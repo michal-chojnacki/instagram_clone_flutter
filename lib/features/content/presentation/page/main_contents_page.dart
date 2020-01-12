@@ -29,7 +29,7 @@ class _MainContentsPagePageState extends State<MainContentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Paginated List App'),
+        title: Text('InstagramClone'),
       ),
       body: BlocBuilder(
           bloc: _mainContentsBloc,

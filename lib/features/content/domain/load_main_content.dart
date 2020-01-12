@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/core/exceptions.dart';
 
-import './load_authorization_token.dart';
+import '../../authenticate/domain/load_authorization_token.dart';
 import './model/content.dart';
 import './user_content_repository.dart';
 import '../../../core/no_params.dart';

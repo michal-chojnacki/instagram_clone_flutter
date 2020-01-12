@@ -14,6 +14,7 @@ dependencies:
   equatable: ^0.4.0
   dartz: ^0.8.6
   http: ^0.12.0+2
+  flutter_stetho: ^0.5.2
 
 dev_dependencies:
   flutter_test:

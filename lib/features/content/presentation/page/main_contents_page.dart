@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents_state.dart';
+import 'package:instagram_clone/features/content/presentation/widget/content_item.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
 
 class MainContentsPage extends StatefulWidget {
@@ -47,7 +47,7 @@ class _MainContentsPagePageState extends State<MainContentsPage> {
                       itemBuilder: (context, index) {
                         return index >= state.contents.length
                             ? _buildLoaderListItem()
-                            : _buildDataListItem(state.contents[index]);
+                            : ContentItem(state.contents[index]);
                       }));
             }
           }),
@@ -75,16 +75,6 @@ class _MainContentsPagePageState extends State<MainContentsPage> {
   Widget _buildLoaderListItem() {
     return Center(
       child: CircularProgressIndicator(),
-    );
-  }
-
-  Widget _buildDataListItem(Content item) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(item.description)
-      ),
     );
   }
 }

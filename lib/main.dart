@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/features/content/injection_container.dart';
-import 'package:instagram_clone/features/content/presentation/main_contents_page.dart';
+import 'package:instagram_clone/features/content/presentation/page/main_contents_page.dart';
 import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:flutter/foundation.dart';
 

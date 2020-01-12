@@ -1,3 +1,4 @@
+import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_repository_impl.dart';
 import 'package:instagram_clone/features/content/data/contents_json_mapper.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_impl.dart';
@@ -10,11 +11,13 @@ import 'package:kiwi/kiwi.dart';
 import 'package:instagram_clone/core/json_mapper.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/authenticate/domain/authentication_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void initKiwi() {
   Container().registerSingleton((c) => http.Client());
   Container().registerFactory<JsonMapper<List<Content>>, ContentsJsonMapper>((c) => ContentsJsonMapper());
-  Container().registerFactory<AuthenticationRepository, AuthenticationRepositoryImpl>((c) => AuthenticationRepositoryImpl(c.resolve()));
+  Container().registerFactory<AuthenticationLocalDataSource, AuthenticationLocalDataSourceImpl>((c) => AuthenticationLocalDataSourceImpl(SharedPreferences.getInstance()));
+  Container().registerFactory<AuthenticationRepository, AuthenticationRepositoryImpl>((c) => AuthenticationRepositoryImpl(c.resolve(), c.resolve()));
   Container().registerFactory<UserContentRepository, UserContentRepositoryImpl>((c) => UserContentRepositoryImpl(c.resolve(), c.resolve()));
   Container().registerFactory((c) => LoadAuthorizationToken(c.resolve()));
   Container().registerFactory((c) => LoadMainContent(c.resolve(), c.resolve()));

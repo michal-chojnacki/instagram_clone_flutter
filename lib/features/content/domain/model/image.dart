@@ -1,10 +1,20 @@
+import 'package:built_value/built_value.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class Image extends Equatable {
-  final String url;
+part 'image.g.dart';
 
-  Image({
-    @required this.url,
-  }) : super([url]);
+abstract class Image extends Object with EquatableMixin implements Built<Image, ImageBuilder> {
+  String get url;
+
+  Image._();
+
+  factory Image([updates(ImageBuilder b)]) = _$Image;
+
+  factory Image.create({@required String url}) {
+    return Image((b) => b..url = url);
+  }
+
+  @override
+  List<Object> get props => [url];
 }

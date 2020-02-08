@@ -1,21 +1,36 @@
+import 'package:built_value/built_value.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../model/image.dart';
 import '../model/user.dart';
 
-class Content extends Equatable {
-  final String id;
-  final Image image;
-  final String description;
-  final User owner;
-  final int publicationTimestamp;
+part 'content.g.dart';
 
-  Content({
-    @required this.id,
-    @required this.image,
-    @required this.description,
-    @required this.owner,
-    @required this.publicationTimestamp,
-  }) : super([id, image, description, owner, publicationTimestamp]);
+abstract class Content extends Object with EquatableMixin implements Built<Content, ContentBuilder> {
+  String get id;
+  Image get image;
+  String get description;
+  User get owner;
+  int get publicationTimestamp;
+
+  Content._();
+
+  factory Content([updates(ContentBuilder b)]) = _$Content;
+
+  factory Content.create({@required String id, 
+  @required Image image,
+  @required String description,
+  @required User owner,
+  @required int publicationTimestamp}) {
+    return Content((b) => b
+    ..id = id
+    ..image = image.toBuilder()
+    ..description = description
+    ..owner = owner.toBuilder()
+    ..publicationTimestamp = publicationTimestamp);
+  }
+
+  @override
+  List<Object> get props => [id, image, description, owner, publicationTimestamp];
 }

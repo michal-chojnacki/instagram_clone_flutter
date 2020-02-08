@@ -1,36 +1,25 @@
-import 'dart:math';
-
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:instagram_clone/features/content/data/model/raw_image.dart';
 import 'package:instagram_clone/features/content/data/model/raw_user.dart';
-import 'package:instagram_clone/features/content/domain/model/content.dart';
-import 'package:meta/meta.dart';
 
-class RawContent extends Content {
-  RawContent({
-    @required String id,
-    @required RawImage image,
-    @required String description,
-    @required RawUser owner,
-    @required int publicationTimestamp,
-  }) : super(id : id, image: image, description: description, owner: owner, publicationTimestamp: publicationTimestamp);
+part 'raw_content.g.dart';
 
-  factory RawContent.fromJson(Map<String, dynamic> json) {
-    return RawContent(
-      id: new Random().nextInt(100).toString(),
-      image: RawImage.fromJson(json['image']),
-      description: json['description'],
-      owner: RawUser.fromJson(json['owner']),
-      publicationTimestamp: json['publicationTimestamp'],
-    );
-  }
+abstract class RawContent implements Built<RawContent, RawContentBuilder> {
+  @nullable
+  String get id;
+  @nullable
+  RawImage get image;
+  @nullable
+  String get description;
+  @nullable
+  RawUser get owner;
+  @nullable
+  int get publicationTimestamp;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'image': (image as RawImage).toJson(),
-      'description': description,
-      'owner': (owner as RawUser).toJson(),
-      'publicationTimestamp': publicationTimestamp,
-    };
-  }
+  RawContent._();
+
+  factory RawContent([updates(RawContentBuilder b)]) = _$RawContent;
+
+  static Serializer<RawContent> get serializer => _$rawContentSerializer;
 }

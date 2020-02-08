@@ -1,20 +1,22 @@
 import 'package:bloc/bloc.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
-import 'package:instagram_clone/features/content/domain/load_main_content.dart';
+import 'package:instagram_clone/features/content/domain/load_main_content_use_case.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents_event.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents_state.dart';
 
+@injectable
 class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
-  final LoadMainContent _loadMainContent;
+  final LoadMainContentUseCase _loadMainContent;
   int _currentPage = -1;
-  int _pageSize;
+  int _pageSize = 50;
 
-  MainContentsBloc(this._loadMainContent, this._pageSize);
+  MainContentsBloc(this._loadMainContent);
 
   void getNextListPage() {
     _currentPage += 1;
-    dispatch(FetchMainContents(page:_currentPage));
+    add(MainContentsEvent.fetchMainContents(page:_currentPage));
   }
 
   @override
@@ -24,13 +26,11 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
   Stream<MainContentsState> mapEventToState(MainContentsEvent event) async* {
     if (event is FetchMainContents) {
       try {
-        yield (await _loadMainContent(Params(page: event.page))).fold((exception) {
-          return currentState.rebuild((b) => b..hasReachedEndOfResults = true);
-        }, (contents) {
-          return MainContentsState.success(currentState.contents + BuiltList.of(contents),  contents.length < _pageSize);
-        });
+        yield (await _loadMainContent(event.page)).when(
+            success: (result) => MainContentsState.success(state.contents + BuiltList.of(result.data),  result.data.length < _pageSize),
+            error: (_) => state.rebuild((b) => b..hasReachedEndOfResults = true));
       } on NoNextPageException catch (_) {
-        yield currentState.rebuild((b) => b..hasReachedEndOfResults = true);
+        yield state.rebuild((b) => b..hasReachedEndOfResults = true);
       }
     }
   }

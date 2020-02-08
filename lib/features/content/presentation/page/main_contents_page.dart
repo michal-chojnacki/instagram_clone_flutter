@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents_state.dart';
 import 'package:instagram_clone/features/content/presentation/widget/content_item.dart';
-import 'package:kiwi/kiwi.dart' as kiwi;
+import 'package:instagram_clone/injection.iconfig.dart';
 
 class MainContentsPage extends StatefulWidget {
-  _MainContentsPagePageState createState() => _MainContentsPagePageState();
+  _MainContentsPageState createState() => _MainContentsPageState();
 }
 
-class _MainContentsPagePageState extends State<MainContentsPage> {
-  final _mainContentsBloc = kiwi.Container().resolve<MainContentsBloc>();
+class _MainContentsPageState extends State<MainContentsPage> {
+  final _mainContentsBloc = getIt<MainContentsBloc>();
   final _scrollController = ScrollController();
 
   @override
@@ -22,7 +22,7 @@ class _MainContentsPagePageState extends State<MainContentsPage> {
   @override
   void dispose() {
     super.dispose();
-    _mainContentsBloc.dispose();
+    _mainContentsBloc.close();
   }
 
   @override

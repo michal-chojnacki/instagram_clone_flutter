@@ -1,31 +1,34 @@
-import 'dart:convert';
-
-import 'package:dartz/dartz.dart';
-import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
-import 'package:instagram_clone/core/json_mapper.dart';
+import 'package:instagram_clone/core/result.dart';
+import 'package:instagram_clone/features/content/data/content_service.dart';
+import 'package:instagram_clone/features/content/data/mapper/content_mapper.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/domain/user_content_repository.dart';
 
+@injectable
 class UserContentRepositoryImpl extends UserContentRepository {
-  final http.Client _client;
-  final JsonMapper<List<Content>> _contentsMapper;
+  final ContentService _service;
+  final ContentMapper _contentsMapper;
 
-  UserContentRepositoryImpl(this._client, this._contentsMapper);
+  UserContentRepositoryImpl(this._service, this._contentsMapper);
 
   @override
-  Future<Either<Exception, List<Content>>> loadMainContent(
+  Future<Result<List<Content>>> loadMainContent(
       String authorizationToken) async {
-    final response = await _client.get("http://10.0.2.2:8080/main_content",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $authorizationToken',
-      },
-    );
-    if (response.statusCode == 200) {
-      return Right(_contentsMapper.map(json.decode(response.body)));
-    } else {
-      return Left(ServerException());
+    try {
+      final response =
+          await _service.getMainContent('Bearer $authorizationToken');
+      if (response.statusCode == 200) {
+        var elo = response.body.contents
+            .map((rawContent) => _contentsMapper.map(rawContent))
+            .toList();
+        return Result.success(data: elo);
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
     }
   }
 }

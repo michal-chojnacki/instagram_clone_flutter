@@ -1,8 +1,12 @@
-import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import 'package:instagram_clone/core/result.dart';
+import 'package:instagram_clone/features/authenticate/data/authentication_repository_impl.dart';
 import 'package:instagram_clone/features/authenticate/domain/model/credentials.dart';
 
+@injectable
+@Bind.toType(AuthenticationRepositoryImpl)
 abstract class AuthenticationRepository {
-  Future<Either<Exception, String>> authenticate(Credentials credentials);
+  Future<Result<String>> authenticate(Credentials credentials);
 
-  Future<Either<Exception, String>> obtainToken();
+  Future<Result<String>> obtainToken();
 }

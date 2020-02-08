@@ -1,11 +1,11 @@
-import 'package:meta/meta.dart';
+import 'package:super_enum/super_enum.dart';
 
-abstract class MainContentsEvent {}
+part "main_contents_event.g.dart";
 
-class FetchMainContents extends MainContentsEvent {
-  final int page;
-
-  FetchMainContents({
-    @required this.page,
-  });
+@superEnum
+enum _MainContentsEvent {
+  @Data(fields: [
+    DataField<int>('page'),
+  ])
+  FetchMainContents,
 }

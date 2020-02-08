@@ -1,24 +1,19 @@
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:instagram_clone/features/content/data/model/raw_image.dart';
-import 'package:instagram_clone/features/content/domain/model/user.dart';
-import 'package:meta/meta.dart';
 
-class RawUser extends User {
-  RawUser({
-    @required String username,
-    @required RawImage avatar,
-  }) : super(username : username, avatar: avatar);
+part 'raw_user.g.dart';
 
-  factory RawUser.fromJson(Map<String, dynamic> json) {
-    return RawUser(
-      username: json['username'],
-      avatar: RawImage.fromJson(json['avatar']),
-    );
-  }
+abstract class RawUser 
+    implements Built<RawUser, RawUserBuilder> {
 
-  Map<String, dynamic> toJson() {
-    return {
-      'username': username,
-      'avatar': (avatar as RawImage).toJson(),
-    };
-  }
+  @nullable String get username;
+  @nullable RawImage get avatar;
+
+  RawUser._();
+
+  factory RawUser([updates(RawUserBuilder b)]) = _$RawUser;
+
+  static Serializer<RawUser> get serializer =>
+      _$rawUserSerializer;
 }

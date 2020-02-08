@@ -1,12 +1,19 @@
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+import 'package:built_value/built_value.dart';
+import 'package:flutter/foundation.dart';
 
-class Credentials extends Equatable {
-  final String username;
-  final String password;
+part 'credentials.g.dart';
 
-  Credentials({
-    @required this.username,
-    @required this.password,
-  }) : super([username, password]);
+abstract class Credentials implements Built<Credentials, CredentialsBuilder> {
+  String get username;
+  String get password;
+
+  Credentials._();
+
+  factory Credentials([updates(CredentialsBuilder b)]) = _$Credentials;
+
+  factory Credentials.create({@required String username, @required String password }) {
+    return Credentials((b) => b
+      ..username = username
+      ..password = password);
+  }
 }

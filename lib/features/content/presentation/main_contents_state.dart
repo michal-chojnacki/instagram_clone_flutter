@@ -1,10 +1,7 @@
 library main_contents_state;
 
-import 'dart:convert';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 
 part 'main_contents_state.g.dart';

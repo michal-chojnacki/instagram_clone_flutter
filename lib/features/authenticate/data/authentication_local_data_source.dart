@@ -1,12 +1,12 @@
 import 'dart:ffi';
 
-import 'package:dartz/dartz.dart';
+import 'package:instagram_clone/core/result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthenticationLocalDataSource {
-  Future<Either<Exception, String>> obtainToken();
+  Future<Result<String>> obtainToken();
 
-  Future<Either<Exception, void>> saveToken(String token);
+  Future<Result<void>> saveToken(String token);
 }
 
 class AuthenticationLocalDataSourceImpl extends AuthenticationLocalDataSource {
@@ -17,19 +17,19 @@ class AuthenticationLocalDataSourceImpl extends AuthenticationLocalDataSource {
   AuthenticationLocalDataSourceImpl(this._sharedPreferences);
 
   @override
-  Future<Either<Exception, String>> obtainToken() async {
+  Future<Result<String>> obtainToken() async {
     if (_token != null) {
-      return Right(_token);
+      return Result.success(data: _token);
     } else {
       var sharedPrefsToken = (await _sharedPreferences).getString(_TOKEN);
-      return (sharedPrefsToken != null) ? Right(sharedPrefsToken) : Left(Exception("No token saved. Authenticate first!"));
+      return (sharedPrefsToken != null) ? Result.success(data: sharedPrefsToken) : Result.error(exception: Exception("No token saved. Authenticate first!"));
     }
   }
 
   @override
-  Future<Either<Exception, void>> saveToken(String token) async {
+  Future<Result<void>> saveToken(String token) async {
     _token = token;
     await (await _sharedPreferences).setString(_TOKEN, token);
-    return Right(Void);
+    return Result.success(data: Void);
   }
 }

@@ -1,20 +1,15 @@
-import 'package:instagram_clone/features/content/domain/model/image.dart';
-import 'package:meta/meta.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-class RawImage extends Image {
-  RawImage({
-    @required String url,
-  }) : super(url : url);
+part 'raw_image.g.dart';
 
-  factory RawImage.fromJson(Map<String, dynamic> json) {
-    return RawImage(
-      url: json['url'],
-    );
-  }
+abstract class RawImage implements Built<RawImage, RawImageBuilder> {
+  @nullable String get url;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'url': url,
-    };
-  }
+  RawImage._();
+
+  factory RawImage([updates(RawImageBuilder b)]) = _$RawImage;
+
+  static Serializer<RawImage> get serializer =>
+      _$rawImageSerializer;
 }

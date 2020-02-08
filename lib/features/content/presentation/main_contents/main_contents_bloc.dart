@@ -3,8 +3,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/features/content/domain/load_main_content_use_case.dart';
-import 'package:instagram_clone/features/content/presentation/main_contents_event.dart';
-import 'package:instagram_clone/features/content/presentation/main_contents_state.dart';
+import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_event.dart';
+import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
 
 @injectable
 class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {

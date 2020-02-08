@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:instagram_clone/features/content/presentation/main_contents_bloc.dart';
-import 'package:instagram_clone/features/content/presentation/main_contents_state.dart';
-import 'package:instagram_clone/features/content/presentation/widget/content_item.dart';
+import 'package:instagram_clone/features/content/presentation/common/content_item.dart';
+import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
+import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
 import 'package:instagram_clone/injection.iconfig.dart';
 
 class MainContentsWidget extends StatefulWidget {

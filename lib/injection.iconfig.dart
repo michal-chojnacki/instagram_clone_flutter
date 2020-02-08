@@ -16,10 +16,10 @@ import 'package:instagram_clone/features/content/data/content_service.dart';
 import 'package:instagram_clone/features/content/data/mapper/content_mapper.dart';
 import 'package:instagram_clone/features/content/domain/load_main_content_use_case.dart';
 import 'package:instagram_clone/features/content/domain/user_content_repository.dart';
-import 'package:instagram_clone/features/content/presentation/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/data/mapper/user_mapper.dart';
 import 'package:instagram_clone/features/content/data/mapper/image_mapper.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
+import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -41,9 +41,9 @@ void $initGetIt({String environment}) {
     ..registerFactory<LoadMainContentUseCase>(() => LoadMainContentUseCase(
         getIt<UserContentRepository>(), getIt<LoadAuthorizationTokenUseCase>()))
     ..registerFactory<UserContentRepository>(() => UserContentRepositoryImpl(getIt<ContentService>(), getIt<ContentMapper>()))
-    ..registerFactory<MainContentsBloc>(() => MainContentsBloc(getIt<LoadMainContentUseCase>()))
     ..registerFactory<UserMapper>(() => UserMapper(getIt<ImageMapper>()))
     ..registerFactory<ContentMapper>(() => ContentMapper(getIt<ImageMapper>(), getIt<UserMapper>()))
     ..registerFactory<ImageMapper>(() => ImageMapper())
-    ..registerLazySingleton<NavigationBloc>(() => NavigationBloc());
+    ..registerLazySingleton<NavigationBloc>(() => NavigationBloc())
+    ..registerFactory<MainContentsBloc>(() => MainContentsBloc(getIt<LoadMainContentUseCase>()));
 }

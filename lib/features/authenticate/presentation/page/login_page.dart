@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
               child: CircularProgressIndicator(),
             );
           } else if (state.authenticated) {
-            _navigationBloc.openMainContentsPage();
+            _navigationBloc.openMainUserPage();
             return Center(
               child: CircularProgressIndicator(),
             );

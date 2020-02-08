@@ -5,11 +5,11 @@ import 'package:instagram_clone/features/content/presentation/main_contents_stat
 import 'package:instagram_clone/features/content/presentation/widget/content_item.dart';
 import 'package:instagram_clone/injection.iconfig.dart';
 
-class MainContentsPage extends StatefulWidget {
-  _MainContentsPageState createState() => _MainContentsPageState();
+class MainContentsWidget extends StatefulWidget {
+  _MainContentsWidgetState createState() => _MainContentsWidgetState();
 }
 
-class _MainContentsPageState extends State<MainContentsPage> {
+class _MainContentsWidgetState extends State<MainContentsWidget> {
   final _mainContentsBloc = getIt<MainContentsBloc>();
   final _scrollController = ScrollController();
 
@@ -27,31 +27,26 @@ class _MainContentsPageState extends State<MainContentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('InstagramClone'),
-      ),
-      body: BlocBuilder(
-          bloc: _mainContentsBloc,
-          builder: (context, MainContentsState state) {
-            if (state.contents.isEmpty) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return NotificationListener<ScrollNotification>(
-                  onNotification: _handleScrollNotification,
-                  child: ListView.builder(
-                      itemCount: calculateListItemCount(state),
-                      controller: _scrollController,
-                      itemBuilder: (context, index) {
-                        return index >= state.contents.length
-                            ? _buildLoaderListItem()
-                            : ContentItem(state.contents[index]);
-                      }));
-            }
-          }),
-    );
+    return BlocBuilder(
+        bloc: _mainContentsBloc,
+        builder: (context, MainContentsState state) {
+          if (state.contents.isEmpty) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return NotificationListener<ScrollNotification>(
+                onNotification: _handleScrollNotification,
+                child: ListView.builder(
+                    itemCount: calculateListItemCount(state),
+                    controller: _scrollController,
+                    itemBuilder: (context, index) {
+                      return index >= state.contents.length
+                          ? _buildLoaderListItem()
+                          : ContentItem(state.contents[index]);
+                    }));
+          }
+        });
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {

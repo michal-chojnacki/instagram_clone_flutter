@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
-import 'package:instagram_clone/features/content/presentation/page/main_contents_page.dart';
+import 'package:instagram_clone/features/common/page/main_user_page.dart';
 import "package:instagram_clone/navigation/navigation_event.dart";
 
 @lazySingleton
@@ -14,14 +14,14 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
   @override
   dynamic get initialState => 0;
 
-  void openMainContentsPage() {
-    add(NavigationEvent.openMainContentPage());
+  void openMainUserPage() {
+    add(NavigationEvent.openMainUserPage());
   }
 
   @override
   Stream<dynamic> mapEventToState(NavigationEvent event) async* {
-    event.when(openMainContentPage: (event) => {
-      navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => MainContentsPage()))
+    event.when(openMainUserPage: (event) => {
+      navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => MainUserPage()))
     }, openLoginPage: (event) => {
       navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()))
     });

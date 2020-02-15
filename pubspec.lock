@@ -113,6 +113,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.8"
+  camera:
+    dependency: "direct main"
+    description:
+      name: camera
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.7+3"
   charcode:
     dependency: transitive
     description:
@@ -288,14 +295,14 @@ packages:
       name: injectable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.0"
+    version: "0.2.2"
   injectable_generator:
     dependency: "direct dev"
     description:
       name: injectable_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.0"
+    version: "0.2.2"
   io:
     dependency: transitive
     description:
@@ -388,12 +395,19 @@ packages:
     source: hosted
     version: "1.0.10"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.4"
+  path_provider:
+    dependency: "direct main"
+    description:
+      name: path_provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.0"
   pedantic:
     dependency: transitive
     description:
@@ -408,6 +422,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
   pool:
     dependency: transitive
     description:

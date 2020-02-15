@@ -9,4 +9,9 @@ enum _LoginPageEvent {
     DataField<String>('password'),
   ])
   AuthenticateUser,
+    @Data(fields: [
+    DataField<String>('username'),
+    DataField<String>('password'),
+  ])
+  RegisterUser,
 }

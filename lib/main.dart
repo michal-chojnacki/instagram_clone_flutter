@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
 import 'package:instagram_clone/injection.dart';
-import 'package:instagram_clone/injection.iconfig.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
-void main() {
+void main() async {
   if (!kReleaseMode) {
     Stetho.initialize();
   }
-  configureInjection();
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureInjection();
   runApp(App());
 }
 
@@ -21,7 +22,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final _navigationBloc = getIt<NavigationBloc>();
+  final _navigationBloc = GetIt.instance.get<NavigationBloc>();
 
   @override
   void dispose() {

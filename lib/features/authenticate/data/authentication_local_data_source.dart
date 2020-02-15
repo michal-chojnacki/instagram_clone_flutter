@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,9 +10,12 @@ abstract class AuthenticationLocalDataSource {
   Future<Result<void>> saveToken(String token);
 }
 
+@injectable
+@lazySingleton
+@RegisterAs(AuthenticationLocalDataSource)
 class AuthenticationLocalDataSourceImpl extends AuthenticationLocalDataSource {
   static const _TOKEN = "authentication_token";
-  final Future<SharedPreferences> _sharedPreferences;
+  final SharedPreferences _sharedPreferences;
   String _token;
 
   AuthenticationLocalDataSourceImpl(this._sharedPreferences);
@@ -21,7 +25,7 @@ class AuthenticationLocalDataSourceImpl extends AuthenticationLocalDataSource {
     if (_token != null) {
       return Result.success(data: _token);
     } else {
-      var sharedPrefsToken = (await _sharedPreferences).getString(_TOKEN);
+      var sharedPrefsToken = _sharedPreferences.getString(_TOKEN);
       return (sharedPrefsToken != null) ? Result.success(data: sharedPrefsToken) : Result.error(exception: Exception("No token saved. Authenticate first!"));
     }
   }
@@ -29,7 +33,7 @@ class AuthenticationLocalDataSourceImpl extends AuthenticationLocalDataSource {
   @override
   Future<Result<void>> saveToken(String token) async {
     _token = token;
-    await (await _sharedPreferences).setString(_TOKEN, token);
+    await _sharedPreferences.setString(_TOKEN, token);
     return Result.success(data: Void);
   }
 }

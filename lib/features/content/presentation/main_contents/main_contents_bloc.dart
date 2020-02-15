@@ -16,7 +16,7 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
 
   void getNextListPage() {
     _currentPage += 1;
-    add(MainContentsEvent.fetchMainContents(page:_currentPage));
+    add(MainContentsEvent.fetchMainContents(page: _currentPage));
   }
 
   @override
@@ -24,11 +24,14 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
 
   @override
   Stream<MainContentsState> mapEventToState(MainContentsEvent event) async* {
-    if (event is FetchMainContents) {
+    if(event is FetchMainContents) {
       try {
         yield (await _loadMainContent(event.page)).when(
-            success: (result) => MainContentsState.success(state.contents + BuiltList.of(result.data),  result.data.length < _pageSize),
-            error: (_) => state.rebuild((b) => b..hasReachedEndOfResults = true));
+            success: (result) => MainContentsState.success(
+                state.contents + BuiltList.of(result.data),
+                result.data.length < _pageSize),
+            error: (_) =>
+                state.rebuild((b) => b..hasReachedEndOfResults = true));
       } on NoNextPageException catch (_) {
         yield state.rebuild((b) => b..hasReachedEndOfResults = true);
       }

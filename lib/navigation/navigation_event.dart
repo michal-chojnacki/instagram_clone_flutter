@@ -8,4 +8,8 @@ enum _NavigationEvent {
   OpenMainUserPage,
   @object
   OpenLoginPage,
+  @Data(fields: [
+    DataField<String>('imagePath'),
+  ])
+  OpenSendContentPage
 }

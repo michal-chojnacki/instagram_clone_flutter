@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_bloc.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_state.dart';
 import 'package:instagram_clone/features/authenticate/presentation/widget/login_form.dart';
-import 'package:instagram_clone/injection.iconfig.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,8 +11,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _loginPageBloc = getIt<LoginPageBloc>();
-  final _navigationBloc = getIt<NavigationBloc>();
+  final _loginPageBloc = GetIt.I<LoginPageBloc>();
+  final _navigationBloc = GetIt.I<NavigationBloc>();
 
   @override
   void dispose() {
@@ -41,7 +41,11 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 LoginForm(
-                    (login, password) => authenticateUser(login, password)),
+                  onLogIn: (login, password) =>
+                      _authenticateUser(login, password),
+                  onRegister: (login, password) =>
+                      _registerUser(login, password),
+                ),
                 if (state.error) Text("Error"),
               ],
             );
@@ -51,7 +55,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> authenticateUser(String login, String password) async {
+  Future<void> _authenticateUser(String login, String password) async {
     _loginPageBloc.authenticateUser(login, password);
+  }
+
+  Future<void> _registerUser(String login, String password) async {
+    _loginPageBloc.registerUser(login, password);
   }
 }

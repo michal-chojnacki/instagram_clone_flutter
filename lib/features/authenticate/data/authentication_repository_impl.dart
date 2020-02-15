@@ -8,6 +8,7 @@ import 'package:instagram_clone/features/authenticate/domain/authentication_repo
 import 'package:instagram_clone/features/authenticate/domain/model/credentials.dart';
 
 @injectable
+@RegisterAs(AuthenticationRepository)
 class AuthenticationRepositoryImpl extends AuthenticationRepository {
   final AuthenticationService _service;
   final AuthenticationLocalDataSource _localDataSource;
@@ -18,6 +19,23 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   Future<Result<String>> authenticate(Credentials credentials) async {
     try {
       final response = await _service.authenticate(RawCredentials.create(
+          username: credentials.username, password: credentials.password));
+      if (response.statusCode == 200) {
+        var token = response.body.token;
+        await _localDataSource.saveToken(token);
+        return Result.success(data: token);
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
+  }
+
+  @override
+  Future<Result<String>> register(Credentials credentials) async {
+    try {
+      final response = await _service.register(RawCredentials.create(
           username: credentials.username, password: credentials.password));
       if (response.statusCode == 200) {
         var token = response.body.token;

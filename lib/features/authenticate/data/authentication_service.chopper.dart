@@ -20,4 +20,11 @@ class _$AuthenticationService extends AuthenticationService {
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<RawToken, RawToken>($request);
   }
+
+  Future<Response<RawToken>> register(RawCredentials rawCredentials) {
+    final $url = '/register';
+    final $body = rawCredentials;
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<RawToken, RawToken>($request);
+  }
 }

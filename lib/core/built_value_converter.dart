@@ -1,11 +1,14 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:chopper/chopper.dart';
+import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/serializers.dart';
 
+@injectable
 class BuiltValueConverter extends JsonConverter {
   @override
   Request convertRequest(Request request) {
     return super.convertRequest(
+      (request.body == null) ? request :
       request.replace(
         // request.body is of type dynamic, but we know that it holds only BuiltValue classes (BuiltPost).
         // Before sending the request to the network, serialize it to a List/Map using a BuiltValue serializer.

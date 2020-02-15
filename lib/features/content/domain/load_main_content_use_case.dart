@@ -8,22 +8,22 @@ import '../../authenticate/domain/load_authorization_token_use_case.dart';
 
 @injectable
 class LoadMainContentUseCase {
-  final UserContentRepository repository;
-  final LoadAuthorizationTokenUseCase loadAuthorizationToken;
+  final UserContentRepository _repository;
+  final LoadAuthorizationTokenUseCase _loadAuthorizationToken;
 
-  LoadMainContentUseCase(this.repository, this.loadAuthorizationToken);
+  LoadMainContentUseCase(this._repository, this._loadAuthorizationToken);
 
-  Future<Result<List<Content>>> call( int page) async {
+  Future<Result<List<Content>>> call(int page) async {
     if (page > 0) {
       return Result.error(exception: NoNextPageException());
     }
 
     try {
-      var authorizationToken = (await loadAuthorizationToken()).when(
+      var authorizationToken = (await _loadAuthorizationToken()).when(
           success: (result) => result.data,
           error: (result) => throw result.exception);
-      return await repository.loadMainContent(authorizationToken);
-    } catch(e) {
+      return await _repository.loadMainContent(authorizationToken);
+    } catch (e) {
       return Result.error(exception: e);
     }
   }

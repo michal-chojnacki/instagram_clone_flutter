@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/content/presentation/common/content_item.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
-import 'package:instagram_clone/injection.iconfig.dart';
 
 class MainContentsWidget extends StatefulWidget {
   _MainContentsWidgetState createState() => _MainContentsWidgetState();
 }
 
 class _MainContentsWidgetState extends State<MainContentsWidget> {
-  final _mainContentsBloc = getIt<MainContentsBloc>();
+  final _mainContentsBloc = GetIt.I<MainContentsBloc>();
   final _scrollController = ScrollController();
 
   @override

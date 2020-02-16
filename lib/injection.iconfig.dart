@@ -4,13 +4,18 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'dart:io';
+
 import 'package:instagram_clone/core/built_value_converter.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 import 'package:instagram_clone/features/content/data/mapper/image_mapper.dart';
+import 'package:http/src/client.dart';
+import 'package:http/src/io_client.dart';
 import 'package:chopper/chopper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:instagram_clone/features/content/data/content_service.dart';
 import 'package:chopper/src/base.dart';
+import 'package:http/http.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:instagram_clone/features/content/data/mapper/user_mapper.dart';
@@ -33,20 +38,24 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<BuiltValueConverter>(() => BuiltValueConverter());
   g.registerLazySingleton<NavigationBloc>(() => NavigationBloc());
   g.registerFactory<ImageMapper>(() => ImageMapper());
+  g.registerLazySingleton<Client>(() => IOClient(
+        HttpClient()..connectionTimeout = const Duration(seconds: 5),
+      ));
   g.registerLazySingleton<ChopperClient>(() => ChopperClient(
-        baseUrl: "http://10.0.2.2:8080",
+        baseUrl: "http://192.168.1.12:8080",
         converter: GetIt.I<BuiltValueConverter>(),
+        client: GetIt.I<Client>(),
       ));
   final sharedPreferences = await SharedPreferences.getInstance();
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
+  g.registerFactory<ContentService>(() => ContentService.create(
+        g<ChopperClient>(),
+      ));
   g.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl(
             g<SharedPreferences>(),
           ));
   g.registerFactory<AuthenticationService>(() => AuthenticationService.create(
-        g<ChopperClient>(),
-      ));
-  g.registerFactory<ContentService>(() => ContentService.create(
         g<ChopperClient>(),
       ));
   g.registerFactory<UserMapper>(() => UserMapper(

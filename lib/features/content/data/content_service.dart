@@ -10,8 +10,7 @@ part "content_service.chopper.dart";
 @ChopperApi(baseUrl: "/")
 abstract class ContentService extends ChopperService {
   @factoryMethod
-  static ContentService create([ChopperClient client]) =>
-      _$ContentService(client);
+  static ContentService create([ChopperClient client]) => _$ContentService(client);
 
   @Get(path: 'main_content')
   Future<Response<RawContents>> getMainContent(

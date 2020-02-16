@@ -15,6 +15,6 @@ abstract class AuthenticationService extends ChopperService {
   @Post(path: 'authenticate')
   Future<Response<RawToken>> authenticate(@Body() RawCredentials rawCredentials);
 
-    @Post(path: 'register')
+  @Post(path: 'register')
   Future<Response<RawToken>> register(@Body() RawCredentials rawCredentials);
 }

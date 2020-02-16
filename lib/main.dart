@@ -22,7 +22,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final _navigationBloc = GetIt.instance.get<NavigationBloc>();
+  final _navigationBloc = GetIt.I<NavigationBloc>();
 
   @override
   void dispose() {

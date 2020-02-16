@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
 import 'package:instagram_clone/features/common/page/main_user_page.dart';
-import 'package:instagram_clone/features/content/presentation/add_content/send_content_widget.dart';
+import 'package:instagram_clone/features/content/presentation/add_content/send_content_page.dart';
 import "package:instagram_clone/navigation/navigation_event.dart";
 
 @lazySingleton
@@ -30,7 +30,7 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
     }, openLoginPage: (event) => {
       navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()))
     }, openSendContentPage: (event)  => {
-      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => SendContentScreen(imagePath: event.imagePath)))
+      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => SendContentPage(imagePath: event.imagePath)))
     });
   }
 }

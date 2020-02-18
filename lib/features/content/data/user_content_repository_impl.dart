@@ -39,10 +39,8 @@ class UserContentRepositoryImpl extends UserContentRepository {
   Future<Result<void>> sendContent(
       String authorizationToken, String message, String imagePath) async {
     try {
-      http.MultipartFile image = await http.MultipartFile.fromPath('file', imagePath,
-          contentType: MediaType('image', 'jpg'));
       final response = await _service.sendContent(
-          'Bearer $authorizationToken', message, image);
+          'Bearer $authorizationToken', message, imagePath);
       if (response.statusCode == 200) {
         return Result.success(data: null);
       } else {

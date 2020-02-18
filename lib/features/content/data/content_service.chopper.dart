@@ -22,12 +22,12 @@ class _$ContentService extends ContentService {
   }
 
   Future<Response> sendContent(
-      String authorizationBearer, String message, MultipartFile image) {
+      String authorizationBearer, String message, String imagePath) {
     final $url = '/content';
     final $headers = {'Authorization': authorizationBearer};
     final $parts = <PartValue>[
       PartValue<String>('message', message),
-      PartValueFile<MultipartFile>('image', image)
+      PartValueFile<String>('image', imagePath)
     ];
     final $request = Request('POST', $url, client.baseUrl,
         parts: $parts, multipart: true, headers: $headers);

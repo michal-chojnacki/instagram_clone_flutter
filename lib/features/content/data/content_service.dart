@@ -21,5 +21,5 @@ abstract class ContentService extends ChopperService {
   Future<Response> sendContent(
       @Header("Authorization") String authorizationBearer,
       @Part("message") String message,
-      @PartFile("image") MultipartFile image);
+      @PartFile("image") String imagePath);
 }

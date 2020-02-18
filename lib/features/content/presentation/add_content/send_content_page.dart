@@ -17,10 +17,11 @@ class SendContentPage extends StatefulWidget {
 
 class _SendContentPageState extends State<SendContentPage> {
   final _sendContentBloc = GetIt.I<SendContentBloc>();
-  String _message;
+  final _messageController = TextEditingController();
 
   @override
   void dispose() {
+    _messageController.dispose();
     _sendContentBloc.close();
     super.dispose();
   }
@@ -35,7 +36,7 @@ class _SendContentPageState extends State<SendContentPage> {
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 child: Text("Share", style: TextStyle(color: Colors.white))),
             onTap: () {
-              _sendContentBloc.sendContent(_message ?? "", widget.imagePath);
+              _sendContentBloc.sendContent(_messageController.text ?? "", widget.imagePath);
             },
           ),
         ]),
@@ -58,9 +59,7 @@ class _SendContentPageState extends State<SendContentPage> {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: 'Description'),
-                          onSubmitted: (String value) {
-                            _message = value;
-                          },
+                          controller: _messageController,
                         ),
                       ),
                     ),

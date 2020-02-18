@@ -9,15 +9,26 @@ part of main_contents_state;
 class _$SendContentState extends SendContentState {
   @override
   final bool progressBarVisible;
+  @override
+  final bool sent;
+  @override
+  final bool error;
 
   factory _$SendContentState(
           [void Function(SendContentStateBuilder) updates]) =>
       (new SendContentStateBuilder()..update(updates)).build();
 
-  _$SendContentState._({this.progressBarVisible}) : super._() {
+  _$SendContentState._({this.progressBarVisible, this.sent, this.error})
+      : super._() {
     if (progressBarVisible == null) {
       throw new BuiltValueNullFieldError(
           'SendContentState', 'progressBarVisible');
+    }
+    if (sent == null) {
+      throw new BuiltValueNullFieldError('SendContentState', 'sent');
+    }
+    if (error == null) {
+      throw new BuiltValueNullFieldError('SendContentState', 'error');
     }
   }
 
@@ -33,18 +44,23 @@ class _$SendContentState extends SendContentState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SendContentState &&
-        progressBarVisible == other.progressBarVisible;
+        progressBarVisible == other.progressBarVisible &&
+        sent == other.sent &&
+        error == other.error;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, progressBarVisible.hashCode));
+    return $jf($jc($jc($jc(0, progressBarVisible.hashCode), sent.hashCode),
+        error.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SendContentState')
-          ..add('progressBarVisible', progressBarVisible))
+          ..add('progressBarVisible', progressBarVisible)
+          ..add('sent', sent)
+          ..add('error', error))
         .toString();
   }
 }
@@ -58,11 +74,21 @@ class SendContentStateBuilder
   set progressBarVisible(bool progressBarVisible) =>
       _$this._progressBarVisible = progressBarVisible;
 
+  bool _sent;
+  bool get sent => _$this._sent;
+  set sent(bool sent) => _$this._sent = sent;
+
+  bool _error;
+  bool get error => _$this._error;
+  set error(bool error) => _$this._error = error;
+
   SendContentStateBuilder();
 
   SendContentStateBuilder get _$this {
     if (_$v != null) {
       _progressBarVisible = _$v.progressBarVisible;
+      _sent = _$v.sent;
+      _error = _$v.error;
       _$v = null;
     }
     return this;
@@ -83,8 +109,9 @@ class SendContentStateBuilder
 
   @override
   _$SendContentState build() {
-    final _$result =
-        _$v ?? new _$SendContentState._(progressBarVisible: progressBarVisible);
+    final _$result = _$v ??
+        new _$SendContentState._(
+            progressBarVisible: progressBarVisible, sent: sent, error: error);
     replace(_$result);
     return _$result;
   }

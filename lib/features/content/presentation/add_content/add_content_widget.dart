@@ -12,11 +12,11 @@ class AddContentWidget extends StatefulWidget {
 
 class _AddContentWidgetState extends State<AddContentWidget> {
   final _navigationBloc = GetIt.I<NavigationBloc>();
-  final changeNotifier = new StreamController.broadcast();
+  final _changeNotifier = new StreamController.broadcast();
 
    @override
   void dispose() {
-    changeNotifier.close();
+    _changeNotifier.close();
     super.dispose();
   }
 
@@ -29,13 +29,13 @@ class _AddContentWidgetState extends State<AddContentWidget> {
             return Scaffold(
               body: TakePictureWidget(
                   camera: snapshot.data,
-                  takePictureSource: changeNotifier.stream,
+                  takePictureSource: _changeNotifier.stream,
                   onPictureTaken: (imagePath) {
                       _navigationBloc.openSendContentScreen(imagePath);
                   }),
               floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.camera_alt),
-                onPressed: () => changeNotifier.sink.add(null),
+                onPressed: () => _changeNotifier.sink.add(null),
               ),
             );
           } else {

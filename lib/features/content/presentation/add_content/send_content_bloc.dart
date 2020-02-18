@@ -23,8 +23,8 @@ class SendContentBloc extends Bloc<SendContentEvent, SendContentState> {
       yield SendContentState.loadingStarted();
       var result = await _sendContentUseCase(event.message, event.imagePath);
       yield result.when(
-          success: (_) => SendContentState.loaded(),
-          error: (result) => SendContentState.loaded());
+          success: (_) => SendContentState.sent(),
+          error: (result) => SendContentState.error());
     }
   }
 }

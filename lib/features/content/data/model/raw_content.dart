@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:instagram_clone/features/content/data/model/raw_image.dart';
@@ -6,8 +8,6 @@ import 'package:instagram_clone/features/content/data/model/raw_user.dart';
 part 'raw_content.g.dart';
 
 abstract class RawContent implements Built<RawContent, RawContentBuilder> {
-  @nullable
-  String get id;
   @nullable
   RawImage get image;
   @nullable

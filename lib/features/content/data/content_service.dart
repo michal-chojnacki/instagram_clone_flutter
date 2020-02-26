@@ -1,6 +1,5 @@
 import "dart:async";
 import 'package:chopper/chopper.dart';
-import 'package:http/http.dart' show MultipartFile;
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/content/data/model/raw_contents.dart';
 

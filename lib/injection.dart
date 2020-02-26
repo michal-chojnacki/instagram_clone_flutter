@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:io' show HttpClient;
 
 import 'package:chopper/chopper.dart';
 import 'package:get_it/get_it.dart';
@@ -19,7 +19,7 @@ abstract class RegisterModule {
   @lazySingleton
   @RegisterAs(Client)
   IOClient get client => IOClient(
-        HttpClient()..connectionTimeout = const Duration(seconds: 5),
+         HttpClient()..connectionTimeout = const Duration(seconds: 5),
       );
 
   @lazySingleton

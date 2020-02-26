@@ -1,5 +1,3 @@
-import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/core/result.dart';

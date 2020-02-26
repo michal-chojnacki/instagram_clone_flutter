@@ -8,7 +8,7 @@ part of 'content.dart';
 
 class _$Content extends Content {
   @override
-  final String id;
+  final int id;
   @override
   final Image image;
   @override
@@ -75,9 +75,9 @@ class _$Content extends Content {
 class ContentBuilder implements Builder<Content, ContentBuilder> {
   _$Content _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   ImageBuilder _image;
   ImageBuilder get image => _$this._image ??= new ImageBuilder();

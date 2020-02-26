@@ -18,6 +18,12 @@ class _$RawContentSerializer implements StructuredSerializer<RawContent> {
   Iterable<Object> serialize(Serializers serializers, RawContent object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
     if (object.image != null) {
       result
         ..add('image')
@@ -56,6 +62,10 @@ class _$RawContentSerializer implements StructuredSerializer<RawContent> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'image':
           result.image.replace(serializers.deserialize(value,
               specifiedType: const FullType(RawImage)) as RawImage);
@@ -81,6 +91,8 @@ class _$RawContentSerializer implements StructuredSerializer<RawContent> {
 
 class _$RawContent extends RawContent {
   @override
+  final int id;
+  @override
   final RawImage image;
   @override
   final String description;
@@ -93,7 +105,11 @@ class _$RawContent extends RawContent {
       (new RawContentBuilder()..update(updates)).build();
 
   _$RawContent._(
-      {this.image, this.description, this.owner, this.publicationTimestamp})
+      {this.id,
+      this.image,
+      this.description,
+      this.owner,
+      this.publicationTimestamp})
       : super._();
 
   @override
@@ -107,6 +123,7 @@ class _$RawContent extends RawContent {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is RawContent &&
+        id == other.id &&
         image == other.image &&
         description == other.description &&
         owner == other.owner &&
@@ -116,13 +133,15 @@ class _$RawContent extends RawContent {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, image.hashCode), description.hashCode), owner.hashCode),
+        $jc($jc($jc($jc(0, id.hashCode), image.hashCode), description.hashCode),
+            owner.hashCode),
         publicationTimestamp.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('RawContent')
+          ..add('id', id)
           ..add('image', image)
           ..add('description', description)
           ..add('owner', owner)
@@ -133,6 +152,10 @@ class _$RawContent extends RawContent {
 
 class RawContentBuilder implements Builder<RawContent, RawContentBuilder> {
   _$RawContent _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   RawImageBuilder _image;
   RawImageBuilder get image => _$this._image ??= new RawImageBuilder();
@@ -155,6 +178,7 @@ class RawContentBuilder implements Builder<RawContent, RawContentBuilder> {
 
   RawContentBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _image = _$v.image?.toBuilder();
       _description = _$v.description;
       _owner = _$v.owner?.toBuilder();
@@ -183,6 +207,7 @@ class RawContentBuilder implements Builder<RawContent, RawContentBuilder> {
     try {
       _$result = _$v ??
           new _$RawContent._(
+              id: id,
               image: _image?.build(),
               description: description,
               owner: _owner?.build(),

@@ -8,7 +8,7 @@ import '../model/user.dart';
 part 'content.g.dart';
 
 abstract class Content extends Object with EquatableMixin implements Built<Content, ContentBuilder> {
-  String get id;
+  int get id;
   Image get image;
   String get description;
   User get owner;
@@ -18,7 +18,7 @@ abstract class Content extends Object with EquatableMixin implements Built<Conte
 
   factory Content([updates(ContentBuilder b)]) = _$Content;
 
-  factory Content.create({@required String id, 
+  factory Content.create({@required int id, 
   @required Image image,
   @required String description,
   @required User owner,

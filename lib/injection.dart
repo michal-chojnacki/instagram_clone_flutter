@@ -10,7 +10,6 @@ import 'package:instagram_clone/injection.iconfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 
-const prod = const Environment('prod');
 const mock = const Environment('mock');
 
 @injectableInit

@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
 import 'package:instagram_clone/features/common/page/main_user_page.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_page.dart';
+import 'package:instagram_clone/features/profile/presentation/edit_profile_page.dart';
 import "package:instagram_clone/navigation/navigation_event.dart";
 
 @lazySingleton
@@ -23,6 +24,10 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
     add(NavigationEvent.openSendContentPage(imagePath: imagePath));
   }
 
+  void openEditProfilePage() {
+    add(NavigationEvent.openEditUserPage());
+  }
+
   @override
   Stream<dynamic> mapEventToState(NavigationEvent event) async* {
     event.when(openMainUserPage: (event) => {
@@ -31,6 +36,8 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
       navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()))
     }, openSendContentPage: (event)  => {
       navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => SendContentPage(imagePath: event.imagePath)))
+    }, openEditUserPage: (event) => {
+      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => EditProfilePage()))
     });
   }
 }

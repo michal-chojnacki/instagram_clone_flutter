@@ -14,6 +14,8 @@ abstract class NavigationEvent extends Equatable {
 
   factory NavigationEvent.openLoginPage() = OpenLoginPage;
 
+  factory NavigationEvent.openEditUserPage() = OpenEditUserPage;
+
   factory NavigationEvent.openSendContentPage({@required String imagePath}) =
       OpenSendContentPage;
 
@@ -26,10 +28,13 @@ abstract class NavigationEvent extends Equatable {
       @required
           FutureOr<R> Function(OpenLoginPage) openLoginPage,
       @required
+          FutureOr<R> Function(OpenEditUserPage) openEditUserPage,
+      @required
           FutureOr<R> Function(OpenSendContentPage) openSendContentPage}) {
     assert(() {
       if (openMainUserPage == null ||
           openLoginPage == null ||
+          openEditUserPage == null ||
           openSendContentPage == null) {
         throw 'check for all possible cases';
       }
@@ -40,6 +45,8 @@ abstract class NavigationEvent extends Equatable {
         return openMainUserPage(this as OpenMainUserPage);
       case _NavigationEvent.OpenLoginPage:
         return openLoginPage(this as OpenLoginPage);
+      case _NavigationEvent.OpenEditUserPage:
+        return openEditUserPage(this as OpenEditUserPage);
       case _NavigationEvent.OpenSendContentPage:
         return openSendContentPage(this as OpenSendContentPage);
     }
@@ -48,6 +55,7 @@ abstract class NavigationEvent extends Equatable {
   FutureOr<R> whenOrElse<R>(
       {FutureOr<R> Function(OpenMainUserPage) openMainUserPage,
       FutureOr<R> Function(OpenLoginPage) openLoginPage,
+      FutureOr<R> Function(OpenEditUserPage) openEditUserPage,
       FutureOr<R> Function(OpenSendContentPage) openSendContentPage,
       @required FutureOr<R> Function(NavigationEvent) orElse}) {
     assert(() {
@@ -63,6 +71,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenLoginPage:
         if (openLoginPage == null) break;
         return openLoginPage(this as OpenLoginPage);
+      case _NavigationEvent.OpenEditUserPage:
+        if (openEditUserPage == null) break;
+        return openEditUserPage(this as OpenEditUserPage);
       case _NavigationEvent.OpenSendContentPage:
         if (openSendContentPage == null) break;
         return openSendContentPage(this as OpenSendContentPage);
@@ -73,10 +84,12 @@ abstract class NavigationEvent extends Equatable {
   FutureOr<void> whenPartial(
       {FutureOr<void> Function(OpenMainUserPage) openMainUserPage,
       FutureOr<void> Function(OpenLoginPage) openLoginPage,
+      FutureOr<void> Function(OpenEditUserPage) openEditUserPage,
       FutureOr<void> Function(OpenSendContentPage) openSendContentPage}) {
     assert(() {
       if (openMainUserPage == null &&
           openLoginPage == null &&
+          openEditUserPage == null &&
           openSendContentPage == null) {
         throw 'provide at least one branch';
       }
@@ -89,6 +102,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenLoginPage:
         if (openLoginPage == null) break;
         return openLoginPage(this as OpenLoginPage);
+      case _NavigationEvent.OpenEditUserPage:
+        if (openEditUserPage == null) break;
+        return openEditUserPage(this as OpenEditUserPage);
       case _NavigationEvent.OpenSendContentPage:
         if (openSendContentPage == null) break;
         return openSendContentPage(this as OpenSendContentPage);
@@ -121,6 +137,18 @@ class OpenLoginPage extends NavigationEvent {
   }
 
   static OpenLoginPage _instance;
+}
+
+@immutable
+class OpenEditUserPage extends NavigationEvent {
+  const OpenEditUserPage._() : super(_NavigationEvent.OpenEditUserPage);
+
+  factory OpenEditUserPage() {
+    _instance ??= OpenEditUserPage._();
+    return _instance;
+  }
+
+  static OpenEditUserPage _instance;
 }
 
 @immutable

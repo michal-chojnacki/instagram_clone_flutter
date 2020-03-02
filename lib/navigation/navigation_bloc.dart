@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
 import 'package:instagram_clone/features/common/page/main_user_page.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_page.dart';
-import 'package:instagram_clone/features/profile/presentation/edit_profile_page.dart';
+import 'package:instagram_clone/features/profile/presentation/page/edit_profile_page.dart';
 import "package:instagram_clone/navigation/navigation_event.dart";
 
 @lazySingleton

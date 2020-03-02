@@ -22,6 +22,8 @@ import 'package:chopper/chopper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_mock_impl.dart';
 import 'package:instagram_clone/features/content/domain/user_content_repository.dart';
+import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';
+import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:chopper/src/base.dart';
@@ -69,6 +71,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       ));
   final sharedPreferences = await SharedPreferences.getInstance();
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
+  g.registerFactory<GetUserDataUseCase>(() => GetUserDataUseCase());
+  g.registerFactory<EditProfileBloc>(() => EditProfileBloc(
+        g<GetUserDataUseCase>(),
+      ));
   g.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl(
             g<SharedPreferences>(),

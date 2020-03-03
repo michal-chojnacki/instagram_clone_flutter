@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/features/content/presentation/add_content/add_content_widget.dart';
+import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/features/camera/pick_image_page.dart';
 import 'package:instagram_clone/features/content/presentation/favs/favs_widget.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_widget.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_widget.dart';
 import 'package:instagram_clone/features/profile/presentation/profile_widget.dart';
+import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class MainUserPage extends StatefulWidget {
   @override
@@ -12,8 +14,15 @@ class MainUserPage extends StatefulWidget {
 
 class _MainUserPageState extends State<MainUserPage> {
   int _selectedIndex = 0;
+  final _navigationBloc = GetIt.I<NavigationBloc>();
 
   void _onItemTapped(int index) {
+    if(index == 2) {
+      _navigationBloc.openPickImagePage(onImagePicked: (imagePath) {
+        _navigationBloc.openSendContentScreen(imagePath);
+      });
+      return;
+    }
     setState(() {
       _selectedIndex = index;
     });
@@ -62,8 +71,6 @@ class _MainUserPageState extends State<MainUserPage> {
       return MainContentsWidget();
     } else if (_selectedIndex == 1) {
       return SearchForContentWidget();
-    } else if (_selectedIndex == 2) {
-      return AddContentWidget();
     } else if (_selectedIndex == 3) {
       return FavsWidget();
     } else if (_selectedIndex == 4) {

@@ -13,5 +13,9 @@ enum _NavigationEvent {
   @Data(fields: [
     DataField<String>('imagePath'),
   ])
-  OpenSendContentPage
+  OpenSendContentPage,
+  @Data(fields: [
+    DataField<Function>('onPickedImage'),
+  ])
+  OpenPickImagePage
 }

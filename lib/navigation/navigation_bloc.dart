@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
+import 'package:instagram_clone/features/camera/pick_image_page.dart';
 import 'package:instagram_clone/features/common/page/main_user_page.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/edit_profile_page.dart';
@@ -28,6 +29,10 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
     add(NavigationEvent.openEditUserPage());
   }
 
+  void openPickImagePage({@required Function onImagePicked}) {
+    add(NavigationEvent.openPickImagePage(onPickedImage: onImagePicked));
+  }
+
   @override
   Stream<dynamic> mapEventToState(NavigationEvent event) async* {
     event.when(openMainUserPage: (event) => {
@@ -35,9 +40,11 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
     }, openLoginPage: (event) => {
       navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()))
     }, openSendContentPage: (event)  => {
-      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => SendContentPage(imagePath: event.imagePath)))
+      navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => SendContentPage(imagePath: event.imagePath)))
     }, openEditUserPage: (event) => {
       navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => EditProfilePage()))
+    }, openPickImagePage: (event)  => {
+      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => PickImagePage(onImagePicked: event.onPickedImage)))
     });
   }
 }

@@ -88,4 +88,5 @@ class ProfileInfoWidget extends StatelessWidget {
       Text(name),
     ]);
   }
+
 }

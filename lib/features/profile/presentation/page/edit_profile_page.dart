@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';
+import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -12,6 +12,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final _editProfileBloc = GetIt.I<EditProfileBloc>();
+  final _navigationBloc = GetIt.I<NavigationBloc>();
 
   @override
   void initState() {
@@ -53,7 +54,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         vertical: 8.0, horizontal: 16.0),
                     child: Column(children: <Widget>[
                       InkWell(
-                        onTap: getImage,
+                        onTap: () => _pickImage(context),
                         child: Column(children: <Widget>[
                           CircleAvatar(
                             radius: 64.0,
@@ -81,8 +82,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ));
   }
 
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    print('onSelectAvatar : $image');
+  void _pickImage(BuildContext context) {
+    _navigationBloc.openPickImagePage(onImagePicked: (imagePath) {
+      Navigator.of(context).pop();
+    });
   }
 }

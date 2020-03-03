@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:instagram_clone/features/content/domain/model/image.dart'
-    as model;
-import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';
 import 'package:instagram_clone/features/profile/presentation/profile_info_widget.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class ProfileWidget extends StatefulWidget {
@@ -48,9 +44,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       margin: EdgeInsets.all(16.0),
                       child: ProfileInfoWidget(
                         user: state.user,
-                        onSelectAvatar: getImage,
+                        onSelectAvatar: () => _pickImage(context),
                         onEditProfile: () =>
-                            {_navigationBloc.openEditProfilePage()},
+                        {_navigationBloc.openEditProfilePage()},
                       )),
                   Expanded(child: Center(child: Text('Profile'))),
                 ],
@@ -60,8 +56,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         });
   }
 
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    print('onSelectAvatar : $image');
+  void _pickImage(BuildContext context) {
+    _navigationBloc.openPickImagePage(onImagePicked: (imagePath) {
+        Navigator.of(context).pop();
+    });
   }
 }

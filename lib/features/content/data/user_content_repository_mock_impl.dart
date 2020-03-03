@@ -22,4 +22,9 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
   Future<Result<void>> sendContent(String authorizationToken, String message, String imagePath) async {
     return Result.success(data: null);
   }
+
+  @override
+  Future<Result<List<Content>>> loadContent(String authorizationToken, User user) async {
+    return loadMainContent(authorizationToken);
+  }
 }

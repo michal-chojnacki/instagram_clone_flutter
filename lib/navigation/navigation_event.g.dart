@@ -22,21 +22,32 @@ abstract class NavigationEvent extends Equatable {
   factory NavigationEvent.openPickImagePage(
       {@required Function onPickedImage}) = OpenPickImagePage;
 
+  factory NavigationEvent.openUserProfilePage({@required User user}) =
+      OpenUserProfilePage;
+
   final _NavigationEvent _type;
 
 //ignore: missing_return
   FutureOr<R> when<R>(
-      {@required FutureOr<R> Function(OpenMainUserPage) openMainUserPage,
-      @required FutureOr<R> Function(OpenLoginPage) openLoginPage,
-      @required FutureOr<R> Function(OpenEditUserPage) openEditUserPage,
-      @required FutureOr<R> Function(OpenSendContentPage) openSendContentPage,
-      @required FutureOr<R> Function(OpenPickImagePage) openPickImagePage}) {
+      {@required
+          FutureOr<R> Function(OpenMainUserPage) openMainUserPage,
+      @required
+          FutureOr<R> Function(OpenLoginPage) openLoginPage,
+      @required
+          FutureOr<R> Function(OpenEditUserPage) openEditUserPage,
+      @required
+          FutureOr<R> Function(OpenSendContentPage) openSendContentPage,
+      @required
+          FutureOr<R> Function(OpenPickImagePage) openPickImagePage,
+      @required
+          FutureOr<R> Function(OpenUserProfilePage) openUserProfilePage}) {
     assert(() {
       if (openMainUserPage == null ||
           openLoginPage == null ||
           openEditUserPage == null ||
           openSendContentPage == null ||
-          openPickImagePage == null) {
+          openPickImagePage == null ||
+          openUserProfilePage == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -52,6 +63,8 @@ abstract class NavigationEvent extends Equatable {
         return openSendContentPage(this as OpenSendContentPage);
       case _NavigationEvent.OpenPickImagePage:
         return openPickImagePage(this as OpenPickImagePage);
+      case _NavigationEvent.OpenUserProfilePage:
+        return openUserProfilePage(this as OpenUserProfilePage);
     }
   }
 
@@ -61,6 +74,7 @@ abstract class NavigationEvent extends Equatable {
       FutureOr<R> Function(OpenEditUserPage) openEditUserPage,
       FutureOr<R> Function(OpenSendContentPage) openSendContentPage,
       FutureOr<R> Function(OpenPickImagePage) openPickImagePage,
+      FutureOr<R> Function(OpenUserProfilePage) openUserProfilePage,
       @required FutureOr<R> Function(NavigationEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -84,6 +98,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenPickImagePage:
         if (openPickImagePage == null) break;
         return openPickImagePage(this as OpenPickImagePage);
+      case _NavigationEvent.OpenUserProfilePage:
+        if (openUserProfilePage == null) break;
+        return openUserProfilePage(this as OpenUserProfilePage);
     }
     return orElse(this);
   }
@@ -93,13 +110,15 @@ abstract class NavigationEvent extends Equatable {
       FutureOr<void> Function(OpenLoginPage) openLoginPage,
       FutureOr<void> Function(OpenEditUserPage) openEditUserPage,
       FutureOr<void> Function(OpenSendContentPage) openSendContentPage,
-      FutureOr<void> Function(OpenPickImagePage) openPickImagePage}) {
+      FutureOr<void> Function(OpenPickImagePage) openPickImagePage,
+      FutureOr<void> Function(OpenUserProfilePage) openUserProfilePage}) {
     assert(() {
       if (openMainUserPage == null &&
           openLoginPage == null &&
           openEditUserPage == null &&
           openSendContentPage == null &&
-          openPickImagePage == null) {
+          openPickImagePage == null &&
+          openUserProfilePage == null) {
         throw 'provide at least one branch';
       }
       return true;
@@ -120,6 +139,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenPickImagePage:
         if (openPickImagePage == null) break;
         return openPickImagePage(this as OpenPickImagePage);
+      case _NavigationEvent.OpenUserProfilePage:
+        if (openUserProfilePage == null) break;
+        return openUserProfilePage(this as OpenUserProfilePage);
     }
   }
 
@@ -187,4 +209,17 @@ class OpenPickImagePage extends NavigationEvent {
   String toString() => 'OpenPickImagePage(onPickedImage:${this.onPickedImage})';
   @override
   List get props => [onPickedImage];
+}
+
+@immutable
+class OpenUserProfilePage extends NavigationEvent {
+  const OpenUserProfilePage({@required this.user})
+      : super(_NavigationEvent.OpenUserProfilePage);
+
+  final User user;
+
+  @override
+  String toString() => 'OpenUserProfilePage(user:${this.user})';
+  @override
+  List get props => [user];
 }

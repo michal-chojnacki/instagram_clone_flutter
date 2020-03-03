@@ -4,6 +4,7 @@ import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/data/content_service.dart';
 import 'package:instagram_clone/features/content/data/mapper/content_mapper.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
+import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/domain/user_content_repository.dart';
 
 @injectable
@@ -48,5 +49,10 @@ class UserContentRepositoryImpl extends UserContentRepository {
     } catch (e) {
       return Result.error(exception: e);
     }
+  }
+
+  @override
+  Future<Result<List<Content>>> loadContent(String authorizationToken, User user) async {
+    return Result.success(data: []);
   }
 }

@@ -4,7 +4,7 @@ import 'package:instagram_clone/features/camera/pick_image_page.dart';
 import 'package:instagram_clone/features/content/presentation/favs/favs_widget.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_widget.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_widget.dart';
-import 'package:instagram_clone/features/profile/presentation/profile_widget.dart';
+import 'package:instagram_clone/features/profile/presentation/my_profile_widget.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class MainUserPage extends StatefulWidget {
@@ -74,7 +74,7 @@ class _MainUserPageState extends State<MainUserPage> {
     } else if (_selectedIndex == 3) {
       return FavsWidget();
     } else if (_selectedIndex == 4) {
-      return ProfileWidget();
+      return MyProfileWidget();
     } else {
       throw Exception('Illegal state! There is not $_selectedIndex page!');
     }

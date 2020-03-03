@@ -1,3 +1,4 @@
+import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:super_enum/super_enum.dart';
 
 part "navigation_event.g.dart";
@@ -17,5 +18,9 @@ enum _NavigationEvent {
   @Data(fields: [
     DataField<Function>('onPickedImage'),
   ])
-  OpenPickImagePage
+  OpenPickImagePage,
+  @Data(fields: [
+    DataField<User>('user'),
+  ])
+  OpenUserProfilePage,
 }

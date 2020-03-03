@@ -4,8 +4,10 @@ import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
 import 'package:instagram_clone/features/camera/pick_image_page.dart';
 import 'package:instagram_clone/features/common/page/main_user_page.dart';
+import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/edit_profile_page.dart';
+import 'package:instagram_clone/features/profile/presentation/page/user_profile_page.dart';
 import "package:instagram_clone/navigation/navigation_event.dart";
 
 @lazySingleton
@@ -33,6 +35,10 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
     add(NavigationEvent.openPickImagePage(onPickedImage: onImagePicked));
   }
 
+  void openUserProfilePage({@required User user}) {
+    add(NavigationEvent.openUserProfilePage(user: user));
+  }
+
   @override
   Stream<dynamic> mapEventToState(NavigationEvent event) async* {
     event.when(openMainUserPage: (event) => {
@@ -45,6 +51,8 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
       navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => EditProfilePage()))
     }, openPickImagePage: (event)  => {
       navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => PickImagePage(onImagePicked: event.onPickedImage)))
+    }, openUserProfilePage: (event)  => {
+      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => UserProfilePage(event.user)))
     });
   }
 }

@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/content/presentation/common/content_item.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
+import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class MainContentsWidget extends StatefulWidget {
   _MainContentsWidgetState createState() => _MainContentsWidgetState();
@@ -11,6 +12,7 @@ class MainContentsWidget extends StatefulWidget {
 
 class _MainContentsWidgetState extends State<MainContentsWidget> {
   final _mainContentsBloc = GetIt.I<MainContentsBloc>();
+  final _navigationBloc = GetIt.I<NavigationBloc>();
   final _scrollController = ScrollController();
 
   @override
@@ -43,7 +45,9 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
                     itemBuilder: (context, index) {
                       return index >= state.contents.length
                           ? _buildLoaderListItem()
-                          : ContentItem(state.contents[index]);
+                          : ContentItem(state.contents[index], (user) {
+                              _navigationBloc.openUserProfilePage(user: user);
+                            });
                     }));
           }
         });

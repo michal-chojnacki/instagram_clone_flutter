@@ -6,12 +6,12 @@ import 'package:instagram_clone/features/profile/presentation/edit_profile_state
 import 'package:instagram_clone/features/profile/presentation/profile_info_widget.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
-class ProfileWidget extends StatefulWidget {
+class MyProfileWidget extends StatefulWidget {
   @override
-  _ProfileWidgetState createState() => _ProfileWidgetState();
+  _MyProfileWidgetState createState() => _MyProfileWidgetState();
 }
 
-class _ProfileWidgetState extends State<ProfileWidget> {
+class _MyProfileWidgetState extends State<MyProfileWidget> {
   final _navigationBloc = GetIt.I<NavigationBloc>();
   final _editProfileBloc = GetIt.I<EditProfileBloc>();
 
@@ -45,9 +45,19 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       child: ProfileInfoWidget(
                         user: state.user,
                         onSelectAvatar: () => _pickImage(context),
-                        onEditProfile: () =>
-                        {_navigationBloc.openEditProfilePage()},
                       )),
+                  ButtonTheme(
+                    minWidth: double.infinity,
+                    child: RaisedButton(
+                      child: Text(
+                        "Edit profile",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () => {
+                        _navigationBloc.openEditProfilePage()
+                      },
+                    ),
+                  ),
                   Expanded(child: Center(child: Text('Profile'))),
                 ],
               ),

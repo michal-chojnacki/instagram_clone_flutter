@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 
 class ProfileInfoWidget extends StatelessWidget {
-  ProfileInfoWidget({this.onSelectAvatar, this.user, this.onEditProfile});
+  ProfileInfoWidget({this.onSelectAvatar, @required this.user});
 
   final Function onSelectAvatar;
-  final Function onEditProfile;
   final User user;
 
   @override
@@ -15,7 +14,7 @@ class ProfileInfoWidget extends StatelessWidget {
         Row(
           children: <Widget>[
             InkWell(
-              onTap: () => onSelectAvatar(),
+              onTap: onSelectAvatar,
               child: Stack(
                 children: <Widget>[
                   Container(
@@ -28,7 +27,7 @@ class ProfileInfoWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned.fill(
+                  if(onSelectAvatar != null) Positioned.fill(
                       child: Align(
                     alignment: Alignment.bottomRight,
                     child: Container(
@@ -68,16 +67,6 @@ class ProfileInfoWidget extends StatelessWidget {
               user.username,
               style: TextStyle(fontSize: 24.0),
             )),
-        ButtonTheme(
-          minWidth: double.infinity,
-          child: RaisedButton(
-            child: Text(
-              "Edit profile",
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () => onEditProfile(),
-          ),
-        ),
       ],
     );
   }

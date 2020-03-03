@@ -1,15 +1,14 @@
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/result.dart';
-import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository.dart';
 
 @injectable
-class GetUserDataUseCase {
+class UpdateUserDataUseCase {
   final UserDataRepository _repository;
 
-  GetUserDataUseCase(this._repository);
+  UpdateUserDataUseCase(this._repository);
 
-  Future<Result<User>> call() {
-    return _repository.fetchUserData();
+  Future<Result<void>> call({ String avatarPath, String bio, String username }) {
+    return _repository.updateUser(avatarPath, bio, username);
   }
 }

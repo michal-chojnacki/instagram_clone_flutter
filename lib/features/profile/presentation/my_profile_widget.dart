@@ -53,9 +53,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                         "Edit profile",
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () => {
-                        _navigationBloc.openEditProfilePage()
-                      },
+                      onPressed: _navigationBloc.openEditProfilePage,
                     ),
                   ),
                   Expanded(child: Center(child: Text('Profile'))),
@@ -63,12 +61,14 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               ),
             );
           }
+
         });
   }
 
   void _pickImage(BuildContext context) {
     _navigationBloc.openPickImagePage(onImagePicked: (imagePath) {
-        Navigator.of(context).pop();
+      _editProfileBloc.updateProfileData(avatarPath: imagePath);
+      _navigationBloc.pop();
     });
   }
 }

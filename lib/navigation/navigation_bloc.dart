@@ -12,10 +12,9 @@ import "package:instagram_clone/navigation/navigation_event.dart";
 
 @lazySingleton
 @injectable
-class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
-  
+class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
   final navigatorKey = GlobalKey<NavigatorState>();
-  
+
   @override
   dynamic get initialState => 0;
 
@@ -39,20 +38,39 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic>{
     add(NavigationEvent.openUserProfilePage(user: user));
   }
 
+  void pop() {
+    add(NavigationEvent.popPage());
+  }
+
   @override
   Stream<dynamic> mapEventToState(NavigationEvent event) async* {
-    event.when(openMainUserPage: (event) => {
-      navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => MainUserPage()))
-    }, openLoginPage: (event) => {
-      navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()))
-    }, openSendContentPage: (event)  => {
-      navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) => SendContentPage(imagePath: event.imagePath)))
-    }, openEditUserPage: (event) => {
-      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => EditProfilePage()))
-    }, openPickImagePage: (event)  => {
-      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => PickImagePage(onImagePicked: event.onPickedImage)))
-    }, openUserProfilePage: (event)  => {
-      navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => UserProfilePage(event.user)))
-    });
+    event.when(
+        openMainUserPage: (event) => {
+              navigatorKey.currentState.pushReplacement(
+                  MaterialPageRoute(builder: (context) => MainUserPage()))
+            },
+        openLoginPage: (event) => {
+              navigatorKey.currentState.pushReplacement(
+                  MaterialPageRoute(builder: (context) => LoginPage()))
+            },
+        openSendContentPage: (event) => {
+              navigatorKey.currentState.pushReplacement(MaterialPageRoute(
+                  builder: (context) =>
+                      SendContentPage(imagePath: event.imagePath)))
+            },
+        openEditUserPage: (event) => {
+              navigatorKey.currentState.push(
+                  MaterialPageRoute(builder: (context) => EditProfilePage()))
+            },
+        openPickImagePage: (event) => {
+              navigatorKey.currentState.push(MaterialPageRoute(
+                  builder: (context) =>
+                      PickImagePage(onImagePicked: event.onPickedImage)))
+            },
+        openUserProfilePage: (event) => {
+              navigatorKey.currentState.push(MaterialPageRoute(
+                  builder: (context) => UserProfilePage(event.user)))
+            },
+        popPage: (event) => {navigatorKey.currentState.pop()});
   }
 }

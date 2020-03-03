@@ -33,12 +33,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
         appBar: AppBar(
           leading: new IconButton(
             icon: new Icon(Icons.close),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => _navigationBloc.pop()
+            ,
           ),
           title: const Text('Edit profile'),
           actions: <Widget>[
             IconButton(icon: Icon(Icons.check),
-              onPressed: () => Navigator.of(context).pop(),)
+              onPressed: _updateProfile,)
           ],
         ),
         body: BlocBuilder(
@@ -84,7 +85,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   void _pickImage(BuildContext context) {
     _navigationBloc.openPickImagePage(onImagePicked: (imagePath) {
-      Navigator.of(context).pop();
+      _editProfileBloc.updateProfileData(avatarPath: imagePath);
+      _navigationBloc.pop();
     });
+  }
+
+  Future<void> _updateProfile() async {
+    _editProfileBloc.updateProfileData(username: '', bio: '');
+    _navigationBloc.pop();
   }
 }

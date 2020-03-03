@@ -22,10 +22,11 @@ import 'package:chopper/chopper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_mock_impl.dart';
 import 'package:instagram_clone/features/content/domain/user_content_repository.dart';
-import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';
-import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_bloc.dart';
+import 'package:instagram_clone/features/profile/data/user_data_repository_impl.dart';
+import 'package:instagram_clone/features/profile/data/user_data_repository.dart';
+import 'package:instagram_clone/features/profile/data/user_data_repository_mock_impl.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:chopper/src/base.dart';
@@ -35,7 +36,10 @@ import 'package:instagram_clone/features/content/domain/send_content_use_case.da
 import 'package:instagram_clone/features/content/domain/load_main_content_use_case.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
+import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';
+import 'package:instagram_clone/features/profile/domain/update_user_data_use_case.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_impl.dart';
+import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> $initGetIt(GetIt g, {String environment}) async {
@@ -73,10 +77,6 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       ));
   final sharedPreferences = await SharedPreferences.getInstance();
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
-  g.registerFactory<GetUserDataUseCase>(() => GetUserDataUseCase());
-  g.registerFactory<EditProfileBloc>(() => EditProfileBloc(
-        g<GetUserDataUseCase>(),
-      ));
   g.registerFactory<GetContentsForUserUseCase>(() => GetContentsForUserUseCase(
         g<UserContentRepository>(),
         g<LoadAuthorizationTokenUseCase>(),
@@ -108,6 +108,16 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<MainContentsBloc>(() => MainContentsBloc(
         g<LoadMainContentUseCase>(),
       ));
+  g.registerFactory<GetUserDataUseCase>(() => GetUserDataUseCase(
+        g<UserDataRepository>(),
+      ));
+  g.registerFactory<UpdateUserDataUseCase>(() => UpdateUserDataUseCase(
+        g<UserDataRepository>(),
+      ));
+  g.registerFactory<EditProfileBloc>(() => EditProfileBloc(
+        g<GetUserDataUseCase>(),
+        g<UpdateUserDataUseCase>(),
+      ));
   if (environment == 'mock') {
     _registerMockDependencies(g);
   }
@@ -121,9 +131,11 @@ void _registerMockDependencies(GetIt g) {
       () => AuthenticationRepositoryMockImpl());
   g.registerFactory<UserContentRepository>(
       () => UserContentRepositoryMockImpl());
+  g.registerFactory<UserDataRepository>(() => UserDataRepositoryMockImpl());
 }
 
 void _registerProdDependencies(GetIt g) {
+  g.registerFactory<UserDataRepository>(() => UserDataRepositoryImpl());
   g.registerFactory<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(
             g<AuthenticationService>(),

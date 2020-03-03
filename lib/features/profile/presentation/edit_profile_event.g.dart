@@ -12,13 +12,19 @@ abstract class EditProfileEvent extends Equatable {
 
   factory EditProfileEvent.fetchProfileData() = FetchProfileData;
 
+  factory EditProfileEvent.updateProfileData(
+      {@required String avatarPath,
+      @required String username,
+      @required String bio}) = UpdateProfileData;
+
   final _EditProfileEvent _type;
 
 //ignore: missing_return
   FutureOr<R> when<R>(
-      {@required FutureOr<R> Function(FetchProfileData) fetchProfileData}) {
+      {@required FutureOr<R> Function(FetchProfileData) fetchProfileData,
+      @required FutureOr<R> Function(UpdateProfileData) updateProfileData}) {
     assert(() {
-      if (fetchProfileData == null) {
+      if (fetchProfileData == null || updateProfileData == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -26,11 +32,14 @@ abstract class EditProfileEvent extends Equatable {
     switch (this._type) {
       case _EditProfileEvent.FetchProfileData:
         return fetchProfileData(this as FetchProfileData);
+      case _EditProfileEvent.UpdateProfileData:
+        return updateProfileData(this as UpdateProfileData);
     }
   }
 
   FutureOr<R> whenOrElse<R>(
       {FutureOr<R> Function(FetchProfileData) fetchProfileData,
+      FutureOr<R> Function(UpdateProfileData) updateProfileData,
       @required FutureOr<R> Function(EditProfileEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -42,14 +51,18 @@ abstract class EditProfileEvent extends Equatable {
       case _EditProfileEvent.FetchProfileData:
         if (fetchProfileData == null) break;
         return fetchProfileData(this as FetchProfileData);
+      case _EditProfileEvent.UpdateProfileData:
+        if (updateProfileData == null) break;
+        return updateProfileData(this as UpdateProfileData);
     }
     return orElse(this);
   }
 
   FutureOr<void> whenPartial(
-      {FutureOr<void> Function(FetchProfileData) fetchProfileData}) {
+      {FutureOr<void> Function(FetchProfileData) fetchProfileData,
+      FutureOr<void> Function(UpdateProfileData) updateProfileData}) {
     assert(() {
-      if (fetchProfileData == null) {
+      if (fetchProfileData == null && updateProfileData == null) {
         throw 'provide at least one branch';
       }
       return true;
@@ -58,6 +71,9 @@ abstract class EditProfileEvent extends Equatable {
       case _EditProfileEvent.FetchProfileData:
         if (fetchProfileData == null) break;
         return fetchProfileData(this as FetchProfileData);
+      case _EditProfileEvent.UpdateProfileData:
+        if (updateProfileData == null) break;
+        return updateProfileData(this as UpdateProfileData);
     }
   }
 
@@ -75,4 +91,23 @@ class FetchProfileData extends EditProfileEvent {
   }
 
   static FetchProfileData _instance;
+}
+
+@immutable
+class UpdateProfileData extends EditProfileEvent {
+  const UpdateProfileData(
+      {@required this.avatarPath, @required this.username, @required this.bio})
+      : super(_EditProfileEvent.UpdateProfileData);
+
+  final String avatarPath;
+
+  final String username;
+
+  final String bio;
+
+  @override
+  String toString() =>
+      'UpdateProfileData(avatarPath:${this.avatarPath},username:${this.username},bio:${this.bio})';
+  @override
+  List get props => [avatarPath, username, bio];
 }

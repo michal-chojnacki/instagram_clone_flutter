@@ -10,6 +10,8 @@ part of 'navigation_event.dart';
 abstract class NavigationEvent extends Equatable {
   const NavigationEvent(this._type);
 
+  factory NavigationEvent.popPage() = PopPage;
+
   factory NavigationEvent.openMainUserPage() = OpenMainUserPage;
 
   factory NavigationEvent.openLoginPage() = OpenLoginPage;
@@ -30,6 +32,8 @@ abstract class NavigationEvent extends Equatable {
 //ignore: missing_return
   FutureOr<R> when<R>(
       {@required
+          FutureOr<R> Function(PopPage) popPage,
+      @required
           FutureOr<R> Function(OpenMainUserPage) openMainUserPage,
       @required
           FutureOr<R> Function(OpenLoginPage) openLoginPage,
@@ -42,7 +46,8 @@ abstract class NavigationEvent extends Equatable {
       @required
           FutureOr<R> Function(OpenUserProfilePage) openUserProfilePage}) {
     assert(() {
-      if (openMainUserPage == null ||
+      if (popPage == null ||
+          openMainUserPage == null ||
           openLoginPage == null ||
           openEditUserPage == null ||
           openSendContentPage == null ||
@@ -53,6 +58,8 @@ abstract class NavigationEvent extends Equatable {
       return true;
     }());
     switch (this._type) {
+      case _NavigationEvent.PopPage:
+        return popPage(this as PopPage);
       case _NavigationEvent.OpenMainUserPage:
         return openMainUserPage(this as OpenMainUserPage);
       case _NavigationEvent.OpenLoginPage:
@@ -69,7 +76,8 @@ abstract class NavigationEvent extends Equatable {
   }
 
   FutureOr<R> whenOrElse<R>(
-      {FutureOr<R> Function(OpenMainUserPage) openMainUserPage,
+      {FutureOr<R> Function(PopPage) popPage,
+      FutureOr<R> Function(OpenMainUserPage) openMainUserPage,
       FutureOr<R> Function(OpenLoginPage) openLoginPage,
       FutureOr<R> Function(OpenEditUserPage) openEditUserPage,
       FutureOr<R> Function(OpenSendContentPage) openSendContentPage,
@@ -83,6 +91,9 @@ abstract class NavigationEvent extends Equatable {
       return true;
     }());
     switch (this._type) {
+      case _NavigationEvent.PopPage:
+        if (popPage == null) break;
+        return popPage(this as PopPage);
       case _NavigationEvent.OpenMainUserPage:
         if (openMainUserPage == null) break;
         return openMainUserPage(this as OpenMainUserPage);
@@ -106,14 +117,16 @@ abstract class NavigationEvent extends Equatable {
   }
 
   FutureOr<void> whenPartial(
-      {FutureOr<void> Function(OpenMainUserPage) openMainUserPage,
+      {FutureOr<void> Function(PopPage) popPage,
+      FutureOr<void> Function(OpenMainUserPage) openMainUserPage,
       FutureOr<void> Function(OpenLoginPage) openLoginPage,
       FutureOr<void> Function(OpenEditUserPage) openEditUserPage,
       FutureOr<void> Function(OpenSendContentPage) openSendContentPage,
       FutureOr<void> Function(OpenPickImagePage) openPickImagePage,
       FutureOr<void> Function(OpenUserProfilePage) openUserProfilePage}) {
     assert(() {
-      if (openMainUserPage == null &&
+      if (popPage == null &&
+          openMainUserPage == null &&
           openLoginPage == null &&
           openEditUserPage == null &&
           openSendContentPage == null &&
@@ -124,6 +137,9 @@ abstract class NavigationEvent extends Equatable {
       return true;
     }());
     switch (this._type) {
+      case _NavigationEvent.PopPage:
+        if (popPage == null) break;
+        return popPage(this as PopPage);
       case _NavigationEvent.OpenMainUserPage:
         if (openMainUserPage == null) break;
         return openMainUserPage(this as OpenMainUserPage);
@@ -147,6 +163,18 @@ abstract class NavigationEvent extends Equatable {
 
   @override
   List get props => const [];
+}
+
+@immutable
+class PopPage extends NavigationEvent {
+  const PopPage._() : super(_NavigationEvent.PopPage);
+
+  factory PopPage() {
+    _instance ??= PopPage._();
+    return _instance;
+  }
+
+  static PopPage _instance;
 }
 
 @immutable

@@ -6,6 +6,8 @@ part "navigation_event.g.dart";
 @superEnum
 enum _NavigationEvent {
   @object
+  PopPage,
+  @object
   OpenMainUserPage,
   @object
   OpenLoginPage,

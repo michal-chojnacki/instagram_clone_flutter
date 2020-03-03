@@ -71,6 +71,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     );
                   } else {
                     return GridView.builder(
+                      shrinkWrap: true,
                         itemCount: state.contents.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3),

@@ -22,17 +22,17 @@ abstract class UserProfileState
       ..progressBarVisible = true);
   }
 
-  factory UserProfileState.success(List<Content> contents) {
+  factory UserProfileState.success(List<Content> contents, bool observing) {
     return UserProfileState((b) => b
       ..contents = contents.toBuiltList().toBuilder()
-      ..observing = false
+      ..observing = observing
       ..progressBarVisible = false);
   }
 
-  factory UserProfileState.setObservation(UserProfileState state, bool observe) {
+  factory UserProfileState.setObservation(UserProfileState state, bool observing) {
     return UserProfileState((b) => b
       ..contents = state.contents.toBuilder()
-      ..observing = observe
+      ..observing = observing
       ..progressBarVisible = state.progressBarVisible);
   }
 }

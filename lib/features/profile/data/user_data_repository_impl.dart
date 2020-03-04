@@ -28,4 +28,9 @@ class UserDataRepositoryImpl extends UserDataRepository {
   Future<Result<void>> changeObservation(User user, bool observe) async {
     return Result.success(data: null);
   }
+
+  @override
+  Future<Result<bool>> getObservation(User user) async {
+    return Result.success(data: false);
+  }
 }

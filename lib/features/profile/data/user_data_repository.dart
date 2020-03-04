@@ -7,4 +7,6 @@ abstract class UserDataRepository {
   Future<Result<User>> fetchUserData();
 
   Future<Result<void>> changeObservation(User user, bool observe);
+
+  Future<Result<bool>> getObservation(User user);
 }

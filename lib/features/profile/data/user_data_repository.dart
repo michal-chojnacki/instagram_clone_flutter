@@ -5,4 +5,6 @@ abstract class UserDataRepository {
   Future<Result<void>> updateUser(String avatarPath, String bio, String username);
 
   Future<Result<User>> fetchUserData();
+
+  Future<Result<void>> changeObservation(User user, bool observe);
 }

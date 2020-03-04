@@ -17,7 +17,6 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   final _userProfileBloc = GetIt.I<UserProfileBloc>();
-  bool observing = false;
 
   @override
   void dispose() {
@@ -45,22 +44,25 @@ class _UserProfilePageState extends State<UserProfilePage> {
             ProfileInfoWidget(
               user: widget._user,
             ),
-            RaisedButton(
-              color: observing ? Colors.white : Colors.blue,
-              child: observing
-                  ? Text(
+            BlocBuilder(
+              bloc: _userProfileBloc,
+              builder: (context, UserProfileState state) {
+                  return RaisedButton(
+                    color: state.observing ? Colors.white : Colors.blue,
+                    child: state.observing
+                        ? Text(
                       'Observing',
                       style: TextStyle(color: Colors.black),
                     )
-                  : Text(
+                        : Text(
                       'Observe',
                       style: TextStyle(color: Colors.white),
                     ),
-              onPressed: () {
-                setState(() {
-                  observing = !observing;
-                });
-              },
+                    onPressed: () {
+                      _userProfileBloc.changeObservation(user: widget._user, observe: !state.observing);
+                    },
+                  );
+                },
             ),
             BlocBuilder(
                 bloc: _userProfileBloc,

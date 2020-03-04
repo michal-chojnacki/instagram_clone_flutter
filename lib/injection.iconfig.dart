@@ -1,4 +1,3 @@
-import 'dart:io' show HttpClient;
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -23,10 +22,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_mock_impl.dart';
 import 'package:instagram_clone/features/content/domain/user_content_repository.dart';
 import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
-import 'package:instagram_clone/features/profile/presentation/page/user_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository_impl.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository_mock_impl.dart';
+import 'package:instagram_clone/features/profile/domain/change_observation_use_case.dart';
+import 'package:instagram_clone/features/common/data/IOClientFactory.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:chopper/src/base.dart';
@@ -37,6 +37,7 @@ import 'package:instagram_clone/features/content/domain/load_main_content_use_ca
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';
+import 'package:instagram_clone/features/profile/presentation/page/user_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/domain/update_user_data_use_case.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_impl.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
@@ -67,9 +68,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<UserMapper>(),
       ));
   g.registerLazySingleton<NavigationBloc>(() => NavigationBloc());
-  g.registerLazySingleton<Client>(() => IOClient(
-        HttpClient()..connectionTimeout = const Duration(seconds: 5),
-      ));
+  g.registerLazySingleton<Client>(() => GetIt.I<IOClientFactory>().create);
   g.registerLazySingleton<ChopperClient>(() => ChopperClient(
         baseUrl: "http://192.168.1.12:8080",
         converter: GetIt.I<BuiltValueConverter>(),
@@ -81,9 +80,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<UserContentRepository>(),
         g<LoadAuthorizationTokenUseCase>(),
       ));
-  g.registerFactory<UserProfileBloc>(() => UserProfileBloc(
-        g<GetContentsForUserUseCase>(),
+  g.registerFactory<ChangeObservationUseCase>(() => ChangeObservationUseCase(
+        g<UserDataRepository>(),
       ));
+  g.registerFactory<IOClientFactory>(() => IOClientFactory());
   g.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl(
             g<SharedPreferences>(),
@@ -110,6 +110,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       ));
   g.registerFactory<GetUserDataUseCase>(() => GetUserDataUseCase(
         g<UserDataRepository>(),
+      ));
+  g.registerFactory<UserProfileBloc>(() => UserProfileBloc(
+        g<GetContentsForUserUseCase>(),
+        g<ChangeObservationUseCase>(),
       ));
   g.registerFactory<UpdateUserDataUseCase>(() => UpdateUserDataUseCase(
         g<UserDataRepository>(),

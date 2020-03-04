@@ -10,15 +10,21 @@ class _$UserProfileState extends UserProfileState {
   @override
   final BuiltList<Content> contents;
   @override
+  final bool observing;
+  @override
   final bool progressBarVisible;
 
   factory _$UserProfileState(
           [void Function(UserProfileStateBuilder) updates]) =>
       (new UserProfileStateBuilder()..update(updates)).build();
 
-  _$UserProfileState._({this.contents, this.progressBarVisible}) : super._() {
+  _$UserProfileState._({this.contents, this.observing, this.progressBarVisible})
+      : super._() {
     if (contents == null) {
       throw new BuiltValueNullFieldError('UserProfileState', 'contents');
+    }
+    if (observing == null) {
+      throw new BuiltValueNullFieldError('UserProfileState', 'observing');
     }
     if (progressBarVisible == null) {
       throw new BuiltValueNullFieldError(
@@ -39,18 +45,21 @@ class _$UserProfileState extends UserProfileState {
     if (identical(other, this)) return true;
     return other is UserProfileState &&
         contents == other.contents &&
+        observing == other.observing &&
         progressBarVisible == other.progressBarVisible;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, contents.hashCode), progressBarVisible.hashCode));
+    return $jf($jc($jc($jc(0, contents.hashCode), observing.hashCode),
+        progressBarVisible.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserProfileState')
           ..add('contents', contents)
+          ..add('observing', observing)
           ..add('progressBarVisible', progressBarVisible))
         .toString();
   }
@@ -65,6 +74,10 @@ class UserProfileStateBuilder
       _$this._contents ??= new ListBuilder<Content>();
   set contents(ListBuilder<Content> contents) => _$this._contents = contents;
 
+  bool _observing;
+  bool get observing => _$this._observing;
+  set observing(bool observing) => _$this._observing = observing;
+
   bool _progressBarVisible;
   bool get progressBarVisible => _$this._progressBarVisible;
   set progressBarVisible(bool progressBarVisible) =>
@@ -75,6 +88,7 @@ class UserProfileStateBuilder
   UserProfileStateBuilder get _$this {
     if (_$v != null) {
       _contents = _$v.contents?.toBuilder();
+      _observing = _$v.observing;
       _progressBarVisible = _$v.progressBarVisible;
       _$v = null;
     }
@@ -101,6 +115,7 @@ class UserProfileStateBuilder
       _$result = _$v ??
           new _$UserProfileState._(
               contents: contents.build(),
+              observing: observing,
               progressBarVisible: progressBarVisible);
     } catch (_) {
       String _$failedField;

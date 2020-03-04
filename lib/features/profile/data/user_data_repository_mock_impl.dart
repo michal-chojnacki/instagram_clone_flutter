@@ -23,4 +23,9 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
                 url:
                 "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")));
   }
+
+  @override
+  Future<Result<void>> changeObservation(User user, bool observe) async {
+    return Result.success(data: null);
+  }
 }

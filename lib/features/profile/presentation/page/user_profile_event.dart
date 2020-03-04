@@ -9,4 +9,9 @@ enum _UserProfileEvent {
     DataField<User>('user'),
   ])
   FetchUserContent,
+  @Data(fields: [
+    DataField<User>('user'),
+    DataField<bool>('observe'),
+  ])
+  ChangeObservation,
 }

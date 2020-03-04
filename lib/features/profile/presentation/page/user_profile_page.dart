@@ -47,22 +47,23 @@ class _UserProfilePageState extends State<UserProfilePage> {
             BlocBuilder(
               bloc: _userProfileBloc,
               builder: (context, UserProfileState state) {
-                  return RaisedButton(
-                    color: state.observing ? Colors.white : Colors.blue,
-                    child: state.observing
-                        ? Text(
-                      'Observing',
-                      style: TextStyle(color: Colors.black),
-                    )
-                        : Text(
-                      'Observe',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      _userProfileBloc.changeObservation(user: widget._user, observe: !state.observing);
-                    },
-                  );
-                },
+                return RaisedButton(
+                  color: state.observing ? Colors.white : Colors.blue,
+                  child: state.observing
+                      ? Text(
+                          'Observing',
+                          style: TextStyle(color: Colors.black),
+                        )
+                      : Text(
+                          'Observe',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                  onPressed: () {
+                    _userProfileBloc.changeObservation(
+                        user: widget._user, observe: !state.observing);
+                  },
+                );
+              },
             ),
             BlocBuilder(
                 bloc: _userProfileBloc,
@@ -73,7 +74,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     );
                   } else {
                     return GridView.builder(
-                      shrinkWrap: true,
+                        shrinkWrap: true,
                         itemCount: state.contents.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3),

@@ -13,6 +13,9 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   final _editProfileBloc = GetIt.I<EditProfileBloc>();
   final _navigationBloc = GetIt.I<NavigationBloc>();
+  final _nameTextEditingController = TextEditingController();
+  final _usernameTextEditingController = TextEditingController();
+  final _bioTextEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -24,6 +27,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void dispose() {
     super.dispose();
     _editProfileBloc.close();
+    _nameTextEditingController.dispose();
+    _usernameTextEditingController.dispose();
+    _bioTextEditingController.dispose();
   }
 
   @override
@@ -33,54 +39,59 @@ class _EditProfilePageState extends State<EditProfilePage> {
         appBar: AppBar(
           leading: new IconButton(
             icon: new Icon(Icons.close),
-            onPressed: () => _navigationBloc.pop()
-            ,
+            onPressed: () => _navigationBloc.pop(),
           ),
           title: const Text('Edit profile'),
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.check),
-              onPressed: _updateProfile,)
+            IconButton(
+              icon: Icon(Icons.check),
+              onPressed: _updateProfile,
+            )
           ],
         ),
         body: BlocBuilder(
             bloc: _editProfileBloc,
             builder: (context, EditProfileState state) {
+              _usernameTextEditingController.text = state.user.username;
               if (state.progressBarVisible) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
                 return Container(
-                    margin: EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
+                    margin:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     child: Column(children: <Widget>[
                       InkWell(
                         onTap: () => _pickImage(context),
-                        child: Column(children: <Widget>[
-                          CircleAvatar(
-                            radius: 64.0,
-                            backgroundColor: Colors.black,
-                            backgroundImage: NetworkImage(
-                              state.user.avatar.url,
+                        child: Column(
+                          children: <Widget>[
+                            CircleAvatar(
+                              radius: 64.0,
+                              backgroundColor: Colors.black,
+                              backgroundImage: NetworkImage(
+                                state.user.avatar.url,
+                              ),
                             ),
-                          ),
-                          Text('Zmień zdjęcie profilowe'),
-                        ],),
+                            Text('Zmień zdjęcie profilowe'),
+                          ],
+                        ),
                       ),
                       TextFormField(
+                        controller: _nameTextEditingController,
                         decoration: InputDecoration(labelText: 'Name'),
                       ),
                       TextFormField(
-                        initialValue: state.user.username,
+                        controller: _usernameTextEditingController,
                         decoration: InputDecoration(labelText: 'Username'),
                       ),
                       TextFormField(
+                        controller: _bioTextEditingController,
                         decoration: InputDecoration(labelText: 'Bio'),
                       ),
                     ]));
               }
-            }
-        ));
+            }));
   }
 
   void _pickImage(BuildContext context) {
@@ -91,7 +102,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   Future<void> _updateProfile() async {
-    _editProfileBloc.updateProfileData(username: '', bio: '');
+    final user = _editProfileBloc.state.user;
+    if (user == null) {
+      return;
+    }
+    var name = _nameTextEditingController.text;
+    var username = _usernameTextEditingController.text;
+    var bio = _bioTextEditingController.text;
+    username = (username == user.username) ? null : username;
+    _editProfileBloc.updateProfileData(username: username, bio: bio);
     _navigationBloc.pop();
   }
 }

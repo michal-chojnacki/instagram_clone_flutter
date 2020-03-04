@@ -16,7 +16,21 @@ abstract class MainContentsEvent extends Equatable {
   final _MainContentsEvent _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
+  R when<R>({@required R Function(FetchMainContents) fetchMainContents}) {
+    assert(() {
+      if (fetchMainContents == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _MainContentsEvent.FetchMainContents:
+        return fetchMainContents(this as FetchMainContents);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(FetchMainContents) fetchMainContents}) {
     assert(() {
       if (fetchMainContents == null) {
@@ -30,7 +44,24 @@ abstract class MainContentsEvent extends Equatable {
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
+  R whenOrElse<R>(
+      {R Function(FetchMainContents) fetchMainContents,
+      @required R Function(MainContentsEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _MainContentsEvent.FetchMainContents:
+        if (fetchMainContents == null) break;
+        return fetchMainContents(this as FetchMainContents);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(FetchMainContents) fetchMainContents,
       @required FutureOr<R> Function(MainContentsEvent) orElse}) {
     assert(() {
@@ -47,7 +78,8 @@ abstract class MainContentsEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(FetchMainContents) fetchMainContents}) {
     assert(() {
       if (fetchMainContents == null) {

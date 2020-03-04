@@ -16,7 +16,21 @@ abstract class SendContentEvent extends Equatable {
   final _SendContentEvent _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
+  R when<R>({@required R Function(SendContent) sendContent}) {
+    assert(() {
+      if (sendContent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _SendContentEvent.SendContent:
+        return sendContent(this as SendContent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(SendContent) sendContent}) {
     assert(() {
       if (sendContent == null) {
@@ -30,7 +44,24 @@ abstract class SendContentEvent extends Equatable {
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
+  R whenOrElse<R>(
+      {R Function(SendContent) sendContent,
+      @required R Function(SendContentEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _SendContentEvent.SendContent:
+        if (sendContent == null) break;
+        return sendContent(this as SendContent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(SendContent) sendContent,
       @required FutureOr<R> Function(SendContentEvent) orElse}) {
     assert(() {
@@ -47,8 +78,8 @@ abstract class SendContentEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
-      {FutureOr<void> Function(SendContent) sendContent}) {
+//ignore: missing_return
+  Future<void> whenPartial({FutureOr<void> Function(SendContent) sendContent}) {
     assert(() {
       if (sendContent == null) {
         throw 'provide at least one branch';

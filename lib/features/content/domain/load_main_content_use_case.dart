@@ -18,13 +18,11 @@ class LoadMainContentUseCase {
       return Result.error(exception: NoNextPageException());
     }
 
-    try {
-      var authorizationToken = (await _loadAuthorizationToken()).when(
-          success: (result) => result.data,
-          error: (result) => throw result.exception);
-      return await _repository.loadMainContent(authorizationToken);
-    } catch (e) {
-      return Result.error(exception: e);
-    }
+    return _loadAuthorizationToken()
+        .asStream()
+        .asyncMap((Result<String> authorizationTokenResult) => authorizationTokenResult.when(
+            success: (result) => _repository.loadMainContent(result.data),
+            error: (result) => Future.value(Result<List<Content>>.error(exception: result.exception))))
+        .single;
   }
 }

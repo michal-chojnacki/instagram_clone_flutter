@@ -19,7 +19,25 @@ abstract class UserProfileEvent extends Equatable {
   final _UserProfileEvent _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
+  R when<R>(
+      {@required R Function(FetchUserContent) fetchUserContent,
+      @required R Function(ChangeObservation) changeObservation}) {
+    assert(() {
+      if (fetchUserContent == null || changeObservation == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _UserProfileEvent.FetchUserContent:
+        return fetchUserContent(this as FetchUserContent);
+      case _UserProfileEvent.ChangeObservation:
+        return changeObservation(this as ChangeObservation);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(FetchUserContent) fetchUserContent,
       @required FutureOr<R> Function(ChangeObservation) changeObservation}) {
     assert(() {
@@ -36,7 +54,28 @@ abstract class UserProfileEvent extends Equatable {
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
+  R whenOrElse<R>(
+      {R Function(FetchUserContent) fetchUserContent,
+      R Function(ChangeObservation) changeObservation,
+      @required R Function(UserProfileEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _UserProfileEvent.FetchUserContent:
+        if (fetchUserContent == null) break;
+        return fetchUserContent(this as FetchUserContent);
+      case _UserProfileEvent.ChangeObservation:
+        if (changeObservation == null) break;
+        return changeObservation(this as ChangeObservation);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(FetchUserContent) fetchUserContent,
       FutureOr<R> Function(ChangeObservation) changeObservation,
       @required FutureOr<R> Function(UserProfileEvent) orElse}) {
@@ -57,7 +96,8 @@ abstract class UserProfileEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(FetchUserContent) fetchUserContent,
       FutureOr<void> Function(ChangeObservation) changeObservation}) {
     assert(() {

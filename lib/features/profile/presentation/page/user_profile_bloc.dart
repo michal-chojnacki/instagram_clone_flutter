@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/change_observation_use_case.dart';
@@ -33,13 +32,13 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   Stream<UserProfileState> mapEventToState(UserProfileEvent event) async* {
     if (event is FetchUserContent) {
       yield UserProfileState.loading();
-      yield await Rx.zip([
+      yield await Rx.zip2(
         _getObservationStatus(event.user).asStream(),
         _getContentsForUser(event.user, 0).asStream()
-      ], (List<Result<dynamic>> values) {
-        var observing = values[0].when(
+      , (observationStatus, contentsForUser) {
+        var observing = observationStatus.when(
             success: (result) => result.data, error: (_) => false);
-        var contents = values[1].when(
+        var contents = contentsForUser.when(
             success: (result) => result.data, error: (_) => null);
         return UserProfileState.success(contents, observing);
       }).single;

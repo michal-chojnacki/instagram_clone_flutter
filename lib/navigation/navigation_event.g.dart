@@ -30,7 +30,46 @@ abstract class NavigationEvent extends Equatable {
   final _NavigationEvent _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
+  R when<R>(
+      {@required R Function(PopPage) popPage,
+      @required R Function(OpenMainUserPage) openMainUserPage,
+      @required R Function(OpenLoginPage) openLoginPage,
+      @required R Function(OpenEditUserPage) openEditUserPage,
+      @required R Function(OpenSendContentPage) openSendContentPage,
+      @required R Function(OpenPickImagePage) openPickImagePage,
+      @required R Function(OpenUserProfilePage) openUserProfilePage}) {
+    assert(() {
+      if (popPage == null ||
+          openMainUserPage == null ||
+          openLoginPage == null ||
+          openEditUserPage == null ||
+          openSendContentPage == null ||
+          openPickImagePage == null ||
+          openUserProfilePage == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _NavigationEvent.PopPage:
+        return popPage(this as PopPage);
+      case _NavigationEvent.OpenMainUserPage:
+        return openMainUserPage(this as OpenMainUserPage);
+      case _NavigationEvent.OpenLoginPage:
+        return openLoginPage(this as OpenLoginPage);
+      case _NavigationEvent.OpenEditUserPage:
+        return openEditUserPage(this as OpenEditUserPage);
+      case _NavigationEvent.OpenSendContentPage:
+        return openSendContentPage(this as OpenSendContentPage);
+      case _NavigationEvent.OpenPickImagePage:
+        return openPickImagePage(this as OpenPickImagePage);
+      case _NavigationEvent.OpenUserProfilePage:
+        return openUserProfilePage(this as OpenUserProfilePage);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required
           FutureOr<R> Function(PopPage) popPage,
       @required
@@ -75,7 +114,48 @@ abstract class NavigationEvent extends Equatable {
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
+  R whenOrElse<R>(
+      {R Function(PopPage) popPage,
+      R Function(OpenMainUserPage) openMainUserPage,
+      R Function(OpenLoginPage) openLoginPage,
+      R Function(OpenEditUserPage) openEditUserPage,
+      R Function(OpenSendContentPage) openSendContentPage,
+      R Function(OpenPickImagePage) openPickImagePage,
+      R Function(OpenUserProfilePage) openUserProfilePage,
+      @required R Function(NavigationEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _NavigationEvent.PopPage:
+        if (popPage == null) break;
+        return popPage(this as PopPage);
+      case _NavigationEvent.OpenMainUserPage:
+        if (openMainUserPage == null) break;
+        return openMainUserPage(this as OpenMainUserPage);
+      case _NavigationEvent.OpenLoginPage:
+        if (openLoginPage == null) break;
+        return openLoginPage(this as OpenLoginPage);
+      case _NavigationEvent.OpenEditUserPage:
+        if (openEditUserPage == null) break;
+        return openEditUserPage(this as OpenEditUserPage);
+      case _NavigationEvent.OpenSendContentPage:
+        if (openSendContentPage == null) break;
+        return openSendContentPage(this as OpenSendContentPage);
+      case _NavigationEvent.OpenPickImagePage:
+        if (openPickImagePage == null) break;
+        return openPickImagePage(this as OpenPickImagePage);
+      case _NavigationEvent.OpenUserProfilePage:
+        if (openUserProfilePage == null) break;
+        return openUserProfilePage(this as OpenUserProfilePage);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(PopPage) popPage,
       FutureOr<R> Function(OpenMainUserPage) openMainUserPage,
       FutureOr<R> Function(OpenLoginPage) openLoginPage,
@@ -116,7 +196,8 @@ abstract class NavigationEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(PopPage) popPage,
       FutureOr<void> Function(OpenMainUserPage) openMainUserPage,
       FutureOr<void> Function(OpenLoginPage) openLoginPage,
@@ -170,7 +251,7 @@ class PopPage extends NavigationEvent {
   const PopPage._() : super(_NavigationEvent.PopPage);
 
   factory PopPage() {
-    _instance ??= PopPage._();
+    _instance ??= const PopPage._();
     return _instance;
   }
 
@@ -182,7 +263,7 @@ class OpenMainUserPage extends NavigationEvent {
   const OpenMainUserPage._() : super(_NavigationEvent.OpenMainUserPage);
 
   factory OpenMainUserPage() {
-    _instance ??= OpenMainUserPage._();
+    _instance ??= const OpenMainUserPage._();
     return _instance;
   }
 
@@ -194,7 +275,7 @@ class OpenLoginPage extends NavigationEvent {
   const OpenLoginPage._() : super(_NavigationEvent.OpenLoginPage);
 
   factory OpenLoginPage() {
-    _instance ??= OpenLoginPage._();
+    _instance ??= const OpenLoginPage._();
     return _instance;
   }
 
@@ -206,7 +287,7 @@ class OpenEditUserPage extends NavigationEvent {
   const OpenEditUserPage._() : super(_NavigationEvent.OpenEditUserPage);
 
   factory OpenEditUserPage() {
-    _instance ??= OpenEditUserPage._();
+    _instance ??= const OpenEditUserPage._();
     return _instance;
   }
 

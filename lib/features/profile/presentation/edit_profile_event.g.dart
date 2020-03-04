@@ -20,7 +20,25 @@ abstract class EditProfileEvent extends Equatable {
   final _EditProfileEvent _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
+  R when<R>(
+      {@required R Function(FetchProfileData) fetchProfileData,
+      @required R Function(UpdateProfileData) updateProfileData}) {
+    assert(() {
+      if (fetchProfileData == null || updateProfileData == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _EditProfileEvent.FetchProfileData:
+        return fetchProfileData(this as FetchProfileData);
+      case _EditProfileEvent.UpdateProfileData:
+        return updateProfileData(this as UpdateProfileData);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(FetchProfileData) fetchProfileData,
       @required FutureOr<R> Function(UpdateProfileData) updateProfileData}) {
     assert(() {
@@ -37,7 +55,28 @@ abstract class EditProfileEvent extends Equatable {
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
+  R whenOrElse<R>(
+      {R Function(FetchProfileData) fetchProfileData,
+      R Function(UpdateProfileData) updateProfileData,
+      @required R Function(EditProfileEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _EditProfileEvent.FetchProfileData:
+        if (fetchProfileData == null) break;
+        return fetchProfileData(this as FetchProfileData);
+      case _EditProfileEvent.UpdateProfileData:
+        if (updateProfileData == null) break;
+        return updateProfileData(this as UpdateProfileData);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(FetchProfileData) fetchProfileData,
       FutureOr<R> Function(UpdateProfileData) updateProfileData,
       @required FutureOr<R> Function(EditProfileEvent) orElse}) {
@@ -58,7 +97,8 @@ abstract class EditProfileEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(FetchProfileData) fetchProfileData,
       FutureOr<void> Function(UpdateProfileData) updateProfileData}) {
     assert(() {
@@ -86,7 +126,7 @@ class FetchProfileData extends EditProfileEvent {
   const FetchProfileData._() : super(_EditProfileEvent.FetchProfileData);
 
   factory FetchProfileData() {
-    _instance ??= FetchProfileData._();
+    _instance ??= const FetchProfileData._();
     return _instance;
   }
 

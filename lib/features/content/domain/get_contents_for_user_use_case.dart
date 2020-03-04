@@ -18,13 +18,11 @@ class GetContentsForUserUseCase {
       return Result.error(exception: NoNextPageException());
     }
 
-    try {
-      var authorizationToken = (await _loadAuthorizationToken()).when(
-          success: (result) => result.data,
-          error: (result) => throw result.exception);
-      return await _repository.loadContent(authorizationToken, user);
-    } catch (e) {
-      return Result.error(exception: e);
-    }
+    return _loadAuthorizationToken()
+        .asStream()
+        .asyncMap((authorizationTokenResult) => authorizationTokenResult.when(
+            success: (result) => _repository.loadContent(result.data, user),
+            error: (result) => Future.value(Result<List<Content>>.error(exception: result.exception))))
+        .single;
   }
 }

@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/change_observation_use_case.dart';
@@ -34,12 +33,16 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   Stream<UserProfileState> mapEventToState(UserProfileEvent event) async* {
     if (event is FetchUserContent) {
       yield UserProfileState.loading();
-      var observing = (await _getObservationStatus(event.user)).when(
-          success: (result) => result.data,
-          error: (_) => false);
-      yield (await _getContentsForUser(event.user, 0)).when(
-          success: (result) => UserProfileState.success(result.data, observing),
-          error: (_) => UserProfileState.success(null, observing));
+      yield await Rx.zip([
+        _getObservationStatus(event.user).asStream(),
+        _getContentsForUser(event.user, 0).asStream()
+      ], (List<Result<dynamic>> values) {
+        var observing = values[0].when(
+            success: (result) => result.data, error: (_) => false);
+        var contents = values[1].when(
+            success: (result) => result.data, error: (_) => null);
+        return UserProfileState.success(contents, observing);
+      }).single;
     } else if (event is ChangeObservation) {
       bool success = (await _changeObservation(event.user, event.observe))
           .when(success: (_) => true, error: (_) => false);

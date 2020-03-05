@@ -15,7 +15,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   final ChangeObservationUseCase _changeObservation;
   final GetObservationStatusUseCase _getObservationStatus;
 
-  UserProfileBloc(this._getContentsForUser, this._changeObservation, this._getObservationStatus);
+  UserProfileBloc(this._getContentsForUser, this._changeObservation,
+      this._getObservationStatus);
 
   void fetchProfileData({@required User user}) {
     add(UserProfileEvent.fetchUserContent(user: user));
@@ -29,25 +30,31 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   UserProfileState get initialState => UserProfileState.loading();
 
   @override
-  Stream<UserProfileState> mapEventToState(UserProfileEvent event) async* {
-    if (event is FetchUserContent) {
-      yield UserProfileState.loading();
-      yield await Rx.zip2(
-        _getObservationStatus(event.user).asStream(),
-        _getContentsForUser(event.user, 0).asStream()
-      , (observationStatus, contentsForUser) {
-        var observing = observationStatus.when(
-            success: (result) => result.data, error: (_) => false);
-        var contents = contentsForUser.when(
-            success: (result) => result.data, error: (_) => null);
-        return UserProfileState.success(contents, observing);
-      }).single;
-    } else if (event is ChangeObservation) {
-      bool success = (await _changeObservation(event.user, event.observe))
-          .when(success: (_) => true, error: (_) => false);
-      if (success) {
-        yield UserProfileState.setObservation(state, event.observe);
-      }
+  Stream<UserProfileState> mapEventToState(UserProfileEvent event) {
+    return event.when(
+        fetchUserContent: (event) => _mapFetchUserContent(event),
+        changeObservation: (event) => _mapChangeObservation(event));
+  }
+
+  Stream<UserProfileState> _mapFetchUserContent(FetchUserContent event) async* {
+    yield UserProfileState.loading();
+    yield await Rx.zip2(_getObservationStatus(event.user).asStream(),
+        _getContentsForUser(event.user, 0).asStream(),
+        (observationStatus, contentsForUser) {
+      var observing = observationStatus.when(
+          success: (result) => result.data, error: (_) => false);
+      var contents = contentsForUser.when(
+          success: (result) => result.data, error: (_) => null);
+      return UserProfileState.success(contents, observing);
+    }).single;
+  }
+
+  Stream<UserProfileState> _mapChangeObservation(
+      ChangeObservation event) async* {
+    bool success = (await _changeObservation(event.user, event.observe))
+        .when(success: (_) => true, error: (_) => false);
+    if (success) {
+      yield UserProfileState.setObservation(state, event.observe);
     }
   }
 }

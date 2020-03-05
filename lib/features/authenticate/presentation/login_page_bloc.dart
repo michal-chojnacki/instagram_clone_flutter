@@ -26,21 +26,28 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
   LoginPageState get initialState => LoginPageState.initial();
 
   @override
-  Stream<LoginPageState> mapEventToState(LoginPageEvent event) async* {
-    if (event is AuthenticateUser) {
-      yield LoginPageState.loading();
-      yield (await _authenticateUser(event.username, event.password)).when(
-          success: (data) => (data != null)
-              ? LoginPageState.authenticated()
-              : LoginPageState.error(),
-          error: (_) => LoginPageState.error());
-    } else if (event is RegisterUser) {
-      yield LoginPageState.loading();
-      yield (await _registerUser(event.username, event.password)).when(
-          success: (data) => (data != null)
-              ? LoginPageState.authenticated()
-              : LoginPageState.error(),
-          error: (_) => LoginPageState.error());
-    }
+  Stream<LoginPageState> mapEventToState(LoginPageEvent event) {
+    return event.when(authenticateUser: (event) => _mapAuthenticateUser(event),
+        registerUser: (event) => _mapRegisterUser(event));
+  }
+
+  Stream<LoginPageState> _mapAuthenticateUser(AuthenticateUser event) async* {
+    yield LoginPageState.loading();
+    yield (await _authenticateUser(event.username, event.password)).when(
+        success: (data) =>
+        (data != null)
+            ? LoginPageState.authenticated()
+            : LoginPageState.error(),
+        error: (_) => LoginPageState.error());
+  }
+
+  Stream<LoginPageState> _mapRegisterUser(RegisterUser event) async* {
+    yield LoginPageState.loading();
+    yield (await _registerUser(event.username, event.password)).when(
+        success: (data) =>
+        (data != null)
+            ? LoginPageState.authenticated()
+            : LoginPageState.error(),
+        error: (_) => LoginPageState.error());
   }
 }

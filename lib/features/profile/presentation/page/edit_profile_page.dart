@@ -52,7 +52,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         body: BlocBuilder(
             bloc: _editProfileBloc,
             builder: (context, EditProfileState state) {
-              _usernameTextEditingController.text = state.user.username;
+              _usernameTextEditingController.text = state.user.username ?? "";
               if (state.progressBarVisible) {
                 return Center(
                   child: CircularProgressIndicator(),

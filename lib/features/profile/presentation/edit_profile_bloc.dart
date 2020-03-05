@@ -25,18 +25,25 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   EditProfileState get initialState => EditProfileState.loading();
 
   @override
-  Stream<EditProfileState> mapEventToState(EditProfileEvent event) async* {
-    if (event is FetchProfileData) {
-      yield EditProfileState.loading();
-      yield (await _getUserData()).when(
-          success: (result) => EditProfileState.success(result.data),
-          error: (_) => EditProfileState.success(null));
-    } else if (event is UpdateProfileData) {
-      (await _updateUserDataUseCase(
-              avatarPath: event.avatarPath,
-              bio: event.bio,
-              username: event.username))
-          .when(success: (_) => {fetchProfileData()}, error: (_) => null);
-    }
+  Stream<EditProfileState> mapEventToState(EditProfileEvent event) {
+    return event.when(fetchProfileData:
+        (event) => _mapFetchProfileData(event),
+        updateProfileData: (event) => _mapUpdateProfileData(event));
+  }
+
+  Stream<EditProfileState> _mapFetchProfileData(FetchProfileData event) async* {
+    yield EditProfileState.loading();
+    yield (await _getUserData()).when(
+        success: (result) => EditProfileState.success(result.data),
+        error: (_) => EditProfileState.success(null));
+  }
+
+  Stream<EditProfileState> _mapUpdateProfileData(
+      UpdateProfileData event) async* {
+    (await _updateUserDataUseCase(
+        avatarPath: event.avatarPath,
+        bio: event.bio,
+        username: event.username))
+        .when(success: (_) => {fetchProfileData()}, error: (_) => null);
   }
 }

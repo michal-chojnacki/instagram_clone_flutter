@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:injectable/injectable.dart';
@@ -23,18 +25,21 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
   MainContentsState get initialState => MainContentsState.initial();
 
   @override
-  Stream<MainContentsState> mapEventToState(MainContentsEvent event) async* {
-    if(event is FetchMainContents) {
-      try {
-        yield (await _loadMainContent(event.page)).when(
-            success: (result) => MainContentsState.success(
-                state.contents + BuiltList.of(result.data),
-                result.data.length < _pageSize),
-            error: (_) =>
-                state.rebuild((b) => b..hasReachedEndOfResults = true));
-      } on NoNextPageException catch (_) {
-        yield state.rebuild((b) => b..hasReachedEndOfResults = true);
-      }
+  Stream<MainContentsState> mapEventToState(MainContentsEvent event) {
+    return event.when(
+        fetchMainContents: (event) => _mapFetchMainContents(event));
+  }
+
+  Stream<MainContentsState> _mapFetchMainContents(
+      FetchMainContents event) async* {
+    try {
+      yield (await _loadMainContent(event.page)).when(
+          success: (result) => MainContentsState.success(
+              state.contents + BuiltList.of(result.data),
+              result.data.length < _pageSize),
+          error: (_) => state.rebuild((b) => b..hasReachedEndOfResults = true));
+    } on NoNextPageException catch (_) {
+      yield state.rebuild((b) => b..hasReachedEndOfResults = true);
     }
   }
 }

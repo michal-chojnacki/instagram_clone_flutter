@@ -29,28 +29,33 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-        bloc: _mainContentsBloc,
-        builder: (context, MainContentsState state) {
-          if (state.contents.isEmpty) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return NotificationListener<ScrollNotification>(
-                onNotification: _handleScrollNotification,
-                child: ListView.builder(
-                    itemCount: calculateListItemCount(state),
-                    controller: _scrollController,
-                    itemBuilder: (context, index) {
-                      return index >= state.contents.length
-                          ? _buildLoaderListItem()
-                          : ContentItem(state.contents[index], (user) {
-                              _navigationBloc.openUserProfilePage(user: user);
-                            });
-                    }));
-          }
-        });
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Instagram clone'),
+      ),
+      body: BlocBuilder(
+          bloc: _mainContentsBloc,
+          builder: (context, MainContentsState state) {
+            if (state.contents.isEmpty) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return NotificationListener<ScrollNotification>(
+                  onNotification: _handleScrollNotification,
+                  child: ListView.builder(
+                      itemCount: calculateListItemCount(state),
+                      controller: _scrollController,
+                      itemBuilder: (context, index) {
+                        return index >= state.contents.length
+                            ? _buildLoaderListItem()
+                            : ContentItem(state.contents[index], (user) {
+                                _navigationBloc.openUserProfilePage(user: user);
+                              });
+                      }));
+            }
+          }),
+    );
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {

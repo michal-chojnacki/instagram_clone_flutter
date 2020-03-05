@@ -50,7 +50,7 @@ class SearchForContentBloc
   Stream<SearchForContentState> _mapFetchRecommendedContent(
       FetchRecommendedContent event) async* {
     yield SearchForContentState.loading();
-    yield (await _getRecommendedContent(currentPage)).when(success: (result) {
+    yield (await _getRecommendedContent(event.page)).when(success: (result) {
       return SearchForContentState.success(
           state.contents + BuiltList.of(result.data));
     }, error: (result) {
@@ -62,9 +62,9 @@ class SearchForContentBloc
   Stream<SearchForContentState> _mapFetchContentForQuery(
       FetchContentForQuery event) async* {
     yield SearchForContentState.loading();
-    yield (await _getContentWithQuery(event.query, currentPage)).when(
+    yield (await _getContentWithQuery(event.query, event.page)).when(
         success: (result) {
-      return SearchForContentState.success(
+          return SearchForContentState.success(
           state.contents + BuiltList.of(result.data));
     }, error: (result) {
       currentPage = null;

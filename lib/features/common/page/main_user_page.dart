@@ -31,9 +31,6 @@ class _MainUserPageState extends State<MainUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Instagram clone'),
-      ),
       body: getCurrentBody(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

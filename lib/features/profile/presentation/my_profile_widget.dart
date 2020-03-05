@@ -29,40 +29,45 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-        bloc: _editProfileBloc,
-        builder: (context, EditProfileState state) {
-          if (state.progressBarVisible) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.all(16.0),
-                      child: ProfileInfoWidget(
-                        user: state.user,
-                        onSelectAvatar: () => _pickImage(context),
-                      )),
-                  ButtonTheme(
-                    minWidth: double.infinity,
-                    child: RaisedButton(
-                      child: Text(
-                        "Edit profile",
-                        style: TextStyle(color: Colors.white),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Instagram clone'),
+      ),
+      body: BlocBuilder(
+          bloc: _editProfileBloc,
+          builder: (context, EditProfileState state) {
+            if (state.progressBarVisible) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.all(16.0),
+                        child: ProfileInfoWidget(
+                          user: state.user,
+                          onSelectAvatar: () => _pickImage(context),
+                        )),
+                    ButtonTheme(
+                      minWidth: double.infinity,
+                      child: RaisedButton(
+                        child: Text(
+                          "Edit profile",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: _navigationBloc.openEditProfilePage,
                       ),
-                      onPressed: _navigationBloc.openEditProfilePage,
                     ),
-                  ),
-                  Expanded(child: Center(child: Text('Profile'))),
-                ],
-              ),
-            );
-          }
+                    Expanded(child: Center(child: Text('Profile'))),
+                  ],
+                ),
+              );
+            }
 
-        });
+          }),
+    );
   }
 
   void _pickImage(BuildContext context) {

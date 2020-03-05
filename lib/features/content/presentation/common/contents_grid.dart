@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
+import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class ContentsGrid extends StatelessWidget {
   final List<Content> contents;
   final bool loading;
+  final _navigationBloc = GetIt.I<NavigationBloc>();
 
   ContentsGrid({@required this.contents, this.loading});
 
@@ -17,12 +20,15 @@ class ContentsGrid extends StatelessWidget {
       return GridView.builder(
           shrinkWrap: true,
           itemCount: contents.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3),
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
           itemBuilder: (context, index) {
-            return Image.network(contents[index].image.url);
+            return InkWell(
+              child: Image.network(contents[index].image.url),
+              onTap: () => _navigationBloc.openSingleContentPage(
+                  content: contents[index]),
+            );
           });
     }
   }
-
 }

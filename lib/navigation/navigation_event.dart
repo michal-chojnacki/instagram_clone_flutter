@@ -1,3 +1,4 @@
+import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:super_enum/super_enum.dart';
 
@@ -25,4 +26,8 @@ enum _NavigationEvent {
     DataField<User>('user'),
   ])
   OpenUserProfilePage,
+  @Data(fields: [
+    DataField<Content>('content'),
+  ])
+  OpenSingleContentPage,
 }

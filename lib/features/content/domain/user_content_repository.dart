@@ -8,5 +8,9 @@ abstract class UserContentRepository {
 
   Future<Result<List<Content>>> loadMainContent(String authorizationToken);
 
+  Future<Result<List<Content>>> loadRecommendedContent(String authorizationToken);
+
+  Future<Result<List<Content>>> loadContentWithQuery(String authorizationToken, String query);
+
   Future<Result<void>> sendContent(String authorizationToken, String message, String imagePath);
 }

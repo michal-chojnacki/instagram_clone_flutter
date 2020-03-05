@@ -7,11 +7,11 @@ import './user_content_repository.dart';
 import '../../authenticate/domain/load_authorization_token_use_case.dart';
 
 @injectable
-class LoadMainContentUseCase {
+class GetMainContentUseCase {
   final UserContentRepository _repository;
   final LoadAuthorizationTokenUseCase _loadAuthorizationToken;
 
-  LoadMainContentUseCase(this._repository, this._loadAuthorizationToken);
+  GetMainContentUseCase(this._repository, this._loadAuthorizationToken);
 
   Future<Result<List<Content>>> call(int page) async {
     if (page > 0) {

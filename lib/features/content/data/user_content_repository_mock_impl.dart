@@ -27,4 +27,14 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
   Future<Result<List<Content>>> loadContent(String authorizationToken, User user) async {
     return loadMainContent(authorizationToken);
   }
+
+  @override
+  Future<Result<List<Content>>> loadContentWithQuery(String authorizationToken, String query) async {
+    return loadMainContent(authorizationToken);
+  }
+
+  @override
+  Future<Result<List<Content>>> loadRecommendedContent(String authorizationToken) async {
+    return loadMainContent(authorizationToken);
+  }
 }

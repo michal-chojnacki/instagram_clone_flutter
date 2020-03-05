@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/features/content/presentation/common/contents_grid.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_state.dart';
 
@@ -56,28 +57,13 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
             )
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            BlocBuilder(
-                bloc: _searchForContentBloc,
-                builder: (context, SearchForContentState state) {
-                  if (state.progressbarVisible) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: state.contents.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3),
-                        itemBuilder: (context, index) {
-                          return Image.network(state.contents[index].image.url);
-                        });
-                  }
-                })
-          ],
-        ));
+        body: BlocBuilder(
+            bloc: _searchForContentBloc,
+            builder: (context, SearchForContentState state) {
+              return ContentsGrid(
+                contents: state.contents.toList(),
+                loading: state.progressbarVisible,);
+            }));
   }
 
   void _onQuerySubmitted(String query) {

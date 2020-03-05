@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
+import 'package:instagram_clone/features/content/presentation/common/user_contents_grid.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_state.dart';
 import 'package:instagram_clone/features/profile/presentation/profile_info_widget.dart';
@@ -27,7 +28,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   void initState() {
     super.initState();
-    _userProfileBloc.fetchProfileData(user: widget._user);
+    _userProfileBloc.fetchObservation(user: widget._user);
   }
 
   @override
@@ -65,24 +66,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 );
               },
             ),
-            BlocBuilder(
-                bloc: _userProfileBloc,
-                builder: (context, UserProfileState state) {
-                  if (state.progressBarVisible) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: state.contents.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3),
-                        itemBuilder: (context, index) {
-                          return Image.network(state.contents[index].image.url);
-                        });
-                  }
-                }),
+            UserContentsGrid(user: widget._user,)
           ],
         ),
       ),

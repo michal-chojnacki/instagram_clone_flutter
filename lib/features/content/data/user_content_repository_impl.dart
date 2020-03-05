@@ -65,4 +65,9 @@ class UserContentRepositoryImpl extends UserContentRepository {
   Future<Result<List<Content>>> loadRecommendedContent(String authorizationToken) async {
     return Result.success(data: []);
   }
+
+  @override
+  Future<Result<List<Content>>> loadUserContent(String authorizationToken) async {
+    return Result.success(data: []);
+  }
 }

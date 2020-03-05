@@ -37,6 +37,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:instagram_clone/features/content/domain/get_main_content_use_case.dart';
 import 'package:instagram_clone/features/content/domain/get_content_with_query_use_case.dart';
 import 'package:instagram_clone/features/content/domain/get_recommended_content_use_case.dart';
+import 'package:instagram_clone/features/content/domain/get_user_contents_use_case.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:chopper/src/base.dart';
@@ -44,6 +45,7 @@ import 'package:instagram_clone/features/authenticate/data/authentication_reposi
 import 'package:instagram_clone/features/content/data/content_service.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_bloc.dart';
+import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_bloc.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_impl.dart';
 import 'package:get_it/get_it.dart';
 
@@ -97,7 +99,6 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<UserDataRepository>(),
       ));
   g.registerFactory<UserProfileBloc>(() => UserProfileBloc(
-        g<GetContentsForUserUseCase>(),
         g<ChangeObservationUseCase>(),
         g<GetObservationStatusUseCase>(),
       ));
@@ -128,6 +129,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
             g<UserContentRepository>(),
             g<LoadAuthorizationTokenUseCase>(),
           ));
+  g.registerFactory<GetUserContentsUseCase>(() => GetUserContentsUseCase(
+        g<UserContentRepository>(),
+        g<LoadAuthorizationTokenUseCase>(),
+      ));
   g.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl(
             g<SharedPreferences>(),
@@ -144,6 +149,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<SearchForContentBloc>(() => SearchForContentBloc(
         g<GetContentWithQueryUseCase>(),
         g<GetRecommendedContentUseCase>(),
+      ));
+  g.registerFactory<UserContentsGridBloc>(() => UserContentsGridBloc(
+        g<GetContentsForUserUseCase>(),
+        g<GetUserContentsUseCase>(),
       ));
   if (environment == 'mock') {
     _registerMockDependencies(g);

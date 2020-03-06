@@ -25,9 +25,8 @@ import 'package:instagram_clone/features/content/presentation/add_content/send_c
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_bloc.dart';
-import 'package:instagram_clone/features/profile/data/user_data_repository_impl.dart';
-import 'package:instagram_clone/features/profile/data/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository_mock_impl.dart';
+import 'package:instagram_clone/features/profile/data/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/update_user_data_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/change_observation_use_case.dart';
@@ -39,11 +38,14 @@ import 'package:http/src/client.dart';
 import 'package:instagram_clone/injection.dart';
 import 'package:chopper/chopper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:instagram_clone/features/profile/data/user_data_service.dart';
+import 'package:chopper/src/base.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:instagram_clone/features/content/data/content_service.dart';
 import 'package:instagram_clone/features/content/data/mapper/user_mapper.dart';
 import 'package:instagram_clone/features/content/data/mapper/content_mapper.dart';
+import 'package:instagram_clone/features/profile/data/user_data_repository_impl.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_repository_impl.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_impl.dart';
 import 'package:get_it/get_it.dart';
@@ -83,14 +85,15 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       () => MainContentsBloc(g<GetMainContentUseCase>()));
   g.registerFactory<SearchForContentBloc>(() => SearchForContentBloc(
       g<GetContentWithQueryUseCase>(), g<GetRecommendedContentUseCase>()));
-  g.registerFactory<GetUserDataUseCase>(
-      () => GetUserDataUseCase(g<UserDataRepository>()));
-  g.registerFactory<UpdateUserDataUseCase>(
-      () => UpdateUserDataUseCase(g<UserDataRepository>()));
-  g.registerFactory<ChangeObservationUseCase>(
-      () => ChangeObservationUseCase(g<UserDataRepository>()));
-  g.registerFactory<GetObservationStatusUseCase>(
-      () => GetObservationStatusUseCase(g<UserDataRepository>()));
+  g.registerFactory<GetUserDataUseCase>(() => GetUserDataUseCase(
+      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+  g.registerFactory<UpdateUserDataUseCase>(() => UpdateUserDataUseCase(
+      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+  g.registerFactory<ChangeObservationUseCase>(() => ChangeObservationUseCase(
+      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+  g.registerFactory<GetObservationStatusUseCase>(() =>
+      GetObservationStatusUseCase(
+          g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
   g.registerFactory<UserProfileBloc>(() => UserProfileBloc(
       g<ChangeObservationUseCase>(), g<GetObservationStatusUseCase>()));
   g.registerFactory<EditProfileBloc>(() =>
@@ -99,6 +102,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<ChopperClient>(() => registerModule.chopperClient);
   final sharedPreferences = await registerModule.prefs;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
+  g.registerFactory<UserDataService>(
+      () => UserDataService.create(g<ChopperClient>()));
+  g.registerFactory<UserDataService>(
+      () => UserDataService.create(g<ChopperClient>()));
   g.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl(g<SharedPreferences>()));
   g.registerFactory<AuthenticationService>(
@@ -121,7 +128,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
 
   //Register prod Dependencies --------
   if (environment == 'prod') {
-    g.registerFactory<UserDataRepository>(() => UserDataRepositoryImpl());
+    g.registerFactory<UserDataRepository>(
+        () => UserDataRepositoryImpl(g<UserDataService>(), g<UserMapper>()));
     g.registerFactory<AuthenticationRepository>(() =>
         AuthenticationRepositoryImpl(
             g<AuthenticationService>(), g<AuthenticationLocalDataSource>()));

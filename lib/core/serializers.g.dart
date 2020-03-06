@@ -11,6 +11,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(RawContents.serializer)
       ..add(RawCredentials.serializer)
       ..add(RawImage.serializer)
+      ..add(RawObservingStatus.serializer)
       ..add(RawToken.serializer)
       ..add(RawUser.serializer)
       ..addBuilderFactory(

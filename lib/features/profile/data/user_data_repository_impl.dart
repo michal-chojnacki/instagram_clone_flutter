@@ -1,37 +1,81 @@
 import 'package:injectable/injectable.dart';
+import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/core/result.dart';
-import 'package:instagram_clone/features/content/domain/model/image.dart';
+import 'package:instagram_clone/features/content/data/mapper/user_mapper.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
+import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository.dart';
+import 'package:instagram_clone/features/profile/data/user_data_service.dart';
 
 @injectable
 @prod
 @RegisterAs(UserDataRepository)
 class UserDataRepositoryImpl extends UserDataRepository {
+  final UserDataService _service;
+  final UserMapper _userMapper;
+
+  UserDataRepositoryImpl(this._service, this._userMapper);
+
   @override
-  Future<Result<void>> updateUser(
-      String avatarPath, String bio, String username) async {
-    return Result.success(data: null);
+  Future<Result<void>> updateUser(String authorizationToken, String avatarPath,
+      String bio, String username) async {
+    try {
+      final response = await _service.updateUserData(
+          'Bearer $authorizationToken', bio, username, avatarPath);
+      if (response.statusCode == 200) {
+        return Result.success(data: null);
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 
   @override
-  Future<Result<User>> fetchUserData() async {
-    return Result.success(
-        data: User.create(
-          id: 1,
-            username: "elo",
-            avatar: Image.create(
-                url:
-                    "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")));
+  Future<Result<User>> fetchUserData(String authorizationToken) async {
+    try {
+      final response = await _service.getUser('Bearer $authorizationToken');
+      if (response.statusCode == 200) {
+        return Result.success(data: _userMapper.map(response.body));
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 
   @override
-  Future<Result<void>> changeObservation(User user, bool observe) async {
-    return Result.success(data: null);
+  Future<Result<void>> changeObservation(
+      String authorizationToken, User user, bool observe) async {
+    try {
+      final response = await _service.updateObservingStatus(
+          'Bearer $authorizationToken',
+          RawObservingStatus.create(userId: user.id, status: observe));
+      if (response.statusCode == 200) {
+        return Result.success(data: null);
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 
   @override
-  Future<Result<bool>> getObservation(User user) async {
-    return Result.success(data: false);
+  Future<Result<bool>> getObservation(
+      String authorizationToken, User user) async {
+    try {
+      final response = await _service.getObservingStatus(
+          'Bearer $authorizationToken', user.id);
+      if (response.statusCode == 200) {
+        return Result.success(data: response.body.status);
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 }

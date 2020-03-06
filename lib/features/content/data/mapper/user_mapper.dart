@@ -17,7 +17,7 @@ class UserMapper implements Mapper<RawUser, User> {
       return null;
     } else {
       return User.create(
-          username: input.username, avatar: _imageMapper.map(input.avatar));
+        id: input.id, username: input.username, avatar: _imageMapper.map(input.avatar));
     }
   }
 }

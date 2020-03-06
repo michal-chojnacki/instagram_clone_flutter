@@ -52,22 +52,78 @@ class UserContentRepositoryImpl extends UserContentRepository {
   }
 
   @override
-  Future<Result<List<Content>>> loadContent(String authorizationToken, User user) async {
-    return Result.success(data: []);
+  Future<Result<List<Content>>> loadContent(
+      String authorizationToken, User user) async {
+    try {
+      final response = await _service.getUserContentById(
+          'Bearer $authorizationToken', user.id);
+      if (response.statusCode == 200) {
+        return Result.success(
+            data: response.body.contents
+                .map((rawContent) => _contentsMapper.map(rawContent))
+                .toList());
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 
   @override
-  Future<Result<List<Content>>> loadContentWithQuery(String authorizationToken, String query) async {
-    return Result.success(data: []);
+  Future<Result<List<Content>>> loadContentWithQuery(
+      String authorizationToken, String query) async {
+    try {
+      final response =
+          await _service.searchContent('Bearer $authorizationToken', query);
+      if (response.statusCode == 200) {
+        return Result.success(
+            data: response.body.contents
+                .map((rawContent) => _contentsMapper.map(rawContent))
+                .toList());
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 
   @override
-  Future<Result<List<Content>>> loadRecommendedContent(String authorizationToken) async {
-    return Result.success(data: []);
+  Future<Result<List<Content>>> loadRecommendedContent(
+      String authorizationToken) async {
+    try {
+      final response =
+          await _service.getRecommendedContent('Bearer $authorizationToken');
+      if (response.statusCode == 200) {
+        return Result.success(
+            data: response.body.contents
+                .map((rawContent) => _contentsMapper.map(rawContent))
+                .toList());
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 
   @override
-  Future<Result<List<Content>>> loadUserContent(String authorizationToken) async {
-    return Result.success(data: []);
+  Future<Result<List<Content>>> loadUserContent(
+      String authorizationToken) async {
+    try {
+      final response =
+          await _service.getUserContent('Bearer $authorizationToken');
+      if (response.statusCode == 200) {
+        return Result.success(
+            data: response.body.contents
+                .map((rawContent) => _contentsMapper.map(rawContent))
+                .toList());
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 }

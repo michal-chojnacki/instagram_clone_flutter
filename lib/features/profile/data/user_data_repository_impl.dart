@@ -18,6 +18,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
   Future<Result<User>> fetchUserData() async {
     return Result.success(
         data: User.create(
+          id: 1,
             username: "elo",
             avatar: Image.create(
                 url:

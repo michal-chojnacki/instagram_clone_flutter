@@ -7,6 +7,7 @@ part 'raw_user.g.dart';
 abstract class RawUser 
     implements Built<RawUser, RawUserBuilder> {
 
+  @nullable int get id;
   @nullable String get username;
   @nullable RawImage get avatar;
 

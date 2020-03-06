@@ -8,6 +8,8 @@ part of 'user.dart';
 
 class _$User extends User {
   @override
+  final int id;
+  @override
   final String username;
   @override
   final Image avatar;
@@ -15,7 +17,10 @@ class _$User extends User {
   factory _$User([void Function(UserBuilder) updates]) =>
       (new UserBuilder()..update(updates)).build();
 
-  _$User._({this.username, this.avatar}) : super._() {
+  _$User._({this.id, this.username, this.avatar}) : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('User', 'id');
+    }
     if (username == null) {
       throw new BuiltValueNullFieldError('User', 'username');
     }
@@ -35,18 +40,24 @@ class _$User extends User {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is User &&
+        id == other.id &&
         username == other.username &&
         avatar == other.avatar;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, username.hashCode), avatar.hashCode));
+    return $jf(
+        $jc($jc($jc(0, id.hashCode), username.hashCode), avatar.hashCode));
   }
 }
 
 class UserBuilder implements Builder<User, UserBuilder> {
   _$User _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
 
   String _username;
   String get username => _$this._username;
@@ -60,6 +71,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
 
   UserBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _username = _$v.username;
       _avatar = _$v.avatar?.toBuilder();
       _$v = null;
@@ -84,8 +96,8 @@ class UserBuilder implements Builder<User, UserBuilder> {
   _$User build() {
     _$User _$result;
     try {
-      _$result =
-          _$v ?? new _$User._(username: username, avatar: avatar.build());
+      _$result = _$v ??
+          new _$User._(id: id, username: username, avatar: avatar.build());
     } catch (_) {
       String _$failedField;
       try {

@@ -9,8 +9,13 @@ class FavsWidget extends StatefulWidget {
 class _FavsWidgetState extends State<FavsWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: Center(child: Text('Favs')),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Instagram clone'),
+      ),
+      body: Container(
+         child: Center(child: Text('Favs')),
+      ),
     );
   }
 }

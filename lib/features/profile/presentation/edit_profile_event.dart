@@ -1,4 +1,3 @@
-import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:super_enum/super_enum.dart';
 
 part "edit_profile_event.g.dart";
@@ -10,6 +9,7 @@ enum _EditProfileEvent {
   @Data(fields: [
     DataField<String>('avatarPath'),
     DataField<String>('username'),
+    DataField<String>('name'),
     DataField<String>('bio'),
   ])
   UpdateProfileData,

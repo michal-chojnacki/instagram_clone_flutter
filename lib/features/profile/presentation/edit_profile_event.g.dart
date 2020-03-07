@@ -15,6 +15,7 @@ abstract class EditProfileEvent extends Equatable {
   factory EditProfileEvent.updateProfileData(
       {@required String avatarPath,
       @required String username,
+      @required String name,
       @required String bio}) = UpdateProfileData;
 
   final _EditProfileEvent _type;
@@ -136,18 +137,23 @@ class FetchProfileData extends EditProfileEvent {
 @immutable
 class UpdateProfileData extends EditProfileEvent {
   const UpdateProfileData(
-      {@required this.avatarPath, @required this.username, @required this.bio})
+      {@required this.avatarPath,
+      @required this.username,
+      @required this.name,
+      @required this.bio})
       : super(_EditProfileEvent.UpdateProfileData);
 
   final String avatarPath;
 
   final String username;
 
+  final String name;
+
   final String bio;
 
   @override
   String toString() =>
-      'UpdateProfileData(avatarPath:${this.avatarPath},username:${this.username},bio:${this.bio})';
+      'UpdateProfileData(avatarPath:${this.avatarPath},username:${this.username},name:${this.name},bio:${this.bio})';
   @override
-  List get props => [avatarPath, username, bio];
+  List get props => [avatarPath, username, name, bio];
 }

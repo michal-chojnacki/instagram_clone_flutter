@@ -4,8 +4,10 @@ import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
 import 'package:instagram_clone/features/camera/pick_image_page.dart';
 import 'package:instagram_clone/features/common/page/main_user_page.dart';
+import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_page.dart';
+import 'package:instagram_clone/features/content/presentation/single_content/single_content_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/edit_profile_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_page.dart';
 import "package:instagram_clone/navigation/navigation_event.dart";
@@ -36,6 +38,10 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
 
   void openUserProfilePage({@required User user}) {
     add(NavigationEvent.openUserProfilePage(user: user));
+  }
+
+  void openSingleContentPage({@required Content content}) {
+    add(NavigationEvent.openSingleContentPage(content: content));
   }
 
   void pop() {
@@ -70,6 +76,12 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
         openUserProfilePage: (event) => {
               navigatorKey.currentState.push(MaterialPageRoute(
                   builder: (context) => UserProfilePage(event.user)))
+            },
+        openSingleContentPage: (event) => {
+              navigatorKey.currentState.push(MaterialPageRoute(
+                  builder: (context) => SingleContentPage(
+                        content: event.content,
+                      )))
             },
         popPage: (event) => {navigatorKey.currentState.pop()});
   }

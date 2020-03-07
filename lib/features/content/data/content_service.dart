@@ -15,6 +15,24 @@ abstract class ContentService extends ChopperService {
   Future<Response<RawContents>> getMainContent(
       @Header("Authorization") String authorizationBearer);
 
+  @Get(path: 'recommended_content')
+  Future<Response<RawContents>> getRecommendedContent(
+      @Header("Authorization") String authorizationBearer);
+
+  @Get(path: 'search_content')
+  Future<Response<RawContents>> searchContent(
+      @Header("Authorization") String authorizationBearer,
+      @Query("query") String query);
+
+  @Get(path: 'content')
+  Future<Response<RawContents>> getUserContentById(
+      @Header("Authorization") String authorizationBearer,
+      @Query("user") int userId);
+
+  @Get(path: 'content')
+  Future<Response<RawContents>> getUserContent(
+      @Header("Authorization") String authorizationBearer);
+
   @Post(path: 'content')
   @multipart
   Future<Response> sendContent(

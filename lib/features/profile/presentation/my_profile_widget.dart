@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/features/content/presentation/common/user_contents_grid.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';
 import 'package:instagram_clone/features/profile/presentation/profile_info_widget.dart';
@@ -29,40 +30,44 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-        bloc: _editProfileBloc,
-        builder: (context, EditProfileState state) {
-          if (state.progressBarVisible) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.all(16.0),
-                      child: ProfileInfoWidget(
-                        user: state.user,
-                        onSelectAvatar: () => _pickImage(context),
-                      )),
-                  ButtonTheme(
-                    minWidth: double.infinity,
-                    child: RaisedButton(
-                      child: Text(
-                        "Edit profile",
-                        style: TextStyle(color: Colors.white),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Instagram clone'),
+      ),
+      body: BlocBuilder(
+          bloc: _editProfileBloc,
+          builder: (context, EditProfileState state) {
+            if (state.progressBarVisible) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.all(16.0),
+                        child: ProfileInfoWidget(
+                          user: state.user,
+                          onSelectAvatar: () => _pickImage(context),
+                        )),
+                    ButtonTheme(
+                      minWidth: double.infinity,
+                      child: RaisedButton(
+                        child: Text(
+                          "Edit profile",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: _navigationBloc.openEditProfilePage,
                       ),
-                      onPressed: _navigationBloc.openEditProfilePage,
                     ),
-                  ),
-                  Expanded(child: Center(child: Text('Profile'))),
-                ],
-              ),
-            );
-          }
-
-        });
+                    Expanded(child: UserContentsGrid(user: null,)),
+                  ],
+                ),
+              );
+            }
+          }),
+    );
   }
 
   void _pickImage(BuildContext context) {

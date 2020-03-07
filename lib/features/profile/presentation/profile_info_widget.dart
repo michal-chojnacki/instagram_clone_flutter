@@ -47,7 +47,7 @@ class ProfileInfoWidget extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 32.0,
+              width: 24.0,
             ),
             Expanded(
               child: Row(

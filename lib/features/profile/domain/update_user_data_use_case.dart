@@ -10,13 +10,13 @@ class UpdateUserDataUseCase {
 
   UpdateUserDataUseCase(this._repository, this._loadAuthorizationToken);
 
-  Future<Result<void>> call({String avatarPath, String bio, String username}) {
+  Future<Result<void>> call({String avatarPath, String bio, String username, String name}) {
     return _loadAuthorizationToken()
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
                 success: (result) => _repository.updateUser(
-                    result.data, avatarPath, bio, username),
+                    result.data, avatarPath, bio, username, name),
                 error: (result) => Future.value(
                     Result<void>.error(exception: result.exception))))
         .single;

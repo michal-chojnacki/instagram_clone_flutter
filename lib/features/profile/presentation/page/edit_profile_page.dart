@@ -52,7 +52,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
         body: BlocBuilder(
             bloc: _editProfileBloc,
             builder: (context, EditProfileState state) {
-              _usernameTextEditingController.text = state.user.username ?? "";
+              if (state.user != null) {
+                _usernameTextEditingController.text = state.user.username ?? "";
+                _bioTextEditingController.text = state.user.bio ?? "";
+                _nameTextEditingController.text = state.user.name ?? "";
+              } else {
+                _usernameTextEditingController.text = "";
+                _bioTextEditingController.text = "";
+                _nameTextEditingController.text = "";
+              }
               if (state.progressBarVisible) {
                 return Center(
                   child: CircularProgressIndicator(),
@@ -110,7 +118,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     var username = _usernameTextEditingController.text;
     var bio = _bioTextEditingController.text;
     username = (username == user.username) ? null : username;
-    _editProfileBloc.updateProfileData(username: username, bio: bio);
+    name = (name == user.name) ? null : name;
+    bio = (bio == user.bio) ? null : bio;
+    _editProfileBloc.updateProfileData(
+        username: username, bio: bio, name: name);
     _navigationBloc.pop();
   }
 }

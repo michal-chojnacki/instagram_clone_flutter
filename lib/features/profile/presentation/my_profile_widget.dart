@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:instagram_clone/features/content/presentation/common/contents_grid.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';

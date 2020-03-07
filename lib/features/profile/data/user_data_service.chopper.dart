@@ -48,12 +48,13 @@ class _$UserDataService extends UserDataService {
 
   @override
   Future<Response<dynamic>> updateUserData(String authorizationBearer,
-      String bio, String username, String avatarPath) {
+      String bio, String username, String name, String avatarPath) {
     final $url = '/user';
     final $headers = {'Authorization': authorizationBearer};
     final $parts = <PartValue>[
       PartValue<String>('bio', bio),
       PartValue<String>('username', username),
+      PartValue<String>('name', name),
       PartValueFile<String>('avatar', avatarPath)
     ];
     final $request = Request('POST', $url, client.baseUrl,

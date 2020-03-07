@@ -12,7 +12,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
   final Map<User, bool> _observations = Map();
 
   @override
-  Future<Result<void>> updateUser(String authorizationToken, String avatarPath, String bio, String username) async {
+  Future<Result<void>> updateUser(String authorizationToken, String avatarPath, String bio, String username, String name) async {
     return Result.success(data: null);
   }
 
@@ -22,6 +22,8 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
         data: User.create(
            id:1,
             username: "elo",
+            name: "",
+            bio: "",
             avatar: Image.create(
                 url:
                 "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")));

@@ -18,10 +18,10 @@ class UserDataRepositoryImpl extends UserDataRepository {
 
   @override
   Future<Result<void>> updateUser(String authorizationToken, String avatarPath,
-      String bio, String username) async {
+      String bio, String username, String name) async {
     try {
       final response = await _service.updateUserData(
-          'Bearer $authorizationToken', bio, username, avatarPath);
+          'Bearer $authorizationToken', bio, username, name, avatarPath);
       if (response.statusCode == 200) {
         return Result.success(data: null);
       } else {

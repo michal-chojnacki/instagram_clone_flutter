@@ -10,7 +10,7 @@ part "user_data_service.chopper.dart";
 @ChopperApi(baseUrl: "/")
 abstract class UserDataService extends ChopperService {
   @factoryMethod
-  static UserDataService create([ChopperClient client]) => _$UserDataService(client);
+  static UserDataService create(ChopperClient client) => _$UserDataService(client);
 
   @Get(path: 'user')
   Future<Response<RawUser>> getUser(

@@ -39,7 +39,6 @@ import 'package:instagram_clone/injection.dart';
 import 'package:chopper/chopper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:instagram_clone/features/profile/data/user_data_service.dart';
-import 'package:chopper/src/base.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:instagram_clone/features/content/data/content_service.dart';
@@ -102,8 +101,6 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<ChopperClient>(() => registerModule.chopperClient);
   final sharedPreferences = await registerModule.prefs;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
-  g.registerFactory<UserDataService>(
-      () => UserDataService.create(g<ChopperClient>()));
   g.registerFactory<UserDataService>(
       () => UserDataService.create(g<ChopperClient>()));
   g.registerLazySingleton<AuthenticationLocalDataSource>(

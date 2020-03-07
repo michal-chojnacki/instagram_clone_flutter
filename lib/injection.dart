@@ -1,6 +1,7 @@
 import 'dart:io' show HttpClient;
 
 import 'package:chopper/chopper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/io_client.dart';
 import 'package:injectable/injectable.dart';
@@ -9,9 +10,11 @@ import 'package:instagram_clone/injection.iconfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 
+const mock = const Environment('mock');
+
 @injectableInit
-Future<void> configureInjection() async {
-  await $initGetIt(GetIt.instance);
+Future<void> configureInjection({@required Environment environment}) async {
+  await $initGetIt(GetIt.instance, environment: environment.name);
 }
 
 @registerModule

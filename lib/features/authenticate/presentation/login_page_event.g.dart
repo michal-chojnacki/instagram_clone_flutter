@@ -20,7 +20,25 @@ abstract class LoginPageEvent extends Equatable {
   final _LoginPageEvent _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
+  R when<R>(
+      {@required R Function(AuthenticateUser) authenticateUser,
+      @required R Function(RegisterUser) registerUser}) {
+    assert(() {
+      if (authenticateUser == null || registerUser == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _LoginPageEvent.AuthenticateUser:
+        return authenticateUser(this as AuthenticateUser);
+      case _LoginPageEvent.RegisterUser:
+        return registerUser(this as RegisterUser);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(AuthenticateUser) authenticateUser,
       @required FutureOr<R> Function(RegisterUser) registerUser}) {
     assert(() {
@@ -37,7 +55,28 @@ abstract class LoginPageEvent extends Equatable {
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
+  R whenOrElse<R>(
+      {R Function(AuthenticateUser) authenticateUser,
+      R Function(RegisterUser) registerUser,
+      @required R Function(LoginPageEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _LoginPageEvent.AuthenticateUser:
+        if (authenticateUser == null) break;
+        return authenticateUser(this as AuthenticateUser);
+      case _LoginPageEvent.RegisterUser:
+        if (registerUser == null) break;
+        return registerUser(this as RegisterUser);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(AuthenticateUser) authenticateUser,
       FutureOr<R> Function(RegisterUser) registerUser,
       @required FutureOr<R> Function(LoginPageEvent) orElse}) {
@@ -58,7 +97,8 @@ abstract class LoginPageEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(AuthenticateUser) authenticateUser,
       FutureOr<void> Function(RegisterUser) registerUser}) {
     assert(() {

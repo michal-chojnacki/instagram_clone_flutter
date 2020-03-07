@@ -18,13 +18,15 @@ class SendContentBloc extends Bloc<SendContentEvent, SendContentState> {
   SendContentState get initialState => SendContentState.loaded();
 
   @override
-  Stream<SendContentState> mapEventToState(SendContentEvent event) async* {
-    if (event is SendContent) {
-      yield SendContentState.loadingStarted();
-      var result = await _sendContentUseCase(event.message, event.imagePath);
-      yield result.when(
-          success: (_) => SendContentState.sent(),
-          error: (result) => SendContentState.error());
-    }
+  Stream<SendContentState> mapEventToState(SendContentEvent event) {
+    return event.when(sendContent: (event) => _mapSendContent(event));
+  }
+
+  Stream<SendContentState> _mapSendContent(SendContent event) async* {
+    yield SendContentState.loadingStarted();
+    var result = await _sendContentUseCase(event.message, event.imagePath);
+    yield result.when(
+        success: (_) => SendContentState.sent(),
+        error: (result) => SendContentState.error());
   }
 }

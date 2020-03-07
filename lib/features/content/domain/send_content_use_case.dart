@@ -11,13 +11,12 @@ class SendContentUseCase {
   SendContentUseCase(this._repository, this._loadAuthorizationToken);
 
   Future<Result<void>> call(String message, String imagePath) async {
-    try {
-      var authorizationToken = (await _loadAuthorizationToken()).when(
-          success: (result) => result.data,
-          error: (result) => throw result.exception);
-      return await _repository.sendContent(authorizationToken, message, imagePath);
-    } catch (e) {
-      return Result.error(exception: e);
-    }
+    return _loadAuthorizationToken()
+        .asStream()
+        .asyncMap((authorizationTokenResult) => authorizationTokenResult.when(
+            success: (result) =>
+                _repository.sendContent(result.data, message, imagePath),
+            error: (result) => Future.value(Result<void>.error(exception: result.exception))))
+        .single;
   }
 }

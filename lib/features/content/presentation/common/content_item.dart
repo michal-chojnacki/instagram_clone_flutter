@@ -4,8 +4,9 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class ContentItem extends StatelessWidget {
   final Content _content;
+  final Function _showUser;
 
-  ContentItem(this._content);
+  ContentItem(this._content, this._showUser);
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +16,22 @@ class ContentItem extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      _content.owner.avatar.url,
+              InkWell(
+                onTap: () => _showUser(_content.owner),
+                child: Row(
+                  children: <Widget>[
+                    CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          _content.owner.avatar.url,
+                        ),
+                      ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 2.0),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 2.0),
-                  ),
-                  Text(_content.owner.username,
-                      style: new TextStyle(fontWeight: FontWeight.bold)),
-                ],
+                    Text(_content.owner.username,
+                        style: new TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+                ),
               ),
               Image.network(_content.image.url),
               Container(

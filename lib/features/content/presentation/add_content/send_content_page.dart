@@ -47,7 +47,7 @@ class _SendContentPageState extends State<SendContentPage> {
             builder: (context, SendContentState state) {
               var progressBarVisible = state.progressBarVisible;
               print("SendContentPage: $progressBarVisible");
-              if(state.sent) {
+              if (state.sent) {
                 _navigationBloc.openMainUserPage();
               }
               return IntrinsicHeight(

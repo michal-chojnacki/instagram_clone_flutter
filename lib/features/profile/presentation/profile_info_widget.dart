@@ -27,22 +27,23 @@ class ProfileInfoWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if(onSelectAvatar != null) Positioned.fill(
-                      child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
+                  if (onSelectAvatar != null)
+                    Positioned.fill(
+                        child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue,
+                        ),
                       ),
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  )),
+                    )),
                 ],
               ),
             ),
@@ -64,9 +65,18 @@ class ProfileInfoWidget extends StatelessWidget {
         Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              user.username,
-              style: TextStyle(fontSize: 24.0),
+              (user.name != null && user.name.isNotEmpty)
+                  ? user.name
+                  : user.username,
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             )),
+        if (user.bio != null && user.bio.isNotEmpty)
+          Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                user.bio,
+                style: TextStyle(fontSize: 14.0),
+              )),
       ],
     );
   }
@@ -77,5 +87,4 @@ class ProfileInfoWidget extends StatelessWidget {
       Text(name),
     ]);
   }
-
 }

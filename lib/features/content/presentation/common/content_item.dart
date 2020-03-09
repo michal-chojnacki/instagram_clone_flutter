@@ -33,6 +33,7 @@ class ContentItem extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 2.0,),
               Image.network(_content.image.url),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 4.0),

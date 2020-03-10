@@ -52,7 +52,7 @@ class _PickImagePageState extends State<PickImagePage> {
                           takePictureSource: _changeNotifier.stream,
                           ratio: widget.ratio,
                           onPictureTaken: (imagePath) {
-                            widget.onImagePicked(imagePath);
+                            widget.onImagePicked(imagePath, false);
                           }),
                     ),
                     Container(
@@ -86,6 +86,6 @@ class _PickImagePageState extends State<PickImagePage> {
 
   Future<void> _pickImageFromGallery() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    widget.onImagePicked(image.path);
+    widget.onImagePicked(image.path, true);
   }
 }

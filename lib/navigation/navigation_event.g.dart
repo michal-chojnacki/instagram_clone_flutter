@@ -32,7 +32,8 @@ abstract class NavigationEvent extends Equatable {
       OpenSingleContentPage;
 
   factory NavigationEvent.openAdjustImagePage(
-      {@required String path,
+      {@required bool editable,
+      @required String path,
       @required Function onPickedImage,
       @required double ratio}) = OpenAdjustImagePage;
 
@@ -405,8 +406,13 @@ class OpenSingleContentPage extends NavigationEvent {
 @immutable
 class OpenAdjustImagePage extends NavigationEvent {
   const OpenAdjustImagePage(
-      {@required this.path, @required this.onPickedImage, @required this.ratio})
+      {@required this.editable,
+      @required this.path,
+      @required this.onPickedImage,
+      @required this.ratio})
       : super(_NavigationEvent.OpenAdjustImagePage);
+
+  final bool editable;
 
   final String path;
 
@@ -416,7 +422,7 @@ class OpenAdjustImagePage extends NavigationEvent {
 
   @override
   String toString() =>
-      'OpenAdjustImagePage(path:${this.path},onPickedImage:${this.onPickedImage},ratio:${this.ratio})';
+      'OpenAdjustImagePage(editable:${this.editable},path:${this.path},onPickedImage:${this.onPickedImage},ratio:${this.ratio})';
   @override
-  List get props => [path, onPickedImage, ratio];
+  List get props => [editable, path, onPickedImage, ratio];
 }

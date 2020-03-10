@@ -7,8 +7,13 @@ class AdjustImagePage extends StatefulWidget {
   final double ratio;
   final File image;
   final Function onImagePicked;
+  final bool editable;
 
-  AdjustImagePage({@required this.image,  @required this.ratio, @required this.onImagePicked});
+  AdjustImagePage(
+      {@required this.image,
+      @required this.ratio,
+      @required this.onImagePicked,
+      @required this.editable});
 
   @override
   _AdjustImagePageState createState() => _AdjustImagePageState();
@@ -24,23 +29,34 @@ class _AdjustImagePageState extends State<AdjustImagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          color: Colors.black,
-          padding: const EdgeInsets.all(20.0),
-          child: Crop.file(
-            widget.image,
-            key: cropKey,
-            aspectRatio: widget.ratio,
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.all(20.0),
+            child: (widget.editable)
+                ? Crop.file(
+                    widget.image,
+                    key: cropKey,
+                    aspectRatio: widget.ratio,
+                  )
+                : Center(child: Image.file(widget.image)),
           ),
-        ),
-        RaisedButton(child: Text("Crop"),onPressed: _cropImage,)
-      ],
+          RaisedButton(
+            child: Text("Crop"),
+            onPressed: _cropImage,
+          )
+        ],
+      ),
     );
   }
 
   void _cropImage() async {
+    if (!widget.editable) {
+      widget.onImagePicked(widget.image.path);
+      return;
+    }
     final croppedFile = await ImageCrop.cropImage(
       file: widget.image,
       area: cropKey.currentState.area,

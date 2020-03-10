@@ -32,6 +32,7 @@ enum _NavigationEvent {
   ])
   OpenSingleContentPage,
   @Data(fields: [
+    DataField<bool>('editable'),
     DataField<String>('path'),
     DataField<Function>('onPickedImage'),
     DataField<double>('ratio'),

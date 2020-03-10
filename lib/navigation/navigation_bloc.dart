@@ -52,9 +52,10 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
   void openAdjustImagePage(
       {@required String imagePath,
       @required double ratio,
+      @required bool editable,
       @required Function onImagePicked}) {
     add(NavigationEvent.openAdjustImagePage(
-        path: imagePath, ratio: ratio, onPickedImage: onImagePicked));
+        path: imagePath, ratio: ratio, editable: editable, onPickedImage: onImagePicked));
   }
 
   void pop() {
@@ -85,10 +86,12 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
               navigatorKey.currentState.push(MaterialPageRoute(
                   builder: (context) => PickImagePage(
                       ratio: event.ratio,
-                      onImagePicked: (String imagePath) => openAdjustImagePage(
-                          imagePath: imagePath,
-                          ratio: event.ratio,
-                          onImagePicked: event.onPickedImage))))
+                      onImagePicked: (String imagePath, bool editable) =>
+                          openAdjustImagePage(
+                              editable: editable,
+                              imagePath: imagePath,
+                              ratio: event.ratio,
+                              onImagePicked: event.onPickedImage))))
             },
         openUserProfilePage: (event) => {
               navigatorKey.currentState.push(MaterialPageRoute(
@@ -103,6 +106,7 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
         openAdjustImagePage: (event) => {
               navigatorKey.currentState.pushReplacement(MaterialPageRoute(
                   builder: (context) => AdjustImagePage(
+                      editable: event.editable,
                       ratio: event.ratio,
                       image: File(event.path),
                       onImagePicked: (String imagePath) =>

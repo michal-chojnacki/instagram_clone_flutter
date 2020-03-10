@@ -30,4 +30,9 @@ enum _NavigationEvent {
     DataField<Content>('content'),
   ])
   OpenSingleContentPage,
+  @Data(fields: [
+    DataField<String>('path'),
+    DataField<Function>('onPickedImage'),
+  ])
+  OpenAdjustImagePage,
 }

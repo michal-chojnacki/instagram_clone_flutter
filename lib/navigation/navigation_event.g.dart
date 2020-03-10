@@ -30,6 +30,10 @@ abstract class NavigationEvent extends Equatable {
   factory NavigationEvent.openSingleContentPage({@required Content content}) =
       OpenSingleContentPage;
 
+  factory NavigationEvent.openAdjustImagePage(
+      {@required String path,
+      @required Function onPickedImage}) = OpenAdjustImagePage;
+
   final _NavigationEvent _type;
 
 //ignore: missing_return
@@ -41,7 +45,8 @@ abstract class NavigationEvent extends Equatable {
       @required R Function(OpenSendContentPage) openSendContentPage,
       @required R Function(OpenPickImagePage) openPickImagePage,
       @required R Function(OpenUserProfilePage) openUserProfilePage,
-      @required R Function(OpenSingleContentPage) openSingleContentPage}) {
+      @required R Function(OpenSingleContentPage) openSingleContentPage,
+      @required R Function(OpenAdjustImagePage) openAdjustImagePage}) {
     assert(() {
       if (popPage == null ||
           openMainUserPage == null ||
@@ -50,7 +55,8 @@ abstract class NavigationEvent extends Equatable {
           openSendContentPage == null ||
           openPickImagePage == null ||
           openUserProfilePage == null ||
-          openSingleContentPage == null) {
+          openSingleContentPage == null ||
+          openAdjustImagePage == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -72,6 +78,8 @@ abstract class NavigationEvent extends Equatable {
         return openUserProfilePage(this as OpenUserProfilePage);
       case _NavigationEvent.OpenSingleContentPage:
         return openSingleContentPage(this as OpenSingleContentPage);
+      case _NavigationEvent.OpenAdjustImagePage:
+        return openAdjustImagePage(this as OpenAdjustImagePage);
     }
   }
 
@@ -92,7 +100,9 @@ abstract class NavigationEvent extends Equatable {
       @required
           FutureOr<R> Function(OpenUserProfilePage) openUserProfilePage,
       @required
-          FutureOr<R> Function(OpenSingleContentPage) openSingleContentPage}) {
+          FutureOr<R> Function(OpenSingleContentPage) openSingleContentPage,
+      @required
+          FutureOr<R> Function(OpenAdjustImagePage) openAdjustImagePage}) {
     assert(() {
       if (popPage == null ||
           openMainUserPage == null ||
@@ -101,7 +111,8 @@ abstract class NavigationEvent extends Equatable {
           openSendContentPage == null ||
           openPickImagePage == null ||
           openUserProfilePage == null ||
-          openSingleContentPage == null) {
+          openSingleContentPage == null ||
+          openAdjustImagePage == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -123,6 +134,8 @@ abstract class NavigationEvent extends Equatable {
         return openUserProfilePage(this as OpenUserProfilePage);
       case _NavigationEvent.OpenSingleContentPage:
         return openSingleContentPage(this as OpenSingleContentPage);
+      case _NavigationEvent.OpenAdjustImagePage:
+        return openAdjustImagePage(this as OpenAdjustImagePage);
     }
   }
 
@@ -135,6 +148,7 @@ abstract class NavigationEvent extends Equatable {
       R Function(OpenPickImagePage) openPickImagePage,
       R Function(OpenUserProfilePage) openUserProfilePage,
       R Function(OpenSingleContentPage) openSingleContentPage,
+      R Function(OpenAdjustImagePage) openAdjustImagePage,
       @required R Function(NavigationEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -167,6 +181,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenSingleContentPage:
         if (openSingleContentPage == null) break;
         return openSingleContentPage(this as OpenSingleContentPage);
+      case _NavigationEvent.OpenAdjustImagePage:
+        if (openAdjustImagePage == null) break;
+        return openAdjustImagePage(this as OpenAdjustImagePage);
     }
     return orElse(this);
   }
@@ -180,6 +197,7 @@ abstract class NavigationEvent extends Equatable {
       FutureOr<R> Function(OpenPickImagePage) openPickImagePage,
       FutureOr<R> Function(OpenUserProfilePage) openUserProfilePage,
       FutureOr<R> Function(OpenSingleContentPage) openSingleContentPage,
+      FutureOr<R> Function(OpenAdjustImagePage) openAdjustImagePage,
       @required FutureOr<R> Function(NavigationEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -212,6 +230,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenSingleContentPage:
         if (openSingleContentPage == null) break;
         return openSingleContentPage(this as OpenSingleContentPage);
+      case _NavigationEvent.OpenAdjustImagePage:
+        if (openAdjustImagePage == null) break;
+        return openAdjustImagePage(this as OpenAdjustImagePage);
     }
     return orElse(this);
   }
@@ -225,7 +246,8 @@ abstract class NavigationEvent extends Equatable {
       FutureOr<void> Function(OpenSendContentPage) openSendContentPage,
       FutureOr<void> Function(OpenPickImagePage) openPickImagePage,
       FutureOr<void> Function(OpenUserProfilePage) openUserProfilePage,
-      FutureOr<void> Function(OpenSingleContentPage) openSingleContentPage}) {
+      FutureOr<void> Function(OpenSingleContentPage) openSingleContentPage,
+      FutureOr<void> Function(OpenAdjustImagePage) openAdjustImagePage}) {
     assert(() {
       if (popPage == null &&
           openMainUserPage == null &&
@@ -234,7 +256,8 @@ abstract class NavigationEvent extends Equatable {
           openSendContentPage == null &&
           openPickImagePage == null &&
           openUserProfilePage == null &&
-          openSingleContentPage == null) {
+          openSingleContentPage == null &&
+          openAdjustImagePage == null) {
         throw 'provide at least one branch';
       }
       return true;
@@ -264,6 +287,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenSingleContentPage:
         if (openSingleContentPage == null) break;
         return openSingleContentPage(this as OpenSingleContentPage);
+      case _NavigationEvent.OpenAdjustImagePage:
+        if (openAdjustImagePage == null) break;
+        return openAdjustImagePage(this as OpenAdjustImagePage);
     }
   }
 
@@ -369,4 +395,20 @@ class OpenSingleContentPage extends NavigationEvent {
   String toString() => 'OpenSingleContentPage(content:${this.content})';
   @override
   List get props => [content];
+}
+
+@immutable
+class OpenAdjustImagePage extends NavigationEvent {
+  const OpenAdjustImagePage({@required this.path, @required this.onPickedImage})
+      : super(_NavigationEvent.OpenAdjustImagePage);
+
+  final String path;
+
+  final Function onPickedImage;
+
+  @override
+  String toString() =>
+      'OpenAdjustImagePage(path:${this.path},onPickedImage:${this.onPickedImage})';
+  @override
+  List get props => [path, onPickedImage];
 }

@@ -22,7 +22,8 @@ abstract class NavigationEvent extends Equatable {
       OpenSendContentPage;
 
   factory NavigationEvent.openPickImagePage(
-      {@required Function onPickedImage}) = OpenPickImagePage;
+      {@required Function onPickedImage,
+      @required double ratio}) = OpenPickImagePage;
 
   factory NavigationEvent.openUserProfilePage({@required User user}) =
       OpenUserProfilePage;
@@ -32,7 +33,8 @@ abstract class NavigationEvent extends Equatable {
 
   factory NavigationEvent.openAdjustImagePage(
       {@required String path,
-      @required Function onPickedImage}) = OpenAdjustImagePage;
+      @required Function onPickedImage,
+      @required double ratio}) = OpenAdjustImagePage;
 
   final _NavigationEvent _type;
 
@@ -360,15 +362,18 @@ class OpenSendContentPage extends NavigationEvent {
 
 @immutable
 class OpenPickImagePage extends NavigationEvent {
-  const OpenPickImagePage({@required this.onPickedImage})
+  const OpenPickImagePage({@required this.onPickedImage, @required this.ratio})
       : super(_NavigationEvent.OpenPickImagePage);
 
   final Function onPickedImage;
 
+  final double ratio;
+
   @override
-  String toString() => 'OpenPickImagePage(onPickedImage:${this.onPickedImage})';
+  String toString() =>
+      'OpenPickImagePage(onPickedImage:${this.onPickedImage},ratio:${this.ratio})';
   @override
-  List get props => [onPickedImage];
+  List get props => [onPickedImage, ratio];
 }
 
 @immutable
@@ -399,16 +404,19 @@ class OpenSingleContentPage extends NavigationEvent {
 
 @immutable
 class OpenAdjustImagePage extends NavigationEvent {
-  const OpenAdjustImagePage({@required this.path, @required this.onPickedImage})
+  const OpenAdjustImagePage(
+      {@required this.path, @required this.onPickedImage, @required this.ratio})
       : super(_NavigationEvent.OpenAdjustImagePage);
 
   final String path;
 
   final Function onPickedImage;
 
+  final double ratio;
+
   @override
   String toString() =>
-      'OpenAdjustImagePage(path:${this.path},onPickedImage:${this.onPickedImage})';
+      'OpenAdjustImagePage(path:${this.path},onPickedImage:${this.onPickedImage},ratio:${this.ratio})';
   @override
-  List get props => [path, onPickedImage];
+  List get props => [path, onPickedImage, ratio];
 }

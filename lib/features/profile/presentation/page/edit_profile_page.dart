@@ -103,7 +103,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void _pickImage(BuildContext context) {
-    _navigationBloc.openPickImagePage(onImagePicked: (imagePath) {
+    _navigationBloc.openPickImagePage(ratio: 1.0, onImagePicked: (imagePath) {
       _editProfileBloc.updateProfileData(avatarPath: imagePath);
       _navigationBloc.pop();
     });

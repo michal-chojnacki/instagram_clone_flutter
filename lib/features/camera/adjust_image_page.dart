@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:image_crop/image_crop.dart';
 
 class AdjustImagePage extends StatefulWidget {
+  final double ratio;
   final File image;
   final Function onImagePicked;
 
-  AdjustImagePage({@required this.image, @required this.onImagePicked});
+  AdjustImagePage({@required this.image,  @required this.ratio, @required this.onImagePicked});
 
   @override
   _AdjustImagePageState createState() => _AdjustImagePageState();
@@ -31,7 +32,7 @@ class _AdjustImagePageState extends State<AdjustImagePage> {
           child: Crop.file(
             widget.image,
             key: cropKey,
-            aspectRatio: 1.0,
+            aspectRatio: widget.ratio,
           ),
         ),
         RaisedButton(child: Text("Crop"),onPressed: _cropImage,)

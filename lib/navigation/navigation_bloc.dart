@@ -35,8 +35,10 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
     add(NavigationEvent.openEditUserPage());
   }
 
-  void openPickImagePage({@required Function onImagePicked}) {
-    add(NavigationEvent.openPickImagePage(onPickedImage: onImagePicked));
+  void openPickImagePage(
+      {@required Function onImagePicked, @required double ratio}) {
+    add(NavigationEvent.openPickImagePage(
+        onPickedImage: onImagePicked, ratio: ratio));
   }
 
   void openUserProfilePage({@required User user}) {
@@ -47,8 +49,12 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
     add(NavigationEvent.openSingleContentPage(content: content));
   }
 
-  void openAdjustImagePage({@required String imagePath, @required Function onImagePicked}) {
-    add(NavigationEvent.openAdjustImagePage(path: imagePath, onPickedImage: onImagePicked));
+  void openAdjustImagePage(
+      {@required String imagePath,
+      @required double ratio,
+      @required Function onImagePicked}) {
+    add(NavigationEvent.openAdjustImagePage(
+        path: imagePath, ratio: ratio, onPickedImage: onImagePicked));
   }
 
   void pop() {
@@ -71,20 +77,22 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
                   builder: (context) =>
                       SendContentPage(imagePath: event.imagePath)))
             },
-        openEditUserPage: (event) =>
-        {
-          navigatorKey.currentState.push(
-              MaterialPageRoute(builder: (context) => EditProfilePage()))
-        },
+        openEditUserPage: (event) => {
+              navigatorKey.currentState.push(
+                  MaterialPageRoute(builder: (context) => EditProfilePage()))
+            },
         openPickImagePage: (event) => {
-          navigatorKey.currentState.push(MaterialPageRoute(
-              builder: (context) =>
-                  PickImagePage(onImagePicked: (String imagePath) => openAdjustImagePage(imagePath: imagePath, onImagePicked: event.onPickedImage))))
-        },
-        openUserProfilePage: (event) =>
-        {
-          navigatorKey.currentState.push(MaterialPageRoute(
-              builder: (context) => UserProfilePage(event.user)))
+              navigatorKey.currentState.push(MaterialPageRoute(
+                  builder: (context) => PickImagePage(
+                      ratio: event.ratio,
+                      onImagePicked: (String imagePath) => openAdjustImagePage(
+                          imagePath: imagePath,
+                          ratio: event.ratio,
+                          onImagePicked: event.onPickedImage))))
+            },
+        openUserProfilePage: (event) => {
+              navigatorKey.currentState.push(MaterialPageRoute(
+                  builder: (context) => UserProfilePage(event.user)))
             },
         openSingleContentPage: (event) => {
               navigatorKey.currentState.push(MaterialPageRoute(
@@ -93,12 +101,13 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
                       )))
             },
         openAdjustImagePage: (event) => {
-          navigatorKey.currentState.pushReplacement(MaterialPageRoute(
-              builder: (context) => AdjustImagePage(
-                image: File(event.path),
-                  onImagePicked: (String imagePath) => event.onPickedImage(imagePath)
-              )))
-        },
+              navigatorKey.currentState.pushReplacement(MaterialPageRoute(
+                  builder: (context) => AdjustImagePage(
+                      ratio: event.ratio,
+                      image: File(event.path),
+                      onImagePicked: (String imagePath) =>
+                          event.onPickedImage(imagePath))))
+            },
         popPage: (event) => {navigatorKey.currentState.pop()});
   }
 }

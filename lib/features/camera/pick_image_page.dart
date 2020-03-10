@@ -7,9 +7,10 @@ import 'package:instagram_clone/navigation/navigation_bloc.dart';
 import 'package:super_enum/super_enum.dart';
 
 class PickImagePage extends StatefulWidget {
+  final double ratio;
   final Function onImagePicked;
 
-  PickImagePage({@required this.onImagePicked});
+  PickImagePage({@required this.onImagePicked, @required this.ratio});
 
   @override
   _PickImagePageState createState() => _PickImagePageState();
@@ -49,7 +50,7 @@ class _PickImagePageState extends State<PickImagePage> {
                       child: TakePictureWidget(
                           camera: snapshot.data,
                           takePictureSource: _changeNotifier.stream,
-                          ratio: 1.0,
+                          ratio: widget.ratio,
                           onPictureTaken: (imagePath) {
                             widget.onImagePicked(imagePath);
                           }),

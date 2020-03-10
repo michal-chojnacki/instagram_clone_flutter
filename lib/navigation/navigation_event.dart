@@ -20,6 +20,7 @@ enum _NavigationEvent {
   OpenSendContentPage,
   @Data(fields: [
     DataField<Function>('onPickedImage'),
+    DataField<double>('ratio'),
   ])
   OpenPickImagePage,
   @Data(fields: [
@@ -33,6 +34,7 @@ enum _NavigationEvent {
   @Data(fields: [
     DataField<String>('path'),
     DataField<Function>('onPickedImage'),
+    DataField<double>('ratio'),
   ])
   OpenAdjustImagePage,
 }

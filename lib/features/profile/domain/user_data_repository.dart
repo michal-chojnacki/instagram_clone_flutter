@@ -6,6 +6,8 @@ abstract class UserDataRepository {
 
   Future<Result<User>> fetchUserData(String authorizationToken);
 
+  Future<Result<List<User>>> fetchRecommendedUsers(String authorizationToken);
+
   Future<Result<void>> changeObservation(String authorizationToken, User user, bool observe);
 
   Future<Result<bool>> getObservation(String authorizationToken, User user);

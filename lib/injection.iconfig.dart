@@ -27,7 +27,7 @@ import 'package:instagram_clone/features/content/presentation/main_contents/main
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_bloc.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository_mock_impl.dart';
-import 'package:instagram_clone/features/profile/data/user_data_repository.dart';
+import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/update_user_data_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/get_observation_status_use_case.dart';
@@ -40,11 +40,13 @@ import 'package:http/src/client.dart';
 import 'package:instagram_clone/injection.dart';
 import 'package:chopper/chopper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:instagram_clone/features/profile/domain/get_recommended_profiles_use_case.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_repository_impl.dart';
 import 'package:instagram_clone/features/content/data/content_service.dart';
 import 'package:instagram_clone/features/profile/data/user_data_service.dart';
+import 'package:instagram_clone/features/content/presentation/recommended_profiles/recommended_profiles_bloc.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_impl.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository_impl.dart';
 import 'package:get_it/get_it.dart';
@@ -104,6 +106,9 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<ChopperClient>(() => registerModule.chopperClient);
   final sharedPreferences = await registerModule.prefs;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
+  g.registerFactory<GetRecommendedProfilesUseCase>(() =>
+      GetRecommendedProfilesUseCase(
+          g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
   g.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl(g<SharedPreferences>()));
   g.registerFactory<AuthenticationService>(
@@ -112,6 +117,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       () => ContentService.create(g<ChopperClient>()));
   g.registerFactory<UserDataService>(
       () => UserDataService.create(g<ChopperClient>()));
+  g.registerFactory<RecommendedProfilesBloc>(() => RecommendedProfilesBloc(
+      g<GetRecommendedProfilesUseCase>(), g<ChangeObservationUseCase>()));
 
   //Register mock Dependencies --------
   if (environment == 'mock') {

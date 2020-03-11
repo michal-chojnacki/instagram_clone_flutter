@@ -32,14 +32,11 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
 
   Stream<MainContentsState> _mapFetchMainContents(
       FetchMainContents event) async* {
-    try {
-      yield (await _getMainContent(event.page)).when(
-          success: (result) => MainContentsState.success(
-              state.contents + BuiltList.of(result.data),
-              result.data.length < _pageSize),
-          error: (_) => state.rebuild((b) => b..hasReachedEndOfResults = true));
-    } on NoNextPageException catch (_) {
-      yield state.rebuild((b) => b..hasReachedEndOfResults = true);
-    }
+    yield (await _getMainContent(event.page)).when(
+        success: (result) => MainContentsState.success(
+            state.contents + BuiltList.of(result.data),
+            result.data.length < _pageSize),
+        error: (result) =>
+            state.rebuild((b) => b..hasReachedEndOfResults = true));
   }
 }

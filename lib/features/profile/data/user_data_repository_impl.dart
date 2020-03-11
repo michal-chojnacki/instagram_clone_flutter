@@ -4,7 +4,7 @@ import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/data/mapper/user_mapper.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
-import 'package:instagram_clone/features/profile/data/user_data_repository.dart';
+import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/data/user_data_service.dart';
 
 @injectable
@@ -77,5 +77,10 @@ class UserDataRepositoryImpl extends UserDataRepository {
     } catch (e) {
       return Result.error(exception: e);
     }
+  }
+
+  @override
+  Future<Result<List<User>>> fetchRecommendedUsers(String authorizationToken) async {
+    return Result.success(data: <User>[]);
   }
 }

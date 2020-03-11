@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/camera/pick_image_page.dart';
-import 'package:instagram_clone/features/content/presentation/favs/favs_widget.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_widget.dart';
+import 'package:instagram_clone/features/content/presentation/recommended_profiles/recommended_profiles_widget.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_widget.dart';
 import 'package:instagram_clone/features/profile/presentation/my_profile_widget.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
@@ -69,7 +69,7 @@ class _MainUserPageState extends State<MainUserPage> {
     } else if (_selectedIndex == 1) {
       return SearchForContentWidget();
     } else if (_selectedIndex == 3) {
-      return FavsWidget();
+      return RecommendedProfilesWidget();
     } else if (_selectedIndex == 4) {
       return MyProfileWidget();
     } else {

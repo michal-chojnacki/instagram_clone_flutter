@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/domain/model/image.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
-import 'package:instagram_clone/features/profile/data/user_data_repository.dart';
+import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 import 'package:instagram_clone/injection.dart';
 
 @lazySingleton
@@ -41,5 +41,27 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
   Future<Result<bool>> getObservation(
       String authorizationToken, User user) async {
     return Result.success(data: _observations[user] ?? false);
+  }
+
+  @override
+  Future<Result<List<User>>> fetchRecommendedUsers(String authorizationToken) async {
+    return Result.success(data: <User>[
+      User.create(
+        id: 1,
+        username: "elo",
+        name: "name",
+        bio: "bio",
+        avatar: Image.create(
+            url:
+            "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
+      User.create(
+          id: 2,
+          username: "elo",
+          name: "name",
+          bio: "bio",
+          avatar: Image.create(
+              url:
+              "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"))
+    ]);
   }
 }

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
+import 'package:instagram_clone/features/camera/adjust_image_page.dart';
 import 'package:instagram_clone/features/camera/pick_image_page.dart';
 import 'package:instagram_clone/features/common/page/main_user_page.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
@@ -32,8 +35,14 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
     add(NavigationEvent.openEditUserPage());
   }
 
-  void openPickImagePage({@required Function onImagePicked}) {
-    add(NavigationEvent.openPickImagePage(onPickedImage: onImagePicked));
+  void openPickImagePage(
+      {@required Function onImagePicked,
+      @required bool circleShaped,
+      @required double ratio}) {
+    add(NavigationEvent.openPickImagePage(
+        onPickedImage: onImagePicked,
+        ratio: ratio,
+        circleShaped: circleShaped));
   }
 
   void openUserProfilePage({@required User user}) {
@@ -42,6 +51,20 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
 
   void openSingleContentPage({@required Content content}) {
     add(NavigationEvent.openSingleContentPage(content: content));
+  }
+
+  void openAdjustImagePage(
+      {@required String imagePath,
+      @required double ratio,
+      @required bool editable,
+      @required bool circleShaped,
+      @required Function onImagePicked}) {
+    add(NavigationEvent.openAdjustImagePage(
+        path: imagePath,
+        ratio: ratio,
+        editable: editable,
+        onPickedImage: onImagePicked,
+        circleShaped: circleShaped));
   }
 
   void pop() {
@@ -70,8 +93,16 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
             },
         openPickImagePage: (event) => {
               navigatorKey.currentState.push(MaterialPageRoute(
-                  builder: (context) =>
-                      PickImagePage(onImagePicked: event.onPickedImage)))
+                  builder: (context) => PickImagePage(
+                      circleShaped: event.circleShaped,
+                      ratio: event.ratio,
+                      onImagePicked: (String imagePath, bool editable) =>
+                          openAdjustImagePage(
+                              editable: editable,
+                              imagePath: imagePath,
+                              ratio: event.ratio,
+                              circleShaped: event.circleShaped,
+                              onImagePicked: event.onPickedImage))))
             },
         openUserProfilePage: (event) => {
               navigatorKey.currentState.push(MaterialPageRoute(
@@ -82,6 +113,16 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
                   builder: (context) => SingleContentPage(
                         content: event.content,
                       )))
+            },
+        openAdjustImagePage: (event) => {
+              navigatorKey.currentState.pushReplacement(MaterialPageRoute(
+                  builder: (context) => AdjustImagePage(
+                      editable: event.editable,
+                      ratio: event.ratio,
+                      circleShaped: event.circleShaped,
+                      image: File(event.path),
+                      onImagePicked: (String imagePath) =>
+                          event.onPickedImage(imagePath))))
             },
         popPage: (event) => {navigatorKey.currentState.pop()});
   }

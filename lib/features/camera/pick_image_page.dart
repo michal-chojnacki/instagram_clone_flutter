@@ -3,13 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/features/camera/take_picture_widget.dart';
+import 'package:instagram_clone/features/common/circular_overlay.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 import 'package:super_enum/super_enum.dart';
 
 class PickImagePage extends StatefulWidget {
+  final double ratio;
+  final bool circleShaped;
   final Function onImagePicked;
 
-  PickImagePage({@required this.onImagePicked});
+  PickImagePage({
+    @required this.onImagePicked,
+    @required this.ratio,
+    @required this.circleShaped,
+  });
 
   @override
   _PickImagePageState createState() => _PickImagePageState();
@@ -27,51 +34,59 @@ class _PickImagePageState extends State<PickImagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<CameraDescription>(
-        future: _chooseCamera(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Scaffold(
-              body: Stack(
-                children: <Widget>[
-                  TakePictureWidget(
-                      camera: snapshot.data,
-                      takePictureSource: _changeNotifier.stream,
-                      onPictureTaken: (imagePath) {
-                        widget.onImagePicked(imagePath);
-                      }),
-                  Positioned.fill(
-                      top: 16.0,
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => _navigationBloc.pop(),
-                          ))),
-                  Positioned.fill(
-                      child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: MaterialButton(
-                            child: Text(
-                              'Gallery',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: _pickImageFromGallery,
-                          ))),
-                ],
-              ),
-              floatingActionButton: FloatingActionButton(
-                child: Icon(Icons.camera_alt),
-                onPressed: () => _changeNotifier.sink.add(null),
-              ),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        });
+    return Scaffold(
+      appBar: AppBar(
+        leading: new IconButton(
+          icon: new Icon(Icons.close),
+          onPressed: () => _navigationBloc.pop(),
+        ),
+        title: const Text('Zdjęcie'),
+      ),
+      body: FutureBuilder<CameraDescription>(
+          future: _chooseCamera(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Container(
+                width: double.maxFinite,
+                height: double.maxFinite,
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: TakePictureWidget(
+                          camera: snapshot.data,
+                          takePictureSource: _changeNotifier.stream,
+                          ratio: widget.ratio,
+                          onPictureTaken: (imagePath) {
+                            widget.onImagePicked(imagePath, false);
+                          }),
+                    ),
+                    Container(
+                        margin: EdgeInsets.symmetric(vertical: 48.0),
+                        alignment: Alignment.bottomCenter,
+                        child: FloatingActionButton(
+                          child: Icon(Icons.camera_alt),
+                          onPressed: () => _changeNotifier.sink.add(null),
+                        )),
+                    Container(
+                        alignment: Alignment.bottomLeft,
+                        child: MaterialButton(
+                          child: Text('Gallery'),
+                          onPressed: _pickImageFromGallery,
+                        )),
+                    if (widget.circleShaped) Container(
+                        width: double.infinity,
+                        child: AspectRatio(
+                            aspectRatio: 1.0,
+                            child: CircularOverlay()))
+                  ],
+                ),
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          }),
+    );
   }
 
   Future<CameraDescription> _chooseCamera() async {
@@ -81,6 +96,6 @@ class _PickImagePageState extends State<PickImagePage> {
 
   Future<void> _pickImageFromGallery() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    widget.onImagePicked(image.path);
+    widget.onImagePicked(image.path, true);
   }
 }

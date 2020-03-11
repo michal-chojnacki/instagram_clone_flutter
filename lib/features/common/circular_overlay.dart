@@ -6,20 +6,11 @@ class CircularOverlay extends StatelessWidget {
     return IgnorePointer(
       child: ColorFiltered(
         colorFilter: ColorFilter.mode(Colors.black12, BlendMode.srcOut),
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.black,
-                  backgroundBlendMode: BlendMode.dstOut),
-            ),
-            Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                )),
-          ],
-        ),
+        child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            )),
       ),
     );
   }

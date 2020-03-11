@@ -30,29 +30,36 @@ class _AdjustImagePageState extends State<AdjustImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            color: Colors.black,
-            padding: const EdgeInsets.all(20.0),
-            child: (widget.editable)
-                ? Crop.file(
-                    widget.image,
-                    key: cropKey,
-                    aspectRatio: widget.ratio,
-                  )
-                : Center(child: Image.file(widget.image)),
-          ),
-          RaisedButton(
-            child: Text("Crop"),
-            onPressed: _cropImage,
+      appBar: AppBar(
+        leading: BackButton(),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.arrow_forward),
+            onPressed: _imageAccepted,
           )
         ],
+      ),
+      body: Container(
+        color: Colors.black,
+        width: double.infinity,
+        height: double.infinity,
+        padding: const EdgeInsets.all(4.0),
+        child: (widget.editable)
+            ? Crop.file(
+                widget.image,
+                key: cropKey,
+                aspectRatio: widget.ratio,
+              )
+            : FittedBox(
+                child: Image.file(
+                  widget.image,
+                ),
+                fit: BoxFit.fitWidth),
       ),
     );
   }
 
-  void _cropImage() async {
+  void _imageAccepted() async {
     if (!widget.editable) {
       widget.onImagePicked(widget.image.path);
       return;

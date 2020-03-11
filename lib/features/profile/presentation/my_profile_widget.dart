@@ -32,7 +32,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Instagram clone'),
+        title: const Text('My profile'),
       ),
       body: BlocBuilder(
           bloc: _editProfileBloc,

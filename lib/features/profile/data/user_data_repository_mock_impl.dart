@@ -13,7 +13,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
 
   @override
   Future<Result<void>> updateUser(String authorizationToken, String avatarPath,
-      String bio, String username, String name) async {
+      String bio, String username, String fullname) async {
     return Result.success(data: null);
   }
 
@@ -23,7 +23,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
         data: User.create(
             id: 1,
             username: "elo",
-            name: "name",
+            fullname: "fullname",
             bio: "bio",
             avatar: Image.create(
                 url:
@@ -49,7 +49,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
       User.create(
         id: 1,
         username: "elo",
-        name: "name",
+        fullname: "fullname",
         bio: "bio",
         avatar: Image.create(
             url:
@@ -57,7 +57,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
       User.create(
           id: 2,
           username: "elo",
-          name: "name",
+          fullname: "fullname",
           bio: "bio",
           avatar: Image.create(
               url:

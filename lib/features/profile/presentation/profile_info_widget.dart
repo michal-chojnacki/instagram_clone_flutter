@@ -65,8 +65,8 @@ class ProfileInfoWidget extends StatelessWidget {
         Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              (user.name != null && user.name.isNotEmpty)
-                  ? user.name
+              (user.fullname != null && user.fullname.isNotEmpty)
+                  ? user.fullname
                   : user.username,
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             )),

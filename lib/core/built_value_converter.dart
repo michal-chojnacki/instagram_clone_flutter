@@ -9,7 +9,7 @@ class BuiltValueConverter extends JsonConverter {
   Request convertRequest(Request request) {
     return super.convertRequest(
       (request.body == null) ? request :
-      request.replace(
+      request.copyWith(
         // request.body is of type dynamic, but we know that it holds only BuiltValue classes (BuiltPost).
         // Before sending the request to the network, serialize it to a List/Map using a BuiltValue serializer.
         body: serializers.serializeWith(
@@ -32,7 +32,7 @@ class BuiltValueConverter extends JsonConverter {
         _convertToCustomObject<SingleItemType>(dynamicResponse.body);
 
     // Return the original dynamicResponse with a no-longer-dynamic body type.
-    return dynamicResponse.replace<BodyType>(body: customBody);
+    return dynamicResponse.copyWith<BodyType>(body: customBody);
   }
 
   dynamic _convertToCustomObject<SingleItemType>(dynamic element) {

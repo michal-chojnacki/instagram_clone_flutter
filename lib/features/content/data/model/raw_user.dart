@@ -10,7 +10,7 @@ abstract class RawUser implements Built<RawUser, RawUserBuilder> {
   @nullable
   String get username;
   @nullable
-  String get name;
+  String get fullname;
   @nullable
   String get bio;
   @nullable

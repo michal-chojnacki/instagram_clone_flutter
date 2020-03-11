@@ -1,6 +1,4 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
-import 'package:instagram_clone/features/content/domain/model/content.dart';
 
 part 'user_profile_state.g.dart';
 

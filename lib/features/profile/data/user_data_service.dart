@@ -3,6 +3,7 @@ import 'package:chopper/chopper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/content/data/model/raw_user.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
+import 'package:instagram_clone/features/profile/data/model/raw_recommended_users.dart';
 
 part "user_data_service.chopper.dart";
 
@@ -16,6 +17,10 @@ abstract class UserDataService extends ChopperService {
   @Get(path: 'user')
   Future<Response<RawUser>> getUser(
       @Header("Authorization") String authorizationBearer);
+
+  @Get(path: 'recommended_users')
+  Future<Response<RawRecommendedUsers>> getRecommendedUsers(@Header("Authorization") String authorizationBearer);
+
 
   @Get(path: 'observing')
   Future<Response<RawObservingStatus>> getObservingStatus(
@@ -34,6 +39,6 @@ abstract class UserDataService extends ChopperService {
       @Header("Authorization") String authorizationBearer,
       @Part("bio") String bio,
       @Part("username") String username,
-      @Part("name") String name,
+      @Part("fullname") String fullname,
       @PartFile("avatar") String avatarPath);
 }

@@ -13,7 +13,7 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   final _editProfileBloc = GetIt.I<EditProfileBloc>();
   final _navigationBloc = GetIt.I<NavigationBloc>();
-  final _nameTextEditingController = TextEditingController();
+  final _fullnameTextEditingController = TextEditingController();
   final _usernameTextEditingController = TextEditingController();
   final _bioTextEditingController = TextEditingController();
 
@@ -27,7 +27,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void dispose() {
     super.dispose();
     _editProfileBloc.close();
-    _nameTextEditingController.dispose();
+    _fullnameTextEditingController.dispose();
     _usernameTextEditingController.dispose();
     _bioTextEditingController.dispose();
   }
@@ -55,11 +55,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
               if (state.user != null) {
                 _usernameTextEditingController.text = state.user.username ?? "";
                 _bioTextEditingController.text = state.user.bio ?? "";
-                _nameTextEditingController.text = state.user.name ?? "";
+                _fullnameTextEditingController.text = state.user.fullname ?? "";
               } else {
                 _usernameTextEditingController.text = "";
                 _bioTextEditingController.text = "";
-                _nameTextEditingController.text = "";
+                _fullnameTextEditingController.text = "";
               }
               if (state.progressBarVisible) {
                 return Center(
@@ -86,8 +86,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                       ),
                       TextFormField(
-                        controller: _nameTextEditingController,
-                        decoration: InputDecoration(labelText: 'Name'),
+                        controller: _fullnameTextEditingController,
+                        decoration: InputDecoration(labelText: 'Full name'),
                       ),
                       TextFormField(
                         controller: _usernameTextEditingController,
@@ -114,14 +114,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (user == null) {
       return;
     }
-    var name = _nameTextEditingController.text;
+    var fullname = _fullnameTextEditingController.text;
     var username = _usernameTextEditingController.text;
     var bio = _bioTextEditingController.text;
     username = (username == user.username) ? null : username;
-    name = (name == user.name) ? null : name;
+    fullname = (fullname == user.fullname) ? null : fullname;
     bio = (bio == user.bio) ? null : bio;
     _editProfileBloc.updateProfileData(
-        username: username, bio: bio, name: name);
+        username: username, bio: bio, fullname: fullname);
     _navigationBloc.pop();
   }
 }

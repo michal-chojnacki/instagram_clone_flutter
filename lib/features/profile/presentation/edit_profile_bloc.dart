@@ -16,9 +16,9 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     add(EditProfileEvent.fetchProfileData());
   }
 
-  void updateProfileData({String avatarPath, String bio, String username, String name}) {
+  void updateProfileData({String avatarPath, String bio, String username, String fullname}) {
     add(EditProfileEvent.updateProfileData(
-        avatarPath: avatarPath, username: username, bio: bio, name: name));
+        avatarPath: avatarPath, username: username, bio: bio, fullname: fullname));
   }
 
   @override
@@ -44,7 +44,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         avatarPath: event.avatarPath,
         bio: event.bio,
         username: event.username,
-        name: event.name))
+        fullname: event.fullname))
         .when(success: (_) => {fetchProfileData()}, error: (_) => null);
   }
 }

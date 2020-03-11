@@ -18,10 +18,10 @@ class UserDataRepositoryImpl extends UserDataRepository {
 
   @override
   Future<Result<void>> updateUser(String authorizationToken, String avatarPath,
-      String bio, String username, String name) async {
+      String bio, String username, String fullname) async {
     try {
       final response = await _service.updateUserData(
-          'Bearer $authorizationToken', bio, username, name, avatarPath);
+          'Bearer $authorizationToken', bio, username, fullname, avatarPath);
       if (response.statusCode == 200) {
         return Result.success(data: null);
       } else {
@@ -81,6 +81,15 @@ class UserDataRepositoryImpl extends UserDataRepository {
 
   @override
   Future<Result<List<User>>> fetchRecommendedUsers(String authorizationToken) async {
-    return Result.success(data: <User>[]);
+        try {
+      final response = await _service.getRecommendedUsers('Bearer $authorizationToken');
+      if (response.statusCode == 200) {
+        return Result.success(data: response.body.recommendations.map((rawUser) => _userMapper.map(rawUser)).toList());
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 }

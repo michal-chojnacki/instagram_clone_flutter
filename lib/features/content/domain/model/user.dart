@@ -8,7 +8,7 @@ part 'user.g.dart';
 abstract class User extends Object with EquatableMixin implements Built<User, UserBuilder> {
   int get id;
   String get username;
-  String get name;
+  String get fullname;
   String get bio;
 
   Image get avatar;
@@ -17,11 +17,11 @@ abstract class User extends Object with EquatableMixin implements Built<User, Us
 
   factory User([updates(UserBuilder b)]) = _$User;
 
-  factory User.create({@required int id, @required String username, @required String name, @required String bio, @required Image avatar}) {
+  factory User.create({@required int id, @required String username, @required String fullname, @required String bio, @required Image avatar}) {
     return User((b) => b
     ..id = id
     ..username = username
-    ..name = name
+    ..fullname = fullname
     ..bio = bio
     ..avatar = avatar.toBuilder());
   }

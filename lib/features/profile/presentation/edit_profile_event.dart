@@ -9,7 +9,7 @@ enum _EditProfileEvent {
   @Data(fields: [
     DataField<String>('avatarPath'),
     DataField<String>('username'),
-    DataField<String>('name'),
+    DataField<String>('fullname'),
     DataField<String>('bio'),
   ])
   UpdateProfileData,

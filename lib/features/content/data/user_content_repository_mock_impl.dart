@@ -21,7 +21,7 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
           owner: User.create(
               id: 1,
               bio: "bio",
-              name: "elo name",
+              fullname: "elo name",
               username: "elo",
               avatar: Image.create(
                   url: "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),

@@ -19,7 +19,7 @@ class UserMapper implements Mapper<RawUser, User> {
       return User.create(
           id: input.id,
           username: input.username,
-          name: input.name ?? "",
+          fullname: input.fullname ?? "",
           bio: input.bio ?? "",
           avatar: _imageMapper.map(input.avatar));
     }

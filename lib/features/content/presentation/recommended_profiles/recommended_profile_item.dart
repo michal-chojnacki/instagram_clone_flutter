@@ -29,7 +29,7 @@ class RecommendedProfileItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(user.username, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
-                Text(user.name, style: TextStyle(fontSize: 12.0),),
+                if(user.fullname != null && user.fullname.isNotEmpty) Text(user.fullname, style: TextStyle(fontSize: 12.0),),
               ],
             ),
           ),

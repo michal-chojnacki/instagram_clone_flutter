@@ -25,6 +25,15 @@ class _$UserDataService extends UserDataService {
   }
 
   @override
+  Future<Response<RawRecommendedUsers>> getRecommendedUsers(
+      String authorizationBearer) {
+    final $url = '/recommended_users';
+    final $headers = {'Authorization': authorizationBearer};
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<RawRecommendedUsers, RawRecommendedUsers>($request);
+  }
+
+  @override
   Future<Response<RawObservingStatus>> getObservingStatus(
       String authorizationBearer, int userId) {
     final $url = '/observing';
@@ -48,13 +57,13 @@ class _$UserDataService extends UserDataService {
 
   @override
   Future<Response<dynamic>> updateUserData(String authorizationBearer,
-      String bio, String username, String name, String avatarPath) {
+      String bio, String username, String fullname, String avatarPath) {
     final $url = '/user';
     final $headers = {'Authorization': authorizationBearer};
     final $parts = <PartValue>[
       PartValue<String>('bio', bio),
       PartValue<String>('username', username),
-      PartValue<String>('name', name),
+      PartValue<String>('fullname', fullname),
       PartValueFile<String>('avatar', avatarPath)
     ];
     final $request = Request('POST', $url, client.baseUrl,

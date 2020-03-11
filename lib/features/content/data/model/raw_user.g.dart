@@ -30,10 +30,10 @@ class _$RawUserSerializer implements StructuredSerializer<RawUser> {
         ..add(serializers.serialize(object.username,
             specifiedType: const FullType(String)));
     }
-    if (object.name != null) {
+    if (object.fullname != null) {
       result
-        ..add('name')
-        ..add(serializers.serialize(object.name,
+        ..add('fullname')
+        ..add(serializers.serialize(object.fullname,
             specifiedType: const FullType(String)));
     }
     if (object.bio != null) {
@@ -70,8 +70,8 @@ class _$RawUserSerializer implements StructuredSerializer<RawUser> {
           result.username = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'name':
-          result.name = serializers.deserialize(value,
+        case 'fullname':
+          result.fullname = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'bio':
@@ -95,7 +95,7 @@ class _$RawUser extends RawUser {
   @override
   final String username;
   @override
-  final String name;
+  final String fullname;
   @override
   final String bio;
   @override
@@ -104,7 +104,7 @@ class _$RawUser extends RawUser {
   factory _$RawUser([void Function(RawUserBuilder) updates]) =>
       (new RawUserBuilder()..update(updates)).build();
 
-  _$RawUser._({this.id, this.username, this.name, this.bio, this.avatar})
+  _$RawUser._({this.id, this.username, this.fullname, this.bio, this.avatar})
       : super._();
 
   @override
@@ -120,7 +120,7 @@ class _$RawUser extends RawUser {
     return other is RawUser &&
         id == other.id &&
         username == other.username &&
-        name == other.name &&
+        fullname == other.fullname &&
         bio == other.bio &&
         avatar == other.avatar;
   }
@@ -128,7 +128,7 @@ class _$RawUser extends RawUser {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), username.hashCode), name.hashCode),
+        $jc($jc($jc($jc(0, id.hashCode), username.hashCode), fullname.hashCode),
             bio.hashCode),
         avatar.hashCode));
   }
@@ -138,7 +138,7 @@ class _$RawUser extends RawUser {
     return (newBuiltValueToStringHelper('RawUser')
           ..add('id', id)
           ..add('username', username)
-          ..add('name', name)
+          ..add('fullname', fullname)
           ..add('bio', bio)
           ..add('avatar', avatar))
         .toString();
@@ -156,9 +156,9 @@ class RawUserBuilder implements Builder<RawUser, RawUserBuilder> {
   String get username => _$this._username;
   set username(String username) => _$this._username = username;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String _fullname;
+  String get fullname => _$this._fullname;
+  set fullname(String fullname) => _$this._fullname = fullname;
 
   String _bio;
   String get bio => _$this._bio;
@@ -174,7 +174,7 @@ class RawUserBuilder implements Builder<RawUser, RawUserBuilder> {
     if (_$v != null) {
       _id = _$v.id;
       _username = _$v.username;
-      _name = _$v.name;
+      _fullname = _$v.fullname;
       _bio = _$v.bio;
       _avatar = _$v.avatar?.toBuilder();
       _$v = null;
@@ -203,7 +203,7 @@ class RawUserBuilder implements Builder<RawUser, RawUserBuilder> {
           new _$RawUser._(
               id: id,
               username: username,
-              name: name,
+              fullname: fullname,
               bio: bio,
               avatar: _avatar?.build());
     } catch (_) {

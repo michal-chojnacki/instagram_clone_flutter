@@ -12,7 +12,7 @@ class _$User extends User {
   @override
   final String username;
   @override
-  final String name;
+  final String fullname;
   @override
   final String bio;
   @override
@@ -21,7 +21,7 @@ class _$User extends User {
   factory _$User([void Function(UserBuilder) updates]) =>
       (new UserBuilder()..update(updates)).build();
 
-  _$User._({this.id, this.username, this.name, this.bio, this.avatar})
+  _$User._({this.id, this.username, this.fullname, this.bio, this.avatar})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('User', 'id');
@@ -29,8 +29,8 @@ class _$User extends User {
     if (username == null) {
       throw new BuiltValueNullFieldError('User', 'username');
     }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('User', 'name');
+    if (fullname == null) {
+      throw new BuiltValueNullFieldError('User', 'fullname');
     }
     if (bio == null) {
       throw new BuiltValueNullFieldError('User', 'bio');
@@ -53,7 +53,7 @@ class _$User extends User {
     return other is User &&
         id == other.id &&
         username == other.username &&
-        name == other.name &&
+        fullname == other.fullname &&
         bio == other.bio &&
         avatar == other.avatar;
   }
@@ -61,7 +61,7 @@ class _$User extends User {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), username.hashCode), name.hashCode),
+        $jc($jc($jc($jc(0, id.hashCode), username.hashCode), fullname.hashCode),
             bio.hashCode),
         avatar.hashCode));
   }
@@ -78,9 +78,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String get username => _$this._username;
   set username(String username) => _$this._username = username;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String _fullname;
+  String get fullname => _$this._fullname;
+  set fullname(String fullname) => _$this._fullname = fullname;
 
   String _bio;
   String get bio => _$this._bio;
@@ -96,7 +96,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
     if (_$v != null) {
       _id = _$v.id;
       _username = _$v.username;
-      _name = _$v.name;
+      _fullname = _$v.fullname;
       _bio = _$v.bio;
       _avatar = _$v.avatar?.toBuilder();
       _$v = null;
@@ -125,7 +125,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
           new _$User._(
               id: id,
               username: username,
-              name: name,
+              fullname: fullname,
               bio: bio,
               avatar: avatar.build());
     } catch (_) {

@@ -23,7 +23,8 @@ abstract class NavigationEvent extends Equatable {
 
   factory NavigationEvent.openPickImagePage(
       {@required Function onPickedImage,
-      @required double ratio}) = OpenPickImagePage;
+      @required double ratio,
+      @required bool circleShaped}) = OpenPickImagePage;
 
   factory NavigationEvent.openUserProfilePage({@required User user}) =
       OpenUserProfilePage;
@@ -35,7 +36,8 @@ abstract class NavigationEvent extends Equatable {
       {@required bool editable,
       @required String path,
       @required Function onPickedImage,
-      @required double ratio}) = OpenAdjustImagePage;
+      @required double ratio,
+      @required bool circleShaped}) = OpenAdjustImagePage;
 
   final _NavigationEvent _type;
 
@@ -363,18 +365,23 @@ class OpenSendContentPage extends NavigationEvent {
 
 @immutable
 class OpenPickImagePage extends NavigationEvent {
-  const OpenPickImagePage({@required this.onPickedImage, @required this.ratio})
+  const OpenPickImagePage(
+      {@required this.onPickedImage,
+      @required this.ratio,
+      @required this.circleShaped})
       : super(_NavigationEvent.OpenPickImagePage);
 
   final Function onPickedImage;
 
   final double ratio;
 
+  final bool circleShaped;
+
   @override
   String toString() =>
-      'OpenPickImagePage(onPickedImage:${this.onPickedImage},ratio:${this.ratio})';
+      'OpenPickImagePage(onPickedImage:${this.onPickedImage},ratio:${this.ratio},circleShaped:${this.circleShaped})';
   @override
-  List get props => [onPickedImage, ratio];
+  List get props => [onPickedImage, ratio, circleShaped];
 }
 
 @immutable
@@ -409,7 +416,8 @@ class OpenAdjustImagePage extends NavigationEvent {
       {@required this.editable,
       @required this.path,
       @required this.onPickedImage,
-      @required this.ratio})
+      @required this.ratio,
+      @required this.circleShaped})
       : super(_NavigationEvent.OpenAdjustImagePage);
 
   final bool editable;
@@ -420,9 +428,11 @@ class OpenAdjustImagePage extends NavigationEvent {
 
   final double ratio;
 
+  final bool circleShaped;
+
   @override
   String toString() =>
-      'OpenAdjustImagePage(editable:${this.editable},path:${this.path},onPickedImage:${this.onPickedImage},ratio:${this.ratio})';
+      'OpenAdjustImagePage(editable:${this.editable},path:${this.path},onPickedImage:${this.onPickedImage},ratio:${this.ratio},circleShaped:${this.circleShaped})';
   @override
-  List get props => [editable, path, onPickedImage, ratio];
+  List get props => [editable, path, onPickedImage, ratio, circleShaped];
 }

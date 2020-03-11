@@ -18,7 +18,7 @@ class _MainUserPageState extends State<MainUserPage> {
 
   void _onItemTapped(int index) {
     if(index == 2) {
-      _navigationBloc.openPickImagePage(ratio: 1.0, onImagePicked: (imagePath) {
+      _navigationBloc.openPickImagePage(ratio: 1.0, circleShaped: false, onImagePicked: (imagePath) {
         _navigationBloc.openSendContentScreen(imagePath);
       });
       return;

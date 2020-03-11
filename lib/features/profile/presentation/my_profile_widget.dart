@@ -71,7 +71,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
   }
 
   void _pickImage(BuildContext context) {
-    _navigationBloc.openPickImagePage(ratio: 1.0, onImagePicked: (imagePath) {
+    _navigationBloc.openPickImagePage(ratio: 1.0, circleShaped: true, onImagePicked: (imagePath) {
       _editProfileBloc.updateProfileData(avatarPath: imagePath);
       _navigationBloc.pop();
     });

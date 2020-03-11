@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/features/camera/take_picture_widget.dart';
+import 'package:instagram_clone/features/common/circular_overlay.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 import 'package:super_enum/super_enum.dart';
 
 class PickImagePage extends StatefulWidget {
   final double ratio;
+  final bool circleShaped;
   final Function onImagePicked;
 
-  PickImagePage({@required this.onImagePicked, @required this.ratio});
+  PickImagePage({
+    @required this.onImagePicked,
+    @required this.ratio,
+    @required this.circleShaped,
+  });
 
   @override
   _PickImagePageState createState() => _PickImagePageState();
@@ -60,18 +66,22 @@ class _PickImagePageState extends State<PickImagePage> {
                         alignment: Alignment.bottomCenter,
                         child: FloatingActionButton(
                           child: Icon(Icons.camera_alt),
-                          onPressed: () =>
-                              _changeNotifier.sink.add(null),
+                          onPressed: () => _changeNotifier.sink.add(null),
                         )),
                     Container(
                         alignment: Alignment.bottomLeft,
                         child: MaterialButton(
-                              child: Text('Gallery'),
-                              onPressed: _pickImageFromGallery,
-                            )),
-                    ],
-                  ),
-                );
+                          child: Text('Gallery'),
+                          onPressed: _pickImageFromGallery,
+                        )),
+                    if (widget.circleShaped) Container(
+                        width: double.infinity,
+                        child: AspectRatio(
+                            aspectRatio: 1.0,
+                            child: CircularOverlay()))
+                  ],
+                ),
+              );
             } else {
               return Center(child: CircularProgressIndicator());
             }

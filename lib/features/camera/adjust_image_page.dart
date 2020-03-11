@@ -2,17 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_crop/image_crop.dart';
+import 'package:instagram_clone/features/common/circular_overlay.dart';
 
 class AdjustImagePage extends StatefulWidget {
   final double ratio;
   final File image;
   final Function onImagePicked;
   final bool editable;
+  final bool circleShaped;
 
   AdjustImagePage(
       {@required this.image,
       @required this.ratio,
       @required this.onImagePicked,
+      @required this.circleShaped,
       @required this.editable});
 
   @override
@@ -39,22 +42,31 @@ class _AdjustImagePageState extends State<AdjustImagePage> {
           )
         ],
       ),
-      body: Container(
-        color: Colors.black,
-        width: double.infinity,
-        height: double.infinity,
-        padding: const EdgeInsets.all(4.0),
-        child: (widget.editable)
-            ? Crop.file(
-                widget.image,
-                key: cropKey,
-                aspectRatio: widget.ratio,
-              )
-            : FittedBox(
-                child: Image.file(
-                  widget.image,
-                ),
-                fit: BoxFit.fitWidth),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            color: Colors.black,
+            width: double.infinity,
+            height: double.infinity,
+            child: (widget.editable)
+                ? Crop.file(
+                    widget.image,
+                    key: cropKey,
+                    aspectRatio: widget.ratio,
+                  )
+                : Container(
+                    padding: const EdgeInsets.all(6.0),
+                    child: FittedBox(
+                        child: Image.file(
+                          widget.image,
+                        ),
+                        fit: BoxFit.fitWidth),
+                  ),
+          ),
+          if (widget.circleShaped)
+            Container(
+                padding: const EdgeInsets.all(6.0), child: CircularOverlay())
+        ],
       ),
     );
   }

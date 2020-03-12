@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_crop/image_crop.dart';
-import 'package:instagram_clone/features/common/circular_overlay.dart';
+import 'package:instagram_clone/features/content/presentation/common/circular_overlay.dart';
 
 class AdjustImagePage extends StatefulWidget {
   final double ratio;

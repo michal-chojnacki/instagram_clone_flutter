@@ -1,11 +1,12 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
+import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 
 part 'search_for_content_state.g.dart';
 
 abstract class SearchForContentState implements Built<SearchForContentState, SearchForContentStateBuilder> {
-  BuiltList<Content> get contents;
+  BuiltList<PersonalizedContent> get contents;
   bool get progressbarVisible;
 
   SearchForContentState._();
@@ -24,7 +25,7 @@ abstract class SearchForContentState implements Built<SearchForContentState, Sea
       ..progressbarVisible = true);
   }
 
-  factory SearchForContentState.success(BuiltList<Content> items) {
+  factory SearchForContentState.success(BuiltList<PersonalizedContent> items) {
     return SearchForContentState((b) => b
       ..contents.replace(items)
       ..progressbarVisible = false);

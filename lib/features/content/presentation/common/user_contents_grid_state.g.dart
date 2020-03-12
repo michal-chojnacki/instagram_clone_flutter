@@ -8,7 +8,7 @@ part of 'user_contents_grid_state.dart';
 
 class _$UserContentsGridState extends UserContentsGridState {
   @override
-  final BuiltList<Content> contents;
+  final BuiltList<PersonalizedContent> contents;
   @override
   final bool progressBarVisible;
 
@@ -62,10 +62,11 @@ class UserContentsGridStateBuilder
     implements Builder<UserContentsGridState, UserContentsGridStateBuilder> {
   _$UserContentsGridState _$v;
 
-  ListBuilder<Content> _contents;
-  ListBuilder<Content> get contents =>
-      _$this._contents ??= new ListBuilder<Content>();
-  set contents(ListBuilder<Content> contents) => _$this._contents = contents;
+  ListBuilder<PersonalizedContent> _contents;
+  ListBuilder<PersonalizedContent> get contents =>
+      _$this._contents ??= new ListBuilder<PersonalizedContent>();
+  set contents(ListBuilder<PersonalizedContent> contents) =>
+      _$this._contents = contents;
 
   bool _progressBarVisible;
   bool get progressBarVisible => _$this._progressBarVisible;

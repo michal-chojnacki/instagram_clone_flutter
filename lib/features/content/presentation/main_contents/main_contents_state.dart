@@ -2,12 +2,12 @@ library main_contents_state;
 
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
-import 'package:instagram_clone/features/content/domain/model/content.dart';
+import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 
 part 'main_contents_state.g.dart';
 
 abstract class MainContentsState implements Built<MainContentsState, MainContentsStateBuilder> {
-  BuiltList<Content> get contents;
+  BuiltList<PersonalizedContent> get contents;
   bool get hasReachedEndOfResults;
 
   MainContentsState._();
@@ -16,11 +16,11 @@ abstract class MainContentsState implements Built<MainContentsState, MainContent
 
   factory MainContentsState.initial() {
     return MainContentsState((b) => b
-      ..contents.replace(BuiltList<Content>())
+      ..contents.replace(BuiltList<PersonalizedContent>())
       ..hasReachedEndOfResults = false);
   }
 
-  factory MainContentsState.success(BuiltList<Content> items, bool hasReachedEndOfResults) {
+  factory MainContentsState.success(BuiltList<PersonalizedContent> items, bool hasReachedEndOfResults) {
     return MainContentsState((b) => b
       ..contents.replace(items)
       ..hasReachedEndOfResults = hasReachedEndOfResults);

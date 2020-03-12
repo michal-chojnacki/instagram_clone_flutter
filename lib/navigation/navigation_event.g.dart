@@ -29,8 +29,8 @@ abstract class NavigationEvent extends Equatable {
   factory NavigationEvent.openUserProfilePage({@required User user}) =
       OpenUserProfilePage;
 
-  factory NavigationEvent.openSingleContentPage({@required Content content}) =
-      OpenSingleContentPage;
+  factory NavigationEvent.openSingleContentPage(
+      {@required PersonalizedContent content}) = OpenSingleContentPage;
 
   factory NavigationEvent.openAdjustImagePage(
       {@required bool editable,
@@ -402,7 +402,7 @@ class OpenSingleContentPage extends NavigationEvent {
   const OpenSingleContentPage({@required this.content})
       : super(_NavigationEvent.OpenSingleContentPage);
 
-  final Content content;
+  final PersonalizedContent content;
 
   @override
   String toString() => 'OpenSingleContentPage(content:${this.content})';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:instagram_clone/features/content/domain/model/content.dart';
+import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class ContentsGrid extends StatelessWidget {
-  final List<Content> contents;
+  final List<PersonalizedContent> contents;
   final bool loading;
   final _navigationBloc = GetIt.I<NavigationBloc>();
 
@@ -24,7 +24,7 @@ class ContentsGrid extends StatelessWidget {
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
           itemBuilder: (context, index) {
             return InkWell(
-              child: Image.network(contents[index].image.url),
+              child: Image.network(contents[index].content.image.url),
               onTap: () => _navigationBloc.openSingleContentPage(
                   content: contents[index]),
             );

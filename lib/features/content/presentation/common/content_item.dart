@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
+import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ContentItem extends StatelessWidget {
-  final Content _content;
+  final PersonalizedContent _personalizedContent;
   final Function _showUser;
 
-  ContentItem(this._content, this._showUser);
+  Content get _content => _personalizedContent.content;
+
+  ContentItem(this._personalizedContent, this._showUser);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +24,10 @@ class ContentItem extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          _content.owner.avatar.url,
-                        ),
+                      backgroundImage: NetworkImage(
+                        _content.owner.avatar.url,
                       ),
+                    ),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 2.0),
                     ),
@@ -33,7 +36,9 @@ class ContentItem extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 2.0,),
+              SizedBox(
+                height: 2.0,
+              ),
               Image.network(_content.image.url),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 4.0),

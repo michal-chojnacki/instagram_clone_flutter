@@ -5,6 +5,7 @@ import 'package:instagram_clone/features/content/domain/get_user_contents_use_ca
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
+import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_event.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_state.dart';
 
@@ -40,7 +41,7 @@ class UserContentsGridBloc
     yield UserContentsGridState.loading();
     yield (await _getContentsForUser(event.user, 0)).when(
         success: (result) => UserContentsGridState.success(result.data),
-        error: (_) => UserContentsGridState.success(<Content>[]));
+        error: (_) => UserContentsGridState.success(<PersonalizedContent>[]));
   }
 
   Stream<UserContentsGridState> _mapFetchCurrentUserContent(
@@ -48,6 +49,6 @@ class UserContentsGridBloc
     yield UserContentsGridState.loading();
     yield (await _getUserContentsUseCase(0)).when(
         success: (result) => UserContentsGridState.success(result.data),
-        error: (_) => UserContentsGridState.success(<Content>[]));
+        error: (_) => UserContentsGridState.success(<PersonalizedContent>[]));
   }
 }

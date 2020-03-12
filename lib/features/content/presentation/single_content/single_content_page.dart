@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/presentation/common/content_item.dart';
+import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class SingleContentPage extends StatelessWidget {
-  final Content content;
+  final PersonalizedContent content;
   final _navigationBloc = GetIt.I<NavigationBloc>();
 
   SingleContentPage({@required this.content});

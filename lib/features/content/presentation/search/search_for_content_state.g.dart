@@ -8,7 +8,7 @@ part of 'search_for_content_state.dart';
 
 class _$SearchForContentState extends SearchForContentState {
   @override
-  final BuiltList<Content> contents;
+  final BuiltList<PersonalizedContent> contents;
   @override
   final bool progressbarVisible;
 
@@ -62,10 +62,11 @@ class SearchForContentStateBuilder
     implements Builder<SearchForContentState, SearchForContentStateBuilder> {
   _$SearchForContentState _$v;
 
-  ListBuilder<Content> _contents;
-  ListBuilder<Content> get contents =>
-      _$this._contents ??= new ListBuilder<Content>();
-  set contents(ListBuilder<Content> contents) => _$this._contents = contents;
+  ListBuilder<PersonalizedContent> _contents;
+  ListBuilder<PersonalizedContent> get contents =>
+      _$this._contents ??= new ListBuilder<PersonalizedContent>();
+  set contents(ListBuilder<PersonalizedContent> contents) =>
+      _$this._contents = contents;
 
   bool _progressbarVisible;
   bool get progressbarVisible => _$this._progressbarVisible;

@@ -16,16 +16,8 @@ import 'package:instagram_clone/features/content/domain/user_content_repository.
 import 'package:instagram_clone/features/content/data/mapper/image_mapper.dart';
 import 'package:instagram_clone/features/content/data/mapper/user_mapper.dart';
 import 'package:instagram_clone/features/content/data/mapper/content_mapper.dart';
-import 'package:instagram_clone/features/content/domain/get_main_content_use_case.dart';
-import 'package:instagram_clone/features/content/domain/get_user_contents_use_case.dart';
 import 'package:instagram_clone/features/content/domain/send_content_use_case.dart';
-import 'package:instagram_clone/features/content/domain/get_content_with_query_use_case.dart';
-import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
-import 'package:instagram_clone/features/content/domain/get_recommended_content_use_case.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_bloc.dart';
-import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
-import 'package:instagram_clone/features/content/presentation/search/search_for_content_bloc.dart';
-import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_bloc.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository_mock_impl.dart';
 import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';
@@ -41,11 +33,20 @@ import 'package:http/src/client.dart';
 import 'package:instagram_clone/injection.dart';
 import 'package:chopper/chopper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:instagram_clone/features/profile/domain/get_likes_statuses_use_case.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_repository_impl.dart';
 import 'package:instagram_clone/features/content/data/content_service.dart';
+import 'package:instagram_clone/features/content/domain/get_main_content_use_case.dart';
+import 'package:instagram_clone/features/content/domain/get_user_contents_use_case.dart';
+import 'package:instagram_clone/features/content/domain/get_content_with_query_use_case.dart';
+import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
+import 'package:instagram_clone/features/content/domain/get_recommended_content_use_case.dart';
+import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/recommended_profiles/recommended_profiles_bloc.dart';
+import 'package:instagram_clone/features/content/presentation/search/search_for_content_bloc.dart';
+import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_bloc.dart';
 import 'package:instagram_clone/features/profile/data/user_data_service.dart';
 import 'package:instagram_clone/features/content/data/user_content_repository_impl.dart';
 import 'package:instagram_clone/features/profile/data/user_data_repository_impl.dart';
@@ -66,28 +67,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<UserMapper>(() => UserMapper(g<ImageMapper>()));
   g.registerFactory<ContentMapper>(
       () => ContentMapper(g<ImageMapper>(), g<UserMapper>()));
-  g.registerFactory<GetMainContentUseCase>(() => GetMainContentUseCase(
-      g<UserContentRepository>(), g<LoadAuthorizationTokenUseCase>()));
-  g.registerFactory<GetUserContentsUseCase>(() => GetUserContentsUseCase(
-      g<UserContentRepository>(), g<LoadAuthorizationTokenUseCase>()));
   g.registerFactory<SendContentUseCase>(() => SendContentUseCase(
       g<UserContentRepository>(), g<LoadAuthorizationTokenUseCase>()));
-  g.registerFactory<GetContentWithQueryUseCase>(() =>
-      GetContentWithQueryUseCase(
-          g<UserContentRepository>(), g<LoadAuthorizationTokenUseCase>()));
-  g.registerFactory<GetContentsForUserUseCase>(() => GetContentsForUserUseCase(
-      g<UserContentRepository>(), g<LoadAuthorizationTokenUseCase>()));
-  g.registerFactory<GetRecommendedContentUseCase>(() =>
-      GetRecommendedContentUseCase(
-          g<UserContentRepository>(), g<LoadAuthorizationTokenUseCase>()));
   g.registerFactory<SendContentBloc>(
       () => SendContentBloc(g<SendContentUseCase>()));
-  g.registerFactory<MainContentsBloc>(
-      () => MainContentsBloc(g<GetMainContentUseCase>()));
-  g.registerFactory<SearchForContentBloc>(() => SearchForContentBloc(
-      g<GetContentWithQueryUseCase>(), g<GetRecommendedContentUseCase>()));
-  g.registerFactory<UserContentsGridBloc>(() => UserContentsGridBloc(
-      g<GetContentsForUserUseCase>(), g<GetUserContentsUseCase>()));
   g.registerFactory<GetUserDataUseCase>(() => GetUserDataUseCase(
       g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
   g.registerFactory<UpdateUserDataUseCase>(() => UpdateUserDataUseCase(
@@ -109,14 +92,48 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<ChopperClient>(() => registerModule.chopperClient);
   final sharedPreferences = await registerModule.prefs;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
+  g.registerFactory<GetLikesStatusesUseCase>(() => GetLikesStatusesUseCase());
   g.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl(g<SharedPreferences>()));
   g.registerFactory<AuthenticationService>(
       () => AuthenticationService.create(g<ChopperClient>()));
   g.registerFactory<ContentService>(
       () => ContentService.create(g<ChopperClient>()));
+  g.registerFactory<GetMainContentUseCase>(() => GetMainContentUseCase(
+        g<UserContentRepository>(),
+        g<LoadAuthorizationTokenUseCase>(),
+        g<GetLikesStatusesUseCase>(),
+      ));
+  g.registerFactory<GetUserContentsUseCase>(() => GetUserContentsUseCase(
+        g<UserContentRepository>(),
+        g<LoadAuthorizationTokenUseCase>(),
+        g<GetLikesStatusesUseCase>(),
+      ));
+  g.registerFactory<GetContentWithQueryUseCase>(
+      () => GetContentWithQueryUseCase(
+            g<UserContentRepository>(),
+            g<LoadAuthorizationTokenUseCase>(),
+            g<GetLikesStatusesUseCase>(),
+          ));
+  g.registerFactory<GetContentsForUserUseCase>(() => GetContentsForUserUseCase(
+        g<UserContentRepository>(),
+        g<LoadAuthorizationTokenUseCase>(),
+        g<GetLikesStatusesUseCase>(),
+      ));
+  g.registerFactory<GetRecommendedContentUseCase>(
+      () => GetRecommendedContentUseCase(
+            g<UserContentRepository>(),
+            g<LoadAuthorizationTokenUseCase>(),
+            g<GetLikesStatusesUseCase>(),
+          ));
+  g.registerFactory<MainContentsBloc>(
+      () => MainContentsBloc(g<GetMainContentUseCase>()));
   g.registerFactory<RecommendedProfilesBloc>(() => RecommendedProfilesBloc(
       g<GetRecommendedProfilesUseCase>(), g<ChangeObservationUseCase>()));
+  g.registerFactory<SearchForContentBloc>(() => SearchForContentBloc(
+      g<GetContentWithQueryUseCase>(), g<GetRecommendedContentUseCase>()));
+  g.registerFactory<UserContentsGridBloc>(() => UserContentsGridBloc(
+      g<GetContentsForUserUseCase>(), g<GetUserContentsUseCase>()));
   g.registerFactory<UserDataService>(
       () => UserDataService.create(g<ChopperClient>()));
 

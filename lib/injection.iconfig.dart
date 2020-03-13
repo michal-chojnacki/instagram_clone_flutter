@@ -34,6 +34,7 @@ import 'package:instagram_clone/injection.dart';
 import 'package:chopper/chopper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:instagram_clone/features/profile/domain/get_likes_statuses_use_case.dart';
+import 'package:instagram_clone/features/profile/domain/change_like_use_case.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_repository_impl.dart';
@@ -94,6 +95,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
   g.registerFactory<GetLikesStatusesUseCase>(() => GetLikesStatusesUseCase(
       g<LoadAuthorizationTokenUseCase>(), g<UserDataRepository>()));
+  g.registerFactory<ChangeLikeUseCase>(() => ChangeLikeUseCase(
+      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
   g.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl(g<SharedPreferences>()));
   g.registerFactory<AuthenticationService>(

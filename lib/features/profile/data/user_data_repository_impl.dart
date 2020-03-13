@@ -105,4 +105,9 @@ class UserDataRepositoryImpl extends UserDataRepository {
         data: Map.fromIterable(contentIds,
             key: (item) => item, value: (item) => false));
   }
+
+  @override
+  Future<Result<void>> changeLike(String authorizationToken, int contentId, bool like) async {
+    return Result.success(data: null);
+  }
 }

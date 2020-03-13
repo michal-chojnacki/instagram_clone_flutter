@@ -45,16 +45,17 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
   }
 
   @override
-  Future<Result<List<User>>> fetchRecommendedUsers(String authorizationToken) async {
+  Future<Result<List<User>>> fetchRecommendedUsers(
+      String authorizationToken) async {
     return Result.success(data: <User>[
       User.create(
-        id: 1,
-        username: "elo",
-        fullname: "fullname",
-        bio: "bio",
-        avatar: Image.create(
-            url:
-            "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
+          id: 1,
+          username: "elo",
+          fullname: "fullname",
+          bio: "bio",
+          avatar: Image.create(
+              url:
+                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
       User.create(
           id: 2,
           username: "elo",
@@ -62,15 +63,22 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
           bio: "bio",
           avatar: Image.create(
               url:
-              "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"))
+                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"))
     ]);
   }
 
   @override
-  Future<Result<Map<int, bool>>> getLikes(String authorizationToken,
-      List<int> contentIds) async {
+  Future<Result<Map<int, bool>>> getLikes(
+      String authorizationToken, List<int> contentIds) async {
     return Result.success(
         data: Map.fromIterable(contentIds,
             key: (item) => item, value: (item) => _likes[item] ?? false));
+  }
+
+  @override
+  Future<Result<void>> changeLike(
+      String authorizationToken, int contentId, bool like) async {
+    _likes[contentId] = like;
+    return Result.success(data: null);
   }
 }

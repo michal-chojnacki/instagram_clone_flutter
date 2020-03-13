@@ -92,7 +92,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<ChopperClient>(() => registerModule.chopperClient);
   final sharedPreferences = await registerModule.prefs;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
-  g.registerFactory<GetLikesStatusesUseCase>(() => GetLikesStatusesUseCase());
+  g.registerFactory<GetLikesStatusesUseCase>(() => GetLikesStatusesUseCase(
+      g<LoadAuthorizationTokenUseCase>(), g<UserDataRepository>()));
   g.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl(g<SharedPreferences>()));
   g.registerFactory<AuthenticationService>(

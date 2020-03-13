@@ -80,16 +80,29 @@ class UserDataRepositoryImpl extends UserDataRepository {
   }
 
   @override
-  Future<Result<List<User>>> fetchRecommendedUsers(String authorizationToken) async {
-        try {
-      final response = await _service.getRecommendedUsers('Bearer $authorizationToken');
+  Future<Result<List<User>>> fetchRecommendedUsers(
+      String authorizationToken) async {
+    try {
+      final response =
+          await _service.getRecommendedUsers('Bearer $authorizationToken');
       if (response.statusCode == 200) {
-        return Result.success(data: response.body.recommendations.map((rawUser) => _userMapper.map(rawUser)).toList());
+        return Result.success(
+            data: response.body.recommendations
+                .map((rawUser) => _userMapper.map(rawUser))
+                .toList());
       } else {
         return Result.error(exception: ServerException());
       }
     } catch (e) {
       return Result.error(exception: e);
     }
+  }
+
+  @override
+  Future<Result<Map<int, bool>>> getLikes(String authorizationToken,
+      List<int> contentIds) async {
+    return Result.success(
+        data: Map.fromIterable(contentIds,
+            key: (item) => item, value: (item) => false));
   }
 }

@@ -42,6 +42,12 @@ class _$RawContentSerializer implements StructuredSerializer<RawContent> {
         ..add(serializers.serialize(object.owner,
             specifiedType: const FullType(RawUser)));
     }
+    if (object.likesCount != null) {
+      result
+        ..add('likesCount')
+        ..add(serializers.serialize(object.likesCount,
+            specifiedType: const FullType(int)));
+    }
     if (object.publicationTimestamp != null) {
       result
         ..add('publicationTimestamp')
@@ -78,6 +84,10 @@ class _$RawContentSerializer implements StructuredSerializer<RawContent> {
           result.owner.replace(serializers.deserialize(value,
               specifiedType: const FullType(RawUser)) as RawUser);
           break;
+        case 'likesCount':
+          result.likesCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'publicationTimestamp':
           result.publicationTimestamp = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -99,6 +109,8 @@ class _$RawContent extends RawContent {
   @override
   final RawUser owner;
   @override
+  final int likesCount;
+  @override
   final int publicationTimestamp;
 
   factory _$RawContent([void Function(RawContentBuilder) updates]) =>
@@ -109,6 +121,7 @@ class _$RawContent extends RawContent {
       this.image,
       this.description,
       this.owner,
+      this.likesCount,
       this.publicationTimestamp})
       : super._();
 
@@ -127,14 +140,19 @@ class _$RawContent extends RawContent {
         image == other.image &&
         description == other.description &&
         owner == other.owner &&
+        likesCount == other.likesCount &&
         publicationTimestamp == other.publicationTimestamp;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), image.hashCode), description.hashCode),
-            owner.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, id.hashCode), image.hashCode),
+                    description.hashCode),
+                owner.hashCode),
+            likesCount.hashCode),
         publicationTimestamp.hashCode));
   }
 
@@ -145,6 +163,7 @@ class _$RawContent extends RawContent {
           ..add('image', image)
           ..add('description', description)
           ..add('owner', owner)
+          ..add('likesCount', likesCount)
           ..add('publicationTimestamp', publicationTimestamp))
         .toString();
   }
@@ -169,6 +188,10 @@ class RawContentBuilder implements Builder<RawContent, RawContentBuilder> {
   RawUserBuilder get owner => _$this._owner ??= new RawUserBuilder();
   set owner(RawUserBuilder owner) => _$this._owner = owner;
 
+  int _likesCount;
+  int get likesCount => _$this._likesCount;
+  set likesCount(int likesCount) => _$this._likesCount = likesCount;
+
   int _publicationTimestamp;
   int get publicationTimestamp => _$this._publicationTimestamp;
   set publicationTimestamp(int publicationTimestamp) =>
@@ -182,6 +205,7 @@ class RawContentBuilder implements Builder<RawContent, RawContentBuilder> {
       _image = _$v.image?.toBuilder();
       _description = _$v.description;
       _owner = _$v.owner?.toBuilder();
+      _likesCount = _$v.likesCount;
       _publicationTimestamp = _$v.publicationTimestamp;
       _$v = null;
     }
@@ -211,6 +235,7 @@ class RawContentBuilder implements Builder<RawContent, RawContentBuilder> {
               image: _image?.build(),
               description: description,
               owner: _owner?.build(),
+              likesCount: likesCount,
               publicationTimestamp: publicationTimestamp);
     } catch (_) {
       String _$failedField;

@@ -15,6 +15,7 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
       String authorizationToken) async {
     return Result.success(data: [
       Content.create(id: 1,
+          likesCount: 2,
           image: Image.create(
               url: "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"),
           description: "test description",

@@ -17,6 +17,7 @@ class ContentItem extends StatefulWidget {
 
 class _ContentItemState extends State<ContentItem> {
   Content get _content => widget.personalizedContent.content;
+  int get _likesCount => _content.likesCount;
   bool _liked = false;
 
   @override
@@ -61,6 +62,7 @@ class _ContentItemState extends State<ContentItem> {
                       _toggleLikeStatus();
                     });
                 },),
+                Text('$_likesCount likes'),
               ],),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 4.0),

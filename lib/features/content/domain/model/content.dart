@@ -18,6 +18,8 @@ abstract class Content extends Object
 
   User get owner;
 
+  int get likesCount;
+
   int get publicationTimestamp;
 
   Content._();
@@ -29,16 +31,18 @@ abstract class Content extends Object
       @required Image image,
       @required String description,
       @required User owner,
+      @required int likesCount,
       @required int publicationTimestamp}) {
     return Content((b) => b
       ..id = id
       ..image = image.toBuilder()
       ..description = description
       ..owner = owner.toBuilder()
+      ..likesCount = likesCount
       ..publicationTimestamp = publicationTimestamp);
   }
 
   @override
   List<Object> get props =>
-      [id, image, description, owner, publicationTimestamp];
+      [id, image, description, owner, likesCount, publicationTimestamp];
 }

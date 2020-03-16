@@ -1,8 +1,10 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/data/mapper/user_mapper.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
+import 'package:instagram_clone/features/profile/data/model/raw_like_status.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
 import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/data/user_data_service.dart';
@@ -101,13 +103,32 @@ class UserDataRepositoryImpl extends UserDataRepository {
   @override
   Future<Result<Map<int, bool>>> getLikes(String authorizationToken,
       List<int> contentIds) async {
-    return Result.success(
-        data: Map.fromIterable(contentIds,
-            key: (item) => item, value: (item) => false));
+    try {
+      final response =
+      await _service.getLikeStatuses('Bearer $authorizationToken', BuiltList.of(contentIds));
+      if (response.statusCode == 200) {
+        return Result.success(data: response.body.statuses.toMap());
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 
   @override
   Future<Result<void>> changeLike(String authorizationToken, int contentId, bool like) async {
-    return Result.success(data: null);
+    try {
+      final response = await _service.updateLikes(
+          'Bearer $authorizationToken',
+          RawLikeStatus.create(contentId: contentId, status: like));
+      if (response.statusCode == 200) {
+        return Result.success(data: null);
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
   }
 }

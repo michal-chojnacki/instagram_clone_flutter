@@ -1,7 +1,10 @@
 import "dart:async";
+import 'package:built_collection/built_collection.dart';
 import 'package:chopper/chopper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/content/data/model/raw_user.dart';
+import 'package:instagram_clone/features/profile/data/model/raw_like_status.dart';
+import 'package:instagram_clone/features/profile/data/model/raw_like_statuses.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_recommended_users.dart';
 
@@ -41,4 +44,14 @@ abstract class UserDataService extends ChopperService {
       @Part("username") String username,
       @Part("fullname") String fullname,
       @PartFile("avatar") String avatarPath);
+
+  @Get(path: 'likes')
+  Future<Response<RawLikeStatuses>> getLikeStatuses(
+      @Header("Authorization") String authorizationBearer,
+      @Query("ids") BuiltList<int> ids);
+
+  @Post(path: 'likes')
+  Future<Response> updateLikes(
+      @Header("Authorization") String authorizationBearer,
+      @Body() RawLikeStatus likeStatus);
 }

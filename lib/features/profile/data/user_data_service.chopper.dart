@@ -70,4 +70,26 @@ class _$UserDataService extends UserDataService {
         parts: $parts, multipart: true, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<RawLikeStatuses>> getLikeStatuses(
+      String authorizationBearer, BuiltList<int> ids) {
+    final $url = '/likes';
+    final $params = <String, dynamic>{'ids': ids};
+    final $headers = {'Authorization': authorizationBearer};
+    final $request = Request('GET', $url, client.baseUrl,
+        parameters: $params, headers: $headers);
+    return client.send<RawLikeStatuses, RawLikeStatuses>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> updateLikes(
+      String authorizationBearer, RawLikeStatus likeStatus) {
+    final $url = '/likes';
+    final $headers = {'Authorization': authorizationBearer};
+    final $body = likeStatus;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

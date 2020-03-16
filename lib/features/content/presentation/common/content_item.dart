@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
+import 'package:instagram_clone/features/profile/domain/get_likes_statuses_use_case.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class ContentItem extends StatelessWidget {
-  final PersonalizedContent _personalizedContent;
-  final Function _showUser;
+class ContentItem extends StatefulWidget {
+  final PersonalizedContent personalizedContent;
+  final Function showUser;
+  final Function changeLikeStatus;
 
-  Content get _content => _personalizedContent.content;
+  ContentItem({@required this.personalizedContent, @required this.showUser, @required this.changeLikeStatus});
 
-  ContentItem(this._personalizedContent, this._showUser);
+  @override
+  _ContentItemState createState() => _ContentItemState();
+}
+
+class _ContentItemState extends State<ContentItem> {
+  Content get _content => widget.personalizedContent.content;
+  bool _liked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _liked = widget.personalizedContent.liked;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +34,7 @@ class ContentItem extends StatelessWidget {
           child: Column(
             children: <Widget>[
               InkWell(
-                onTap: () => _showUser(_content.owner),
+                onTap: () => widget.showUser(_content.owner),
                 child: Row(
                   children: <Widget>[
                     CircleAvatar(
@@ -40,6 +54,14 @@ class ContentItem extends StatelessWidget {
                 height: 2.0,
               ),
               Image.network(_content.image.url),
+              Row(children: <Widget>[
+                IconButton(
+                  icon: Icon(_liked ? Icons.favorite : Icons.favorite_border), onPressed: () {
+                    setState(() {
+                      _toggleLikeStatus();
+                    });
+                },),
+              ],),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 4.0),
                   alignment: Alignment.centerLeft,
@@ -72,5 +94,9 @@ class ContentItem extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  void _toggleLikeStatus() async {
+    _liked = await widget.changeLikeStatus(_liked);
   }
 }

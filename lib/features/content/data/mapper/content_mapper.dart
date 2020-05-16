@@ -19,6 +19,7 @@ class ContentMapper implements Mapper<RawContent, Content> {
         image: _imageMapper.map(input.image) ?? null,
         description: input.description ?? "",
         owner: _userMapper.map(input.owner) ?? null,
+        likesCount: input.likesCount ?? 0,
         publicationTimestamp: input.publicationTimestamp ?? 0);
   }
 }

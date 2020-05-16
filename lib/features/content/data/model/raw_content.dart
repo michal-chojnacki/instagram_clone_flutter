@@ -15,6 +15,8 @@ abstract class RawContent implements Built<RawContent, RawContentBuilder> {
   @nullable
   RawUser get owner;
   @nullable
+  int get likesCount;
+  @nullable
   int get publicationTimestamp;
 
   RawContent._();

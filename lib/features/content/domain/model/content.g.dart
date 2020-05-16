@@ -16,6 +16,8 @@ class _$Content extends Content {
   @override
   final User owner;
   @override
+  final int likesCount;
+  @override
   final int publicationTimestamp;
 
   factory _$Content([void Function(ContentBuilder) updates]) =>
@@ -26,6 +28,7 @@ class _$Content extends Content {
       this.image,
       this.description,
       this.owner,
+      this.likesCount,
       this.publicationTimestamp})
       : super._() {
     if (id == null) {
@@ -39,6 +42,9 @@ class _$Content extends Content {
     }
     if (owner == null) {
       throw new BuiltValueNullFieldError('Content', 'owner');
+    }
+    if (likesCount == null) {
+      throw new BuiltValueNullFieldError('Content', 'likesCount');
     }
     if (publicationTimestamp == null) {
       throw new BuiltValueNullFieldError('Content', 'publicationTimestamp');
@@ -60,14 +66,19 @@ class _$Content extends Content {
         image == other.image &&
         description == other.description &&
         owner == other.owner &&
+        likesCount == other.likesCount &&
         publicationTimestamp == other.publicationTimestamp;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), image.hashCode), description.hashCode),
-            owner.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, id.hashCode), image.hashCode),
+                    description.hashCode),
+                owner.hashCode),
+            likesCount.hashCode),
         publicationTimestamp.hashCode));
   }
 }
@@ -91,6 +102,10 @@ class ContentBuilder implements Builder<Content, ContentBuilder> {
   UserBuilder get owner => _$this._owner ??= new UserBuilder();
   set owner(UserBuilder owner) => _$this._owner = owner;
 
+  int _likesCount;
+  int get likesCount => _$this._likesCount;
+  set likesCount(int likesCount) => _$this._likesCount = likesCount;
+
   int _publicationTimestamp;
   int get publicationTimestamp => _$this._publicationTimestamp;
   set publicationTimestamp(int publicationTimestamp) =>
@@ -104,6 +119,7 @@ class ContentBuilder implements Builder<Content, ContentBuilder> {
       _image = _$v.image?.toBuilder();
       _description = _$v.description;
       _owner = _$v.owner?.toBuilder();
+      _likesCount = _$v.likesCount;
       _publicationTimestamp = _$v.publicationTimestamp;
       _$v = null;
     }
@@ -133,6 +149,7 @@ class ContentBuilder implements Builder<Content, ContentBuilder> {
               image: image.build(),
               description: description,
               owner: owner.build(),
+              likesCount: likesCount,
               publicationTimestamp: publicationTimestamp);
     } catch (_) {
       String _$failedField;

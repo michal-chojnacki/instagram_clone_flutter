@@ -6,10 +6,11 @@ import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
 import 'package:instagram_clone/features/camera/adjust_image_page.dart';
 import 'package:instagram_clone/features/camera/pick_image_page.dart';
-import 'package:instagram_clone/features/common/page/main_user_page.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_page.dart';
+import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
+import 'package:instagram_clone/features/content/presentation/common/page/main_user_page.dart';
 import 'package:instagram_clone/features/content/presentation/single_content/single_content_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/edit_profile_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_page.dart';
@@ -49,7 +50,7 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
     add(NavigationEvent.openUserProfilePage(user: user));
   }
 
-  void openSingleContentPage({@required Content content}) {
+  void openSingleContentPage({@required PersonalizedContent content}) {
     add(NavigationEvent.openSingleContentPage(content: content));
   }
 

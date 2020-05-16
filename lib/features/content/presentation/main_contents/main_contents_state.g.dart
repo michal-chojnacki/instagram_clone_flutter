@@ -8,7 +8,7 @@ part of main_contents_state;
 
 class _$MainContentsState extends MainContentsState {
   @override
-  final BuiltList<Content> contents;
+  final BuiltList<PersonalizedContent> contents;
   @override
   final bool hasReachedEndOfResults;
 
@@ -61,10 +61,11 @@ class MainContentsStateBuilder
     implements Builder<MainContentsState, MainContentsStateBuilder> {
   _$MainContentsState _$v;
 
-  ListBuilder<Content> _contents;
-  ListBuilder<Content> get contents =>
-      _$this._contents ??= new ListBuilder<Content>();
-  set contents(ListBuilder<Content> contents) => _$this._contents = contents;
+  ListBuilder<PersonalizedContent> _contents;
+  ListBuilder<PersonalizedContent> get contents =>
+      _$this._contents ??= new ListBuilder<PersonalizedContent>();
+  set contents(ListBuilder<PersonalizedContent> contents) =>
+      _$this._contents = contents;
 
   bool _hasReachedEndOfResults;
   bool get hasReachedEndOfResults => _$this._hasReachedEndOfResults;

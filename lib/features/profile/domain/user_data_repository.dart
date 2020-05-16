@@ -11,4 +11,8 @@ abstract class UserDataRepository {
   Future<Result<void>> changeObservation(String authorizationToken, User user, bool observe);
 
   Future<Result<bool>> getObservation(String authorizationToken, User user);
+
+  Future<Result<Map<int, bool>>> getLikes(String authorizationToken, List<int> contentIds);
+
+  Future<Result<void>> changeLike(String authorizationToken, int contentId, bool like);
 }

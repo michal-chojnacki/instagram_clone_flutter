@@ -13,7 +13,7 @@ void main() async {
     Stetho.initialize();
   }
   WidgetsFlutterBinding.ensureInitialized();
-  await configureInjection(environment: prod);
+  await configureInjection(environment: mock);
   runApp(App());
 }
 

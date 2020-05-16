@@ -9,7 +9,9 @@ class ContentItem extends StatefulWidget {
   final Function showUser;
   final Function changeLikeStatus;
 
-  ContentItem({@required this.personalizedContent, @required this.showUser, @required this.changeLikeStatus});
+  ContentItem({@required this.personalizedContent,
+    @required this.showUser,
+    @required this.changeLikeStatus});
 
   @override
   _ContentItemState createState() => _ContentItemState();
@@ -17,13 +19,15 @@ class ContentItem extends StatefulWidget {
 
 class _ContentItemState extends State<ContentItem> {
   Content get _content => widget.personalizedContent.content;
-  int get _likesCount => _content.likesCount;
+
+  int _likesCount;
   bool _liked = false;
 
   @override
   void initState() {
     super.initState();
     _liked = widget.personalizedContent.liked;
+    _likesCount = widget.personalizedContent.content.likesCount;
   }
 
   @override
@@ -55,15 +59,19 @@ class _ContentItemState extends State<ContentItem> {
                 height: 2.0,
               ),
               Image.network(_content.image.url),
-              Row(children: <Widget>[
-                IconButton(
-                  icon: Icon(_liked ? Icons.favorite : Icons.favorite_border), onPressed: () {
-                    setState(() {
-                      _toggleLikeStatus();
-                    });
-                },),
-                Text('$_likesCount likes'),
-              ],),
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(_liked ? Icons.favorite : Icons.favorite_border),
+                    onPressed: () {
+                      setState(() {
+                        _toggleLikeStatus();
+                      });
+                    },
+                  ),
+                  Text('$_likesCount likes'),
+                ],
+              ),
               Container(
                   margin: const EdgeInsets.symmetric(vertical: 4.0),
                   alignment: Alignment.centerLeft,
@@ -77,7 +85,7 @@ class _ContentItemState extends State<ContentItem> {
                           TextSpan(
                               text: _content.owner.username,
                               style:
-                                  new TextStyle(fontWeight: FontWeight.bold)),
+                              new TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: ' '),
                           TextSpan(text: _content.description),
                         ]),
@@ -99,6 +107,20 @@ class _ContentItemState extends State<ContentItem> {
   }
 
   void _toggleLikeStatus() async {
-    _liked = await widget.changeLikeStatus(_liked);
+    var prevLikeStatus = _liked;
+    _liked = !prevLikeStatus;
+    _likesCount = _refreshLikesCount(_liked);
+    _liked = await widget.changeLikeStatus(prevLikeStatus);
+    if (prevLikeStatus == _liked) {
+      _refreshLikesCount(_liked);
+    }
+  }
+
+  int _refreshLikesCount(bool liked) {
+    if (liked) {
+      return _likesCount + 1;
+    } else {
+      return _likesCount - 1;
+    }
   }
 }

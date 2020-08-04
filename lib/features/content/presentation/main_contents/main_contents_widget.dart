@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/presentation/common/content_item.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
@@ -36,8 +35,8 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
       appBar: AppBar(
         title: const Text('Instagram clone'),
       ),
-      body: BlocBuilder(
-          bloc: _mainContentsBloc,
+      body: BlocBuilder<MainContentsBloc, MainContentsState>(
+          cubit: _mainContentsBloc,
           builder: (context, MainContentsState state) {
             if (state.contents.isEmpty) {
               return Center(
@@ -54,15 +53,19 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
                             ? _buildLoaderListItem()
                             : ContentItem(
                                 personalizedContent: state.contents[index],
-                          showUser: (user) {
-                            _navigationBloc.openUserProfilePage(
-                                user: user);
-                          },
-                          changeLikeStatus: (status) async {
-                              return (await (_changeLike(state.contents[index].content.id, !status))).when(
-                                  success: (_) => !status, error: (_) => status);
-                          },
-                        );
+                                showUser: (user) {
+                                  _navigationBloc.openUserProfilePage(
+                                      user: user);
+                                },
+                                changeLikeStatus: (status) async {
+                                  return (await (_changeLike(
+                                          state.contents[index].content.id,
+                                          !status)))
+                                      .when(
+                                          success: (_) => !status,
+                                          error: (_) => status);
+                                },
+                              );
                       }));
             }
           }),

@@ -7,9 +7,8 @@ import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/domain/user_content_repository.dart';
 
-@injectable
 @prod
-@RegisterAs(UserContentRepository)
+@Injectable(as: UserContentRepository)
 class UserContentRepositoryImpl extends UserContentRepository {
   final ContentService _service;
   final ContentMapper _contentsMapper;

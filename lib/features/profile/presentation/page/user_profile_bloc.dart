@@ -12,7 +12,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   final ChangeObservationUseCase _changeObservation;
   final GetObservationStatusUseCase _getObservationStatus;
 
-  UserProfileBloc(this._changeObservation, this._getObservationStatus);
+  UserProfileBloc(this._changeObservation, this._getObservationStatus)
+      : super(UserProfileState.loading());
 
   void fetchObservation({@required User user}) {
     add(UserProfileEvent.fetchObservation(user: user));
@@ -21,9 +22,6 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   void changeObservation({@required User user, @required bool observe}) {
     add(UserProfileEvent.changeObservation(user: user, observe: observe));
   }
-
-  @override
-  UserProfileState get initialState => UserProfileState.loading();
 
   @override
   Stream<UserProfileState> mapEventToState(UserProfileEvent event) {

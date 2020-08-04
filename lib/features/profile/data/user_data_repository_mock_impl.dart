@@ -5,9 +5,8 @@ import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 import 'package:instagram_clone/injection.dart';
 
-@lazySingleton
 @mock
-@RegisterAs(UserDataRepository)
+@LazySingleton(as: UserDataRepository)
 class UserDataRepositoryMockImpl extends UserDataRepository {
   final Map<User, bool> _observations = Map();
   final Map<int, bool> _likes = Map();

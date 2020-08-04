@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
 import 'package:instagram_clone/injection.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
@@ -30,7 +29,7 @@ class _AppState extends State<App> {
     _navigationBloc.close();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<NavigationBloc>(

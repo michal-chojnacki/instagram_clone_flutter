@@ -49,8 +49,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
             )
           ],
         ),
-        body: BlocBuilder(
-            bloc: _editProfileBloc,
+        body: BlocBuilder<EditProfileBloc, EditProfileState>(
+            cubit: _editProfileBloc,
             builder: (context, EditProfileState state) {
               if (state.user != null) {
                 _usernameTextEditingController.text = state.user.username ?? "";
@@ -103,10 +103,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void _pickImage(BuildContext context) {
-    _navigationBloc.openPickImagePage(ratio: 1.0, circleShaped: true, onImagePicked: (imagePath) {
-      _editProfileBloc.updateProfileData(avatarPath: imagePath);
-      _navigationBloc.pop();
-    });
+    _navigationBloc.openPickImagePage(
+        ratio: 1.0,
+        circleShaped: true,
+        onImagePicked: (imagePath) {
+          _editProfileBloc.updateProfileData(avatarPath: imagePath);
+          _navigationBloc.pop();
+        });
   }
 
   Future<void> _updateProfile() async {

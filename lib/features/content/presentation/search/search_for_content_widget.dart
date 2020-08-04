@@ -38,7 +38,8 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
           leading: IconButton(
             icon: const Icon(Icons.search),
             onPressed: () =>
-                FocusScope.of(context).requestFocus(_queryFocusNode),),
+                FocusScope.of(context).requestFocus(_queryFocusNode),
+          ),
           title: TextField(
             focusNode: _queryFocusNode,
             controller: _editingController,
@@ -57,12 +58,13 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
             )
           ],
         ),
-        body: BlocBuilder(
-            bloc: _searchForContentBloc,
+        body: BlocBuilder<SearchForContentBloc, SearchForContentState>(
+            cubit: _searchForContentBloc,
             builder: (context, SearchForContentState state) {
               return ContentsGrid(
                 contents: state.contents.toList(),
-                loading: state.progressbarVisible,);
+                loading: state.progressbarVisible,
+              );
             }));
   }
 

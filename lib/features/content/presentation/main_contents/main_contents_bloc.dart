@@ -11,15 +11,12 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
   int _currentPage = -1;
   int _pageSize = 50;
 
-  MainContentsBloc(this._getMainContent);
+  MainContentsBloc(this._getMainContent) : super(MainContentsState.initial());
 
   void getNextListPage() {
     _currentPage += 1;
     add(MainContentsEvent.fetchMainContents(page: _currentPage));
   }
-
-  @override
-  MainContentsState get initialState => MainContentsState.initial();
 
   @override
   Stream<MainContentsState> mapEventToState(MainContentsEvent event) {

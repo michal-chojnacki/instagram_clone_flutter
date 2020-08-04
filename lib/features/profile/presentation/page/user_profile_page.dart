@@ -45,8 +45,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
             ProfileInfoWidget(
               user: widget._user,
             ),
-            BlocBuilder(
-              bloc: _userProfileBloc,
+            BlocBuilder<UserProfileBloc, UserProfileState>(
+              cubit: _userProfileBloc,
               builder: (context, UserProfileState state) {
                 return RaisedButton(
                   color: state.observing ? Colors.white : Colors.blue,
@@ -66,7 +66,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 );
               },
             ),
-            UserContentsGrid(user: widget._user,)
+            UserContentsGrid(
+              user: widget._user,
+            )
           ],
         ),
       ),

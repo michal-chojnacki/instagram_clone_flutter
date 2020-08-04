@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/content/domain/get_user_contents_use_case.dart';
-import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
@@ -15,7 +14,8 @@ class UserContentsGridBloc
   final GetContentsForUserUseCase _getContentsForUser;
   final GetUserContentsUseCase _getUserContentsUseCase;
 
-  UserContentsGridBloc(this._getContentsForUser, this._getUserContentsUseCase);
+  UserContentsGridBloc(this._getContentsForUser, this._getUserContentsUseCase)
+      : super(UserContentsGridState.loading());
 
   void fetchProfileData({@required User user}) {
     add(UserContentsGridEvent.fetchUserContent(user: user));
@@ -24,9 +24,6 @@ class UserContentsGridBloc
   void fetchCurrentUserContent() {
     add(UserContentsGridEvent.fetchCurrentUserContent());
   }
-
-  @override
-  UserContentsGridState get initialState => UserContentsGridState.loading();
 
   @override
   Stream<UserContentsGridState> mapEventToState(UserContentsGridEvent event) {

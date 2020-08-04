@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/authenticate/presentation/page/login_page.dart';
 import 'package:instagram_clone/features/camera/adjust_image_page.dart';
 import 'package:instagram_clone/features/camera/pick_image_page.dart';
-import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_page.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
@@ -21,8 +20,7 @@ import "package:instagram_clone/navigation/navigation_event.dart";
 class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
   final navigatorKey = GlobalKey<NavigatorState>();
 
-  @override
-  dynamic get initialState => 0;
+  NavigationBloc() : super(0);
 
   void openMainUserPage() {
     add(NavigationEvent.openMainUserPage());

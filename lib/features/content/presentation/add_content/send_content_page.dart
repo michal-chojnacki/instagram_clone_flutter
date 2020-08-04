@@ -38,12 +38,13 @@ class _SendContentPageState extends State<SendContentPage> {
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 child: Text("Share", style: TextStyle(color: Colors.white))),
             onTap: () {
-              _sendContentBloc.sendContent(_messageController.text ?? "", widget.imagePath);
+              _sendContentBloc.sendContent(
+                  _messageController.text ?? "", widget.imagePath);
             },
           ),
         ]),
-        body: BlocBuilder(
-            bloc: _sendContentBloc,
+        body: BlocBuilder<SendContentBloc, SendContentState>(
+            cubit: _sendContentBloc,
             builder: (context, SendContentState state) {
               var progressBarVisible = state.progressBarVisible;
               print("SendContentPage: $progressBarVisible");

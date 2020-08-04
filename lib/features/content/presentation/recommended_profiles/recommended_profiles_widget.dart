@@ -34,8 +34,8 @@ class _RecommendedProfilesWidgetState extends State<RecommendedProfilesWidget> {
       appBar: AppBar(
         title: const Text('Propozycje dla Ciebie'),
       ),
-      body: BlocBuilder(
-          bloc: _recommendedProfilesBloc,
+      body: BlocBuilder<RecommendedProfilesBloc, RecommendedProfilesState>(
+          cubit: _recommendedProfilesBloc,
           builder: (context, RecommendedProfilesState state) {
             if (state.loading) {
               return Center(

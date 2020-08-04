@@ -34,8 +34,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
       appBar: AppBar(
         title: const Text('My profile'),
       ),
-      body: BlocBuilder(
-          bloc: _editProfileBloc,
+      body: BlocBuilder<EditProfileBloc, EditProfileState>(
+          cubit: _editProfileBloc,
           builder: (context, EditProfileState state) {
             if (state.progressBarVisible) {
               return Center(
@@ -61,7 +61,10 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                         onPressed: _navigationBloc.openEditProfilePage,
                       ),
                     ),
-                    Expanded(child: UserContentsGrid(user: null,)),
+                    Expanded(
+                        child: UserContentsGrid(
+                      user: null,
+                    )),
                   ],
                 ),
               );
@@ -71,9 +74,12 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
   }
 
   void _pickImage(BuildContext context) {
-    _navigationBloc.openPickImagePage(ratio: 1.0, circleShaped: true, onImagePicked: (imagePath) {
-      _editProfileBloc.updateProfileData(avatarPath: imagePath);
-      _navigationBloc.pop();
-    });
+    _navigationBloc.openPickImagePage(
+        ratio: 1.0,
+        circleShaped: true,
+        onImagePicked: (imagePath) {
+          _editProfileBloc.updateProfileData(avatarPath: imagePath);
+          _navigationBloc.pop();
+        });
   }
 }

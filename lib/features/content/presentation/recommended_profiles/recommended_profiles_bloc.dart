@@ -15,12 +15,8 @@ class RecommendedProfilesBloc
   final GetRecommendedProfilesUseCase _getRecommendedProfiles;
   final ChangeObservationUseCase _changeObservation;
 
-  RecommendedProfilesBloc(
-      this._getRecommendedProfiles, this._changeObservation);
-
-  @override
-  RecommendedProfilesState get initialState =>
-      RecommendedProfilesState.initial();
+  RecommendedProfilesBloc(this._getRecommendedProfiles, this._changeObservation)
+      : super(RecommendedProfilesState.initial());
 
   void getRecommendedProfiles() {
     add(RecommendedProfilesEvent.fetchRecommendedProfiles());

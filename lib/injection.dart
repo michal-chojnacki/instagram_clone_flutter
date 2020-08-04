@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/io_client.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/built_value_converter.dart';
-import 'package:instagram_clone/injection.iconfig.dart';
+import 'package:instagram_clone/injection.config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 
@@ -17,15 +17,14 @@ Future<void> configureInjection({@required Environment environment}) async {
   await $initGetIt(GetIt.instance, environment: environment.name);
 }
 
-@registerModule
+@module
 abstract class RegisterModule {
-  // @lazySingleton
-  @RegisterAs(Client)
+  @LazySingleton(as: Client)
   IOClient get create => IOClient(HttpClient()
     ..connectionTimeout = const Duration(seconds: 5)
     ..proxy = false);
 
-  // @lazySingleton
+  @lazySingleton
   ChopperClient get chopperClient => ChopperClient(
         baseUrl: "http://192.168.1.7:8080",
         converter: GetIt.I<BuiltValueConverter>(),

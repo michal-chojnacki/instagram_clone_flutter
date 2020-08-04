@@ -8,14 +8,11 @@ import 'package:instagram_clone/features/content/presentation/add_content/send_c
 class SendContentBloc extends Bloc<SendContentEvent, SendContentState> {
   final SendContentUseCase _sendContentUseCase;
 
-  SendContentBloc(this._sendContentUseCase);
+  SendContentBloc(this._sendContentUseCase) : super(SendContentState.loaded());
 
   void sendContent(String message, String imagePath) {
     add(SendContentEvent.sendContent(message: message, imagePath: imagePath));
   }
-
-  @override
-  SendContentState get initialState => SendContentState.loaded();
 
   @override
   Stream<SendContentState> mapEventToState(SendContentEvent event) {

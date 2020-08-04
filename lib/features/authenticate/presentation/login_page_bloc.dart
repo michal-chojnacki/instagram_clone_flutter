@@ -11,7 +11,8 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
   final AuthenticateUserUseCase _authenticateUser;
   final RegisterUserUseCase _registerUser;
 
-  LoginPageBloc(this._authenticateUser, this._registerUser);
+  LoginPageBloc(this._authenticateUser, this._registerUser)
+      : super(LoginPageState.initial());
 
   void authenticateUser(String username, String password) {
     add(LoginPageEvent.authenticateUser(
@@ -23,19 +24,16 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
   }
 
   @override
-  LoginPageState get initialState => LoginPageState.initial();
-
-  @override
   Stream<LoginPageState> mapEventToState(LoginPageEvent event) {
-    return event.when(authenticateUser: (event) => _mapAuthenticateUser(event),
+    return event.when(
+        authenticateUser: (event) => _mapAuthenticateUser(event),
         registerUser: (event) => _mapRegisterUser(event));
   }
 
   Stream<LoginPageState> _mapAuthenticateUser(AuthenticateUser event) async* {
     yield LoginPageState.loading();
     yield (await _authenticateUser(event.username, event.password)).when(
-        success: (data) =>
-        (data != null)
+        success: (data) => (data != null)
             ? LoginPageState.authenticated()
             : LoginPageState.error(),
         error: (_) => LoginPageState.error());
@@ -44,8 +42,7 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
   Stream<LoginPageState> _mapRegisterUser(RegisterUser event) async* {
     yield LoginPageState.loading();
     yield (await _registerUser(event.username, event.password)).when(
-        success: (data) =>
-        (data != null)
+        success: (data) => (data != null)
             ? LoginPageState.authenticated()
             : LoginPageState.error(),
         error: (_) => LoginPageState.error());

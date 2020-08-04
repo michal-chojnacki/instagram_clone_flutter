@@ -24,8 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      body: BlocBuilder(
-        bloc: _loginPageBloc,
+      body: BlocBuilder<LoginPageBloc, LoginPageState>(
+        cubit: _loginPageBloc,
         builder: (context, LoginPageState state) {
           if (state.loading) {
             return Center(

@@ -36,8 +36,8 @@ class _UserContentsGridState extends State<UserContentsGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-        bloc: _userContentsGridBloc,
+    return BlocBuilder<UserContentsGridBloc, UserContentsGridState>(
+        cubit: _userContentsGridBloc,
         builder: (context, UserContentsGridState state) {
           return ContentsGrid(
             contents: state.contents.toList(),

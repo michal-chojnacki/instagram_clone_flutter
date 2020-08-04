@@ -23,6 +23,7 @@ class PickImagePage extends StatefulWidget {
 }
 
 class _PickImagePageState extends State<PickImagePage> {
+  final _imagePicker = new ImagePicker();
   final _changeNotifier = new StreamController.broadcast();
   final _navigationBloc = GetIt.I<NavigationBloc>();
 
@@ -74,11 +75,11 @@ class _PickImagePageState extends State<PickImagePage> {
                           child: Text('Gallery'),
                           onPressed: _pickImageFromGallery,
                         )),
-                    if (widget.circleShaped) Container(
-                        width: double.infinity,
-                        child: AspectRatio(
-                            aspectRatio: 1.0,
-                            child: CircularOverlay()))
+                    if (widget.circleShaped)
+                      Container(
+                          width: double.infinity,
+                          child: AspectRatio(
+                              aspectRatio: 1.0, child: CircularOverlay()))
                   ],
                 ),
               );
@@ -95,7 +96,7 @@ class _PickImagePageState extends State<PickImagePage> {
   }
 
   Future<void> _pickImageFromGallery() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var image = await _imagePicker.getImage(source: ImageSource.gallery);
     widget.onImagePicked(image.path, true);
   }
 }

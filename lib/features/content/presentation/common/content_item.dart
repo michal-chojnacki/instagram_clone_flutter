@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
-import 'package:instagram_clone/features/profile/domain/get_likes_statuses_use_case.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ContentItem extends StatefulWidget {
@@ -9,9 +8,10 @@ class ContentItem extends StatefulWidget {
   final Function showUser;
   final Function changeLikeStatus;
 
-  ContentItem({@required this.personalizedContent,
-    @required this.showUser,
-    @required this.changeLikeStatus});
+  ContentItem(
+      {@required this.personalizedContent,
+      @required this.showUser,
+      @required this.changeLikeStatus});
 
   @override
   _ContentItemState createState() => _ContentItemState();
@@ -85,7 +85,7 @@ class _ContentItemState extends State<ContentItem> {
                           TextSpan(
                               text: _content.owner.username,
                               style:
-                              new TextStyle(fontWeight: FontWeight.bold)),
+                                  new TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: ' '),
                           TextSpan(text: _content.description),
                         ]),

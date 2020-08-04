@@ -10,20 +10,14 @@ class _$LoginPageState extends LoginPageState {
   @override
   final bool loading;
   @override
-  final bool authenticated;
-  @override
   final bool error;
 
   factory _$LoginPageState([void Function(LoginPageStateBuilder) updates]) =>
       (new LoginPageStateBuilder()..update(updates)).build();
 
-  _$LoginPageState._({this.loading, this.authenticated, this.error})
-      : super._() {
+  _$LoginPageState._({this.loading, this.error}) : super._() {
     if (loading == null) {
       throw new BuiltValueNullFieldError('LoginPageState', 'loading');
-    }
-    if (authenticated == null) {
-      throw new BuiltValueNullFieldError('LoginPageState', 'authenticated');
     }
     if (error == null) {
       throw new BuiltValueNullFieldError('LoginPageState', 'error');
@@ -43,21 +37,18 @@ class _$LoginPageState extends LoginPageState {
     if (identical(other, this)) return true;
     return other is LoginPageState &&
         loading == other.loading &&
-        authenticated == other.authenticated &&
         error == other.error;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc(0, loading.hashCode), authenticated.hashCode), error.hashCode));
+    return $jf($jc($jc(0, loading.hashCode), error.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('LoginPageState')
           ..add('loading', loading)
-          ..add('authenticated', authenticated)
           ..add('error', error))
         .toString();
   }
@@ -71,11 +62,6 @@ class LoginPageStateBuilder
   bool get loading => _$this._loading;
   set loading(bool loading) => _$this._loading = loading;
 
-  bool _authenticated;
-  bool get authenticated => _$this._authenticated;
-  set authenticated(bool authenticated) =>
-      _$this._authenticated = authenticated;
-
   bool _error;
   bool get error => _$this._error;
   set error(bool error) => _$this._error = error;
@@ -85,7 +71,6 @@ class LoginPageStateBuilder
   LoginPageStateBuilder get _$this {
     if (_$v != null) {
       _loading = _$v.loading;
-      _authenticated = _$v.authenticated;
       _error = _$v.error;
       _$v = null;
     }
@@ -107,9 +92,8 @@ class LoginPageStateBuilder
 
   @override
   _$LoginPageState build() {
-    final _$result = _$v ??
-        new _$LoginPageState._(
-            loading: loading, authenticated: authenticated, error: error);
+    final _$result =
+        _$v ?? new _$LoginPageState._(loading: loading, error: error);
     replace(_$result);
     return _$result;
   }

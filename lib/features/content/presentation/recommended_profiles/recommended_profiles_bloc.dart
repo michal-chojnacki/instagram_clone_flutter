@@ -8,14 +8,17 @@ import 'package:instagram_clone/features/content/presentation/recommended_profil
 import 'package:instagram_clone/features/content/presentation/recommended_profiles/recommended_profiles_state.dart';
 import 'package:instagram_clone/features/profile/domain/change_observation_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/get_recommended_profiles_use_case.dart';
+import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 @injectable
 class RecommendedProfilesBloc
     extends Bloc<RecommendedProfilesEvent, RecommendedProfilesState> {
+  final NavigationBloc _navigationBloc;
   final GetRecommendedProfilesUseCase _getRecommendedProfiles;
   final ChangeObservationUseCase _changeObservation;
 
-  RecommendedProfilesBloc(this._getRecommendedProfiles, this._changeObservation)
+  RecommendedProfilesBloc(this._navigationBloc, this._getRecommendedProfiles,
+      this._changeObservation)
       : super(RecommendedProfilesState.initial());
 
   void getRecommendedProfiles() {
@@ -24,6 +27,10 @@ class RecommendedProfilesBloc
 
   void observeUser({@required User user}) {
     add(RecommendedProfilesEvent.observeUser(user: user));
+  }
+
+  void openUserProfilePage({@required User user}) {
+    _navigationBloc.openUserProfilePage(user: user);
   }
 
   @override

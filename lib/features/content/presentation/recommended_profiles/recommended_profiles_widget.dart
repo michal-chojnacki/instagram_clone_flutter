@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/content/presentation/recommended_profiles/recommended_profile_item.dart';
 import 'package:instagram_clone/features/content/presentation/recommended_profiles/recommended_profiles_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/recommended_profiles/recommended_profiles_state.dart';
-import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class RecommendedProfilesWidget extends StatefulWidget {
   @override
@@ -14,7 +13,6 @@ class RecommendedProfilesWidget extends StatefulWidget {
 
 class _RecommendedProfilesWidgetState extends State<RecommendedProfilesWidget> {
   final _recommendedProfilesBloc = GetIt.I<RecommendedProfilesBloc>();
-  final _navigationBloc = GetIt.I<NavigationBloc>();
 
   @override
   void dispose() {
@@ -53,7 +51,8 @@ class _RecommendedProfilesWidgetState extends State<RecommendedProfilesWidget> {
                         return RecommendedProfileItem(
                             user: state.users[index],
                             onOpenProfileClick: (user) =>
-                                _navigationBloc.openUserProfilePage(user: user),
+                                _recommendedProfilesBloc.openUserProfilePage(
+                                    user: user),
                             onObserveClick: (user) => _recommendedProfilesBloc
                                 .observeUser(user: user));
                       }));

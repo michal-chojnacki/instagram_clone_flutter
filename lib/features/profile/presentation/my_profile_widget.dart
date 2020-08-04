@@ -5,7 +5,6 @@ import 'package:instagram_clone/features/content/presentation/common/user_conten
 import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';
 import 'package:instagram_clone/features/profile/presentation/profile_info_widget.dart';
-import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class MyProfileWidget extends StatefulWidget {
   @override
@@ -13,7 +12,6 @@ class MyProfileWidget extends StatefulWidget {
 }
 
 class _MyProfileWidgetState extends State<MyProfileWidget> {
-  final _navigationBloc = GetIt.I<NavigationBloc>();
   final _editProfileBloc = GetIt.I<EditProfileBloc>();
 
   @override
@@ -49,7 +47,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                         margin: EdgeInsets.all(16.0),
                         child: ProfileInfoWidget(
                           user: state.user,
-                          onSelectAvatar: () => _pickImage(context),
+                          onSelectAvatar: () =>
+                              _editProfileBloc.openPickImagePage(),
                         )),
                     ButtonTheme(
                       minWidth: double.infinity,
@@ -58,7 +57,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                           "Edit profile",
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: _navigationBloc.openEditProfilePage,
+                        onPressed: _editProfileBloc.openEditProfilePage,
                       ),
                     ),
                     Expanded(
@@ -71,15 +70,5 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
             }
           }),
     );
-  }
-
-  void _pickImage(BuildContext context) {
-    _navigationBloc.openPickImagePage(
-        ratio: 1.0,
-        circleShaped: true,
-        onImagePicked: (imagePath) {
-          _editProfileBloc.updateProfileData(avatarPath: imagePath);
-          _navigationBloc.pop();
-        });
   }
 }

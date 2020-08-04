@@ -5,7 +5,6 @@ import 'package:instagram_clone/features/content/presentation/common/content_ite
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
 import 'package:instagram_clone/features/profile/domain/change_like_use_case.dart';
-import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class MainContentsWidget extends StatefulWidget {
   _MainContentsWidgetState createState() => _MainContentsWidgetState();
@@ -14,7 +13,6 @@ class MainContentsWidget extends StatefulWidget {
 class _MainContentsWidgetState extends State<MainContentsWidget> {
   final _changeLike = GetIt.I<ChangeLikeUseCase>();
   final _mainContentsBloc = GetIt.I<MainContentsBloc>();
-  final _navigationBloc = GetIt.I<NavigationBloc>();
   final _scrollController = ScrollController();
 
   @override
@@ -54,7 +52,7 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
                             : ContentItem(
                                 personalizedContent: state.contents[index],
                                 showUser: (user) {
-                                  _navigationBloc.openUserProfilePage(
+                                  _mainContentsBloc.openUserProfilePage(
                                       user: user);
                                 },
                                 changeLikeStatus: (status) async {

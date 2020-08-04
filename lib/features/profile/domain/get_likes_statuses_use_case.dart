@@ -11,6 +11,10 @@ class GetLikesStatusesUseCase {
   GetLikesStatusesUseCase(this._loadAuthorizationToken, this._repository);
 
   Future<Result<Map<int, bool>>> call(List<int> contentIds) {
+    if (contentIds.isEmpty) {
+      return Future.value(
+          Result<Map<int, bool>>.success(data: Map<int, bool>()));
+    }
     return _loadAuthorizationToken()
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';
-import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -12,7 +11,6 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final _editProfileBloc = GetIt.I<EditProfileBloc>();
-  final _navigationBloc = GetIt.I<NavigationBloc>();
   final _fullnameTextEditingController = TextEditingController();
   final _usernameTextEditingController = TextEditingController();
   final _bioTextEditingController = TextEditingController();
@@ -39,7 +37,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         appBar: AppBar(
           leading: new IconButton(
             icon: new Icon(Icons.close),
-            onPressed: () => _navigationBloc.pop(),
+            onPressed: () => _editProfileBloc.closeScreen(),
           ),
           title: const Text('Edit profile'),
           actions: <Widget>[
@@ -103,13 +101,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void _pickImage(BuildContext context) {
-    _navigationBloc.openPickImagePage(
-        ratio: 1.0,
-        circleShaped: true,
-        onImagePicked: (imagePath) {
-          _editProfileBloc.updateProfileData(avatarPath: imagePath);
-          _navigationBloc.pop();
-        });
+    _editProfileBloc.openPickImagePage();
   }
 
   Future<void> _updateProfile() async {
@@ -125,6 +117,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     bio = (bio == user.bio) ? null : bio;
     _editProfileBloc.updateProfileData(
         username: username, bio: bio, fullname: fullname);
-    _navigationBloc.pop();
+    _editProfileBloc.closeScreen();
   }
 }

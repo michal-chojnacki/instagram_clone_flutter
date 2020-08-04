@@ -26,7 +26,7 @@ abstract class RegisterModule {
 
   @lazySingleton
   ChopperClient get chopperClient => ChopperClient(
-        baseUrl: "http://192.168.1.7:8080",
+        baseUrl: "http://192.168.1.11:8080",
         converter: GetIt.I<BuiltValueConverter>(),
         client: GetIt.I<Client>(),
       );
@@ -36,7 +36,7 @@ abstract class RegisterModule {
 }
 
 extension HttpClientProxy on HttpClient {
-  String get proxyIp => '192.168.1.9';
+  String get proxyIp => '192.168.1.11';
 
   String get proxyAddress =>
       Platform.isAndroid ? '$proxyIp:8888' : 'localhost:8888';

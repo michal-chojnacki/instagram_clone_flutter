@@ -37,5 +37,8 @@ dev_dependencies:
   injectable_generator: ^1.0.2
   mockito: ^4.1.0
 
+dependency_overrides:
+  analyzer: '0.39.14'
+
 flutter:
   uses-material-design: true

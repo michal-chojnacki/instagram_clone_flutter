@@ -4,17 +4,34 @@ import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.d
 import 'package:instagram_clone/features/profile/domain/update_user_data_use_case.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_event.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';
+import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 @injectable
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
+  final NavigationBloc _navigationBloc;
   final GetUserDataUseCase _getUserData;
   final UpdateUserDataUseCase _updateUserDataUseCase;
 
-  EditProfileBloc(this._getUserData, this._updateUserDataUseCase)
+  EditProfileBloc(
+      this._navigationBloc, this._getUserData, this._updateUserDataUseCase)
       : super(EditProfileState.loading());
 
   void fetchProfileData() {
     add(EditProfileEvent.fetchProfileData());
+  }
+
+  void openEditProfilePage() {
+    _navigationBloc.openEditProfilePage();
+  }
+
+  void openPickImagePage() {
+    _navigationBloc.openPickImagePage(
+        ratio: 1.0,
+        circleShaped: true,
+        onImagePicked: (imagePath) {
+          updateProfileData(avatarPath: imagePath);
+          closeScreen();
+        });
   }
 
   void updateProfileData(
@@ -24,6 +41,10 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         username: username,
         bio: bio,
         fullname: fullname));
+  }
+
+  void closeScreen() {
+    _navigationBloc.pop();
   }
 
   @override

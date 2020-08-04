@@ -36,6 +36,7 @@ import 'features/content/data/mapper/image_mapper.dart';
 import 'features/authenticate/domain/load_authorization_token_use_case.dart';
 import 'features/authenticate/presentation/login_page_bloc.dart';
 import 'features/content/presentation/main_contents/main_contents_bloc.dart';
+import 'features/content/presentation/common/page/main_user_bloc.dart';
 import 'navigation/navigation_bloc.dart';
 import 'features/content/presentation/recommended_profiles/recommended_profiles_bloc.dart';
 import 'injection.dart';
@@ -120,10 +121,14 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       ));
   gh.factory<GetUserDataUseCase>(() => GetUserDataUseCase(
       g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
-  gh.factory<LoginPageBloc>(() =>
-      LoginPageBloc(g<AuthenticateUserUseCase>(), g<RegisterUserUseCase>()));
+  gh.factory<LoginPageBloc>(() => LoginPageBloc(
+        g<NavigationBloc>(),
+        g<AuthenticateUserUseCase>(),
+        g<RegisterUserUseCase>(),
+      ));
   gh.factory<MainContentsBloc>(
-      () => MainContentsBloc(g<GetMainContentUseCase>()));
+      () => MainContentsBloc(g<NavigationBloc>(), g<GetMainContentUseCase>()));
+  gh.factory<MainUserBloc>(() => MainUserBloc(g<NavigationBloc>()));
   gh.factory<RecommendedProfilesBloc>(() => RecommendedProfilesBloc(
       g<GetRecommendedProfilesUseCase>(), g<ChangeObservationUseCase>()));
   gh.factory<SendContentUseCase>(() => SendContentUseCase(
@@ -142,8 +147,11 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       () => AuthenticationRepositoryImpl(
           g<AuthenticationService>(), g<AuthenticationLocalDataSource>()),
       registerFor: {_prod});
-  gh.factory<EditProfileBloc>(() =>
-      EditProfileBloc(g<GetUserDataUseCase>(), g<UpdateUserDataUseCase>()));
+  gh.factory<EditProfileBloc>(() => EditProfileBloc(
+        g<NavigationBloc>(),
+        g<GetUserDataUseCase>(),
+        g<UpdateUserDataUseCase>(),
+      ));
   gh.factory<GetContentWithQueryUseCase>(() => GetContentWithQueryUseCase(
         g<UserContentRepository>(),
         g<LoadAuthorizationTokenUseCase>(),
@@ -156,7 +164,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       ));
   gh.factory<SearchForContentBloc>(() => SearchForContentBloc(
       g<GetContentWithQueryUseCase>(), g<GetRecommendedContentUseCase>()));
-  gh.factory<SendContentBloc>(() => SendContentBloc(g<SendContentUseCase>()));
+  gh.factory<SendContentBloc>(
+      () => SendContentBloc(g<NavigationBloc>(), g<SendContentUseCase>()));
   gh.factory<UserContentsGridBloc>(() => UserContentsGridBloc(
       g<GetContentsForUserUseCase>(), g<GetUserContentsUseCase>()));
 }

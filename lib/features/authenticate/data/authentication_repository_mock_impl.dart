@@ -4,9 +4,8 @@ import 'package:instagram_clone/features/authenticate/domain/authentication_repo
 import 'package:instagram_clone/features/authenticate/domain/model/credentials.dart';
 import 'package:instagram_clone/injection.dart';
 
-@injectable
+@Injectable(as: AuthenticationRepository)
 @mock
-@RegisterAs(AuthenticationRepository)
 class AuthenticationRepositoryMockImpl extends AuthenticationRepository {
   final String _mockToken = "mock_token";
 

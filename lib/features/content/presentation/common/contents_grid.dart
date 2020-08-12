@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class ContentsGrid extends StatelessWidget {
   final List<PersonalizedContent> contents;
   final bool loading;
-  final _navigationBloc = GetIt.I<NavigationBloc>();
 
   ContentsGrid({@required this.contents, this.loading});
 
@@ -25,8 +24,9 @@ class ContentsGrid extends StatelessWidget {
           itemBuilder: (context, index) {
             return InkWell(
               child: Image.network(contents[index].content.image.url),
-              onTap: () => _navigationBloc.openSingleContentPage(
-                  content: contents[index]),
+              onTap: () => context
+                  .bloc<NavigationBloc>()
+                  .openSingleContentPage(content: contents[index]),
             );
           });
     }

@@ -9,9 +9,8 @@ import 'package:instagram_clone/features/profile/data/model/raw_observing_status
 import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/data/user_data_service.dart';
 
-@injectable
 @prod
-@RegisterAs(UserDataRepository)
+@Injectable(as: UserDataRepository)
 class UserDataRepositoryImpl extends UserDataRepository {
   final UserDataService _service;
   final UserMapper _userMapper;
@@ -101,11 +100,11 @@ class UserDataRepositoryImpl extends UserDataRepository {
   }
 
   @override
-  Future<Result<Map<int, bool>>> getLikes(String authorizationToken,
-      List<int> contentIds) async {
+  Future<Result<Map<int, bool>>> getLikes(
+      String authorizationToken, List<int> contentIds) async {
     try {
-      final response =
-      await _service.getLikeStatuses('Bearer $authorizationToken', BuiltList.of(contentIds));
+      final response = await _service.getLikeStatuses(
+          'Bearer $authorizationToken', BuiltList.of(contentIds));
       if (response.statusCode == 200) {
         return Result.success(data: response.body.statuses.toMap());
       } else {
@@ -117,10 +116,10 @@ class UserDataRepositoryImpl extends UserDataRepository {
   }
 
   @override
-  Future<Result<void>> changeLike(String authorizationToken, int contentId, bool like) async {
+  Future<Result<void>> changeLike(
+      String authorizationToken, int contentId, bool like) async {
     try {
-      final response = await _service.updateLikes(
-          'Bearer $authorizationToken',
+      final response = await _service.updateLikes('Bearer $authorizationToken',
           RawLikeStatus.create(contentId: contentId, status: like));
       if (response.statusCode == 200) {
         return Result.success(data: null);

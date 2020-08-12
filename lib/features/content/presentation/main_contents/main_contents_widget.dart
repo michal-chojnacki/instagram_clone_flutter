@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:instagram_clone/features/content/domain/model/content.dart';
-import 'package:instagram_clone/features/content/presentation/common/content_item.dart';
+import 'package:instagram_clone/features/content/presentation/item/content_item_widget.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
-import 'package:instagram_clone/features/profile/domain/change_like_use_case.dart';
-import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class MainContentsWidget extends StatefulWidget {
   _MainContentsWidgetState createState() => _MainContentsWidgetState();
 }
 
 class _MainContentsWidgetState extends State<MainContentsWidget> {
-  final _changeLike = GetIt.I<ChangeLikeUseCase>();
   final _mainContentsBloc = GetIt.I<MainContentsBloc>();
-  final _navigationBloc = GetIt.I<NavigationBloc>();
   final _scrollController = ScrollController();
 
   @override
@@ -36,8 +31,8 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
       appBar: AppBar(
         title: const Text('Instagram clone'),
       ),
-      body: BlocBuilder(
-          bloc: _mainContentsBloc,
+      body: BlocBuilder<MainContentsBloc, MainContentsState>(
+          cubit: _mainContentsBloc,
           builder: (context, MainContentsState state) {
             if (state.contents.isEmpty) {
               return Center(
@@ -52,17 +47,9 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
                       itemBuilder: (context, index) {
                         return index >= state.contents.length
                             ? _buildLoaderListItem()
-                            : ContentItem(
+                            : ContentItemWidget(
                                 personalizedContent: state.contents[index],
-                          showUser: (user) {
-                            _navigationBloc.openUserProfilePage(
-                                user: user);
-                          },
-                          changeLikeStatus: (status) async {
-                              return (await (_changeLike(state.contents[index].content.id, !status))).when(
-                                  success: (_) => !status, error: (_) => status);
-                          },
-                        );
+                              );
                       }));
             }
           }),

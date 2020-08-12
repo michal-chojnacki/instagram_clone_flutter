@@ -14,7 +14,8 @@ class SearchForContentBloc
   final GetRecommendedContentUseCase _getRecommendedContent;
   int currentPage = 0;
 
-  SearchForContentBloc(this._getContentWithQuery, this._getRecommendedContent);
+  SearchForContentBloc(this._getContentWithQuery, this._getRecommendedContent)
+      : super(SearchForContentState.initial());
 
   void fetchRecommendedContent({@required bool clearedQuery}) {
     if (clearedQuery) {
@@ -36,9 +37,6 @@ class SearchForContentBloc
       currentPage += 1;
     }
   }
-
-  @override
-  SearchForContentState get initialState => SearchForContentState.initial();
 
   @override
   Stream<SearchForContentState> mapEventToState(SearchForContentEvent event) {
@@ -64,7 +62,7 @@ class SearchForContentBloc
     yield SearchForContentState.loading();
     yield (await _getContentWithQuery(event.query, event.page)).when(
         success: (result) {
-          return SearchForContentState.success(
+      return SearchForContentState.success(
           state.contents + BuiltList.of(result.data));
     }, error: (result) {
       currentPage = null;

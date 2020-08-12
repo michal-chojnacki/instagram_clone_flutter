@@ -20,6 +20,7 @@ import 'features/authenticate/data/authentication_service.dart';
 import 'core/built_value_converter.dart';
 import 'features/profile/domain/change_like_use_case.dart';
 import 'features/profile/domain/change_observation_use_case.dart';
+import 'features/content/presentation/item/content_item_bloc.dart';
 import 'features/content/data/mapper/content_mapper.dart';
 import 'features/content/data/content_service.dart';
 import 'features/profile/presentation/edit_profile_bloc.dart';
@@ -38,6 +39,7 @@ import 'features/authenticate/presentation/login_page_bloc.dart';
 import 'features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'features/content/presentation/common/page/main_user_bloc.dart';
 import 'navigation/navigation_bloc.dart';
+import 'features/content/presentation/common/model/personalized_content.dart';
 import 'features/content/presentation/recommended_profiles/recommended_profiles_bloc.dart';
 import 'injection.dart';
 import 'features/authenticate/domain/register_user_use_case.dart';
@@ -96,6 +98,12 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
   gh.factory<ChangeObservationUseCase>(() => ChangeObservationUseCase(
       g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+  gh.factoryParam<ContentItemBloc, PersonalizedContent, dynamic>(
+      (personalizedContent, _) => ContentItemBloc(
+            g<NavigationBloc>(),
+            g<ChangeLikeUseCase>(),
+            personalizedContent,
+          ));
   gh.factory<ContentMapper>(
       () => ContentMapper(g<ImageMapper>(), g<UserMapper>()));
   gh.factory<GetLikesStatusesUseCase>(() => GetLikesStatusesUseCase(
@@ -130,7 +138,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       () => MainContentsBloc(g<NavigationBloc>(), g<GetMainContentUseCase>()));
   gh.factory<MainUserBloc>(() => MainUserBloc(g<NavigationBloc>()));
   gh.factory<RecommendedProfilesBloc>(() => RecommendedProfilesBloc(
-      g<GetRecommendedProfilesUseCase>(), g<ChangeObservationUseCase>()));
+        g<NavigationBloc>(),
+        g<GetRecommendedProfilesUseCase>(),
+        g<ChangeObservationUseCase>(),
+      ));
   gh.factory<SendContentUseCase>(() => SendContentUseCase(
       g<UserContentRepository>(), g<LoadAuthorizationTokenUseCase>()));
   gh.factory<UpdateUserDataUseCase>(() => UpdateUserDataUseCase(

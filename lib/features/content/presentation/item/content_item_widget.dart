@@ -62,7 +62,9 @@ class _ContentItemWidgetState extends State<ContentItemWidget> {
                 const SizedBox(
                   height: 2.0,
                 ),
-                Image.network(state.content.image.url),
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(state.content.image.url)),
                 Row(
                   children: <Widget>[
                     IconButton(

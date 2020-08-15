@@ -23,7 +23,9 @@ class ContentsGrid extends StatelessWidget {
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
           itemBuilder: (context, index) {
             return InkWell(
-              child: Image.network(contents[index].content.image.url),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(contents[index].content.image.url)),
               onTap: () => context
                   .bloc<NavigationBloc>()
                   .openSingleContentPage(content: contents[index]),

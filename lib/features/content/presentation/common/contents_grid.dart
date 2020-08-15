@@ -16,21 +16,24 @@ class ContentsGrid extends StatelessWidget {
         child: CircularProgressIndicator(),
       );
     } else {
-      return GridView.builder(
-          shrinkWrap: true,
-          itemCount: contents.length,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-          itemBuilder: (context, index) {
-            return InkWell(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(contents[index].content.image.url)),
-              onTap: () => context
-                  .bloc<NavigationBloc>()
-                  .openSingleContentPage(content: contents[index]),
-            );
-          });
+      return Expanded(
+        child: GridView.builder(
+            itemCount: contents.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, childAspectRatio: 1.0),
+            itemBuilder: (context, index) {
+              return InkWell(
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      contents[index].content.image.url,
+                    )),
+                onTap: () => context
+                    .bloc<NavigationBloc>()
+                    .openSingleContentPage(content: contents[index]),
+              );
+            }),
+      );
     }
   }
 }

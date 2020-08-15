@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/core/widgets/animated_fav_icon.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_state.dart';
@@ -58,15 +59,16 @@ class _ContentItemWidgetState extends State<ContentItemWidget> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2.0,
                 ),
                 Image.network(state.content.image.url),
                 Row(
                   children: <Widget>[
                     IconButton(
-                      icon: Icon(
-                          state.liked ? Icons.favorite : Icons.favorite_border),
+                      icon: AnimatedFavIcon(
+                        state: () => state.liked,
+                      ),
                       onPressed: () {
                         _contentItemBloc.changeLikeStatus(
                             liked: !state.liked, contentId: state.content.id);

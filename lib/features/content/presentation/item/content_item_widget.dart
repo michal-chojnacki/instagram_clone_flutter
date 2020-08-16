@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/core/widgets/animated_fav_icon.dart';
+import 'package:instagram_clone/core/widgets/rounded_square_image.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_state.dart';
@@ -62,9 +63,7 @@ class _ContentItemWidgetState extends State<ContentItemWidget> {
                 const SizedBox(
                   height: 2.0,
                 ),
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(state.content.image.url)),
+                RoundedSquareImage.network(state.content.image.url),
                 Row(
                   children: <Widget>[
                     IconButton(

@@ -60,6 +60,17 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                         onPressed: _editProfileBloc.openEditProfilePage,
                       ),
                     ),
+                    ButtonTheme(
+                      minWidth: double.infinity,
+                      child: RaisedButton(
+                        color: Colors.white,
+                        child: Text(
+                          "Logout",
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                        onPressed: _editProfileBloc.logout,
+                      ),
+                    ),
                     Expanded(
                         child: UserContentsGrid(
                       user: null,

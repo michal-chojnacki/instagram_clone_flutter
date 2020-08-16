@@ -7,4 +7,6 @@ abstract class AuthenticationRepository {
   Future<Result<String>> register(Credentials credentials);
 
   Future<Result<String>> obtainToken();
+
+  Future<Result<void>> clearToken();
 }

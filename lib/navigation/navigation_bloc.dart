@@ -16,11 +16,14 @@ import 'package:instagram_clone/features/profile/presentation/page/user_profile_
 import "package:instagram_clone/navigation/navigation_event.dart";
 
 @lazySingleton
-@injectable
 class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
   final navigatorKey = GlobalKey<NavigatorState>();
 
   NavigationBloc() : super(0);
+
+  void openLoginPage() {
+    add(NavigationEvent.openLoginPage());
+  }
 
   void openMainUserPage() {
     add(NavigationEvent.openMainUserPage());

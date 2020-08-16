@@ -13,4 +13,6 @@ enum _EditProfileEvent {
     DataField<String>('bio'),
   ])
   UpdateProfileData,
+  @object
+  Logout,
 }

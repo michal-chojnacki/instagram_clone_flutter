@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instagram_clone/core/widgets/rounded_square_image.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
-import 'package:instagram_clone/navigation/navigation_bloc.dart';
+import 'package:instagram_clone/features/content/presentation/main/main_bloc.dart';
 
 class ContentsGrid extends StatelessWidget {
   final List<PersonalizedContent> contents;
@@ -17,21 +17,23 @@ class ContentsGrid extends StatelessWidget {
         child: CircularProgressIndicator(),
       );
     } else {
-      return Expanded(
-        child: GridView.builder(
-            itemCount: contents.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, childAspectRatio: 1.0),
-            itemBuilder: (context, index) {
-              return InkWell(
+      return GridView.builder(
+          shrinkWrap: true,
+          itemCount: contents.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, childAspectRatio: 1.0),
+          itemBuilder: (context, index) {
+            return InkWell(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: RoundedSquareImage.network(
                     contents[index].content.image.url),
-                onTap: () => context
-                    .bloc<NavigationBloc>()
-                    .openSingleContentPage(content: contents[index]),
-              );
-            }),
-      );
+              ),
+              onTap: () => context
+                  .bloc<MainBloc>()
+                  .openSingleContentPage(content: contents[index]),
+            );
+          });
     }
   }
 }

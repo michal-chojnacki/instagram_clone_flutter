@@ -18,14 +18,19 @@ abstract class EditProfileEvent extends Equatable {
       @required String fullname,
       @required String bio}) = UpdateProfileData;
 
+  factory EditProfileEvent.logout() = Logout;
+
   final _EditProfileEvent _type;
 
 //ignore: missing_return
   R when<R>(
       {@required R Function(FetchProfileData) fetchProfileData,
-      @required R Function(UpdateProfileData) updateProfileData}) {
+      @required R Function(UpdateProfileData) updateProfileData,
+      @required R Function(Logout) logout}) {
     assert(() {
-      if (fetchProfileData == null || updateProfileData == null) {
+      if (fetchProfileData == null ||
+          updateProfileData == null ||
+          logout == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -35,15 +40,20 @@ abstract class EditProfileEvent extends Equatable {
         return fetchProfileData(this as FetchProfileData);
       case _EditProfileEvent.UpdateProfileData:
         return updateProfileData(this as UpdateProfileData);
+      case _EditProfileEvent.Logout:
+        return logout(this as Logout);
     }
   }
 
 //ignore: missing_return
   Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(FetchProfileData) fetchProfileData,
-      @required FutureOr<R> Function(UpdateProfileData) updateProfileData}) {
+      @required FutureOr<R> Function(UpdateProfileData) updateProfileData,
+      @required FutureOr<R> Function(Logout) logout}) {
     assert(() {
-      if (fetchProfileData == null || updateProfileData == null) {
+      if (fetchProfileData == null ||
+          updateProfileData == null ||
+          logout == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -53,12 +63,15 @@ abstract class EditProfileEvent extends Equatable {
         return fetchProfileData(this as FetchProfileData);
       case _EditProfileEvent.UpdateProfileData:
         return updateProfileData(this as UpdateProfileData);
+      case _EditProfileEvent.Logout:
+        return logout(this as Logout);
     }
   }
 
   R whenOrElse<R>(
       {R Function(FetchProfileData) fetchProfileData,
       R Function(UpdateProfileData) updateProfileData,
+      R Function(Logout) logout,
       @required R Function(EditProfileEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -73,6 +86,9 @@ abstract class EditProfileEvent extends Equatable {
       case _EditProfileEvent.UpdateProfileData:
         if (updateProfileData == null) break;
         return updateProfileData(this as UpdateProfileData);
+      case _EditProfileEvent.Logout:
+        if (logout == null) break;
+        return logout(this as Logout);
     }
     return orElse(this);
   }
@@ -80,6 +96,7 @@ abstract class EditProfileEvent extends Equatable {
   Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(FetchProfileData) fetchProfileData,
       FutureOr<R> Function(UpdateProfileData) updateProfileData,
+      FutureOr<R> Function(Logout) logout,
       @required FutureOr<R> Function(EditProfileEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -94,6 +111,9 @@ abstract class EditProfileEvent extends Equatable {
       case _EditProfileEvent.UpdateProfileData:
         if (updateProfileData == null) break;
         return updateProfileData(this as UpdateProfileData);
+      case _EditProfileEvent.Logout:
+        if (logout == null) break;
+        return logout(this as Logout);
     }
     return orElse(this);
   }
@@ -101,9 +121,12 @@ abstract class EditProfileEvent extends Equatable {
 //ignore: missing_return
   Future<void> whenPartial(
       {FutureOr<void> Function(FetchProfileData) fetchProfileData,
-      FutureOr<void> Function(UpdateProfileData) updateProfileData}) {
+      FutureOr<void> Function(UpdateProfileData) updateProfileData,
+      FutureOr<void> Function(Logout) logout}) {
     assert(() {
-      if (fetchProfileData == null && updateProfileData == null) {
+      if (fetchProfileData == null &&
+          updateProfileData == null &&
+          logout == null) {
         throw 'provide at least one branch';
       }
       return true;
@@ -115,6 +138,9 @@ abstract class EditProfileEvent extends Equatable {
       case _EditProfileEvent.UpdateProfileData:
         if (updateProfileData == null) break;
         return updateProfileData(this as UpdateProfileData);
+      case _EditProfileEvent.Logout:
+        if (logout == null) break;
+        return logout(this as Logout);
     }
   }
 
@@ -156,4 +182,16 @@ class UpdateProfileData extends EditProfileEvent {
       'UpdateProfileData(avatarPath:${this.avatarPath},username:${this.username},fullname:${this.fullname},bio:${this.bio})';
   @override
   List get props => [avatarPath, username, fullname, bio];
+}
+
+@immutable
+class Logout extends EditProfileEvent {
+  const Logout._() : super(_EditProfileEvent.Logout);
+
+  factory Logout() {
+    _instance ??= const Logout._();
+    return _instance;
+  }
+
+  static Logout _instance;
 }

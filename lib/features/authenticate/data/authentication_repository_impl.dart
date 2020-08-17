@@ -53,4 +53,9 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   Future<Result<String>> obtainToken() {
     return _localDataSource.obtainToken();
   }
+
+  @override
+  Future<Result<void>> clearToken() {
+    return _localDataSource.saveToken(null);
+  }
 }

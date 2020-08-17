@@ -20,6 +20,7 @@ import 'features/authenticate/data/authentication_service.dart';
 import 'core/built_value_converter.dart';
 import 'features/profile/domain/change_like_use_case.dart';
 import 'features/profile/domain/change_observation_use_case.dart';
+import 'features/authenticate/domain/clear_authentication_token_use_case.dart';
 import 'features/content/presentation/item/content_item_bloc.dart';
 import 'features/content/data/mapper/content_mapper.dart';
 import 'features/content/data/content_service.dart';
@@ -36,6 +37,7 @@ import 'features/profile/domain/get_user_data_use_case.dart';
 import 'features/content/data/mapper/image_mapper.dart';
 import 'features/authenticate/domain/load_authorization_token_use_case.dart';
 import 'features/authenticate/presentation/login_page_bloc.dart';
+import 'features/content/presentation/main/main_bloc.dart';
 import 'features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'features/content/presentation/common/page/main_user_bloc.dart';
 import 'navigation/navigation_bloc.dart';
@@ -68,10 +70,13 @@ const _prod = 'prod';
 Future<void> $initGetIt(GetIt g, {String environment}) async {
   final gh = GetItHelper(g, environment);
   final registerModule = _$RegisterModule();
-  gh.factory<AuthenticationRepository>(() => AuthenticationRepositoryMockImpl(),
+  gh.lazySingleton<AuthenticationRepository>(
+      () => AuthenticationRepositoryMockImpl(),
       registerFor: {_mock});
   gh.factory<BuiltValueConverter>(() => BuiltValueConverter());
   gh.lazySingleton<ChopperClient>(() => registerModule.chopperClient);
+  gh.factory<ClearAuthenticationTokenUseCase>(
+      () => ClearAuthenticationTokenUseCase(g<AuthenticationRepository>()));
   gh.lazySingleton<Client>(() => registerModule.create);
   gh.factory<ContentService>(() => ContentService.create(g<ChopperClient>()));
   gh.factory<ImageMapper>(() => ImageMapper());
@@ -134,6 +139,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<AuthenticateUserUseCase>(),
         g<RegisterUserUseCase>(),
       ));
+  gh.lazySingleton<MainBloc>(
+      () => MainBloc(g<LoadAuthorizationTokenUseCase>(), g<NavigationBloc>()));
   gh.factory<MainContentsBloc>(
       () => MainContentsBloc(g<NavigationBloc>(), g<GetMainContentUseCase>()));
   gh.factory<MainUserBloc>(() => MainUserBloc(g<NavigationBloc>()));
@@ -159,9 +166,11 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
           g<AuthenticationService>(), g<AuthenticationLocalDataSource>()),
       registerFor: {_prod});
   gh.factory<EditProfileBloc>(() => EditProfileBloc(
+        g<MainBloc>(),
         g<NavigationBloc>(),
         g<GetUserDataUseCase>(),
         g<UpdateUserDataUseCase>(),
+        g<ClearAuthenticationTokenUseCase>(),
       ));
   gh.factory<GetContentWithQueryUseCase>(() => GetContentWithQueryUseCase(
         g<UserContentRepository>(),

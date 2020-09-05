@@ -26,7 +26,7 @@ abstract class RegisterModule {
 
   @lazySingleton
   ChopperClient get chopperClient => ChopperClient(
-        baseUrl: "http://192.168.1.11:8080",
+        baseUrl: "https://michappsinstagram.herokuapp.com/api/v1",
         converter: GetIt.I<BuiltValueConverter>(),
         client: GetIt.I<Client>(),
       );

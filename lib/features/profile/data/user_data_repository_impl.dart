@@ -104,7 +104,8 @@ class UserDataRepositoryImpl extends UserDataRepository {
       String authorizationToken, List<int> contentIds) async {
     try {
       final response = await _service.getLikeStatuses(
-          'Bearer $authorizationToken', BuiltList.of(contentIds));
+          'Bearer $authorizationToken',
+          BuiltList.of(contentIds).toString().replaceAll(' ', ''));
       if (response.statusCode == 200) {
         return Result.success(data: response.body.statuses.toMap());
       } else {

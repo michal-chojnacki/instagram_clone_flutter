@@ -18,7 +18,7 @@ abstract class ContentItemState
   factory ContentItemState.initial(Content content, bool liked) {
     return ContentItemState((b) => b
       ..content = content.toBuilder()
-      ..liked = false);
+      ..liked = liked);
   }
 
   factory ContentItemState.setLikeStatus(

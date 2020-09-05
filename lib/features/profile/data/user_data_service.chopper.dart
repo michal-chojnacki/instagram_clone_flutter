@@ -73,7 +73,7 @@ class _$UserDataService extends UserDataService {
 
   @override
   Future<Response<RawLikeStatuses>> getLikeStatuses(
-      String authorizationBearer, BuiltList<int> ids) {
+      String authorizationBearer, String ids) {
     final $url = '/likes';
     final $params = <String, dynamic>{'ids': ids};
     final $headers = {'Authorization': authorizationBearer};

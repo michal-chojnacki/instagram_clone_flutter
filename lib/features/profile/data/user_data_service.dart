@@ -22,8 +22,8 @@ abstract class UserDataService extends ChopperService {
       @Header("Authorization") String authorizationBearer);
 
   @Get(path: 'recommended_users')
-  Future<Response<RawRecommendedUsers>> getRecommendedUsers(@Header("Authorization") String authorizationBearer);
-
+  Future<Response<RawRecommendedUsers>> getRecommendedUsers(
+      @Header("Authorization") String authorizationBearer);
 
   @Get(path: 'observing')
   Future<Response<RawObservingStatus>> getObservingStatus(
@@ -48,7 +48,7 @@ abstract class UserDataService extends ChopperService {
   @Get(path: 'likes')
   Future<Response<RawLikeStatuses>> getLikeStatuses(
       @Header("Authorization") String authorizationBearer,
-      @Query("ids") BuiltList<int> ids);
+      @Query("ids") String ids);
 
   @Post(path: 'likes')
   Future<Response> updateLikes(

@@ -36,7 +36,9 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
           builder: (context, MainContentsState state) {
             if (state.contents.isEmpty) {
               return Center(
-                child: CircularProgressIndicator(),
+                child: state.hasReachedEndOfResults
+                    ? Text("There is no content...")
+                    : CircularProgressIndicator(),
               );
             } else {
               return NotificationListener<ScrollNotification>(

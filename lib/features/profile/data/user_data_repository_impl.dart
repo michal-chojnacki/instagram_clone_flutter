@@ -10,6 +10,7 @@ import 'package:instagram_clone/features/profile/domain/user_data_repository.dar
 import 'package:instagram_clone/features/profile/data/user_data_service.dart';
 
 @prod
+@dev
 @Injectable(as: UserDataRepository)
 class UserDataRepositoryImpl extends UserDataRepository {
   final UserDataService _service;

@@ -8,6 +8,7 @@ import 'package:instagram_clone/features/authenticate/domain/authentication_repo
 import 'package:instagram_clone/features/authenticate/domain/model/credentials.dart';
 
 @prod
+@dev
 @Injectable(as: AuthenticationRepository)
 class AuthenticationRepositoryImpl extends AuthenticationRepository {
   final AuthenticationService _service;

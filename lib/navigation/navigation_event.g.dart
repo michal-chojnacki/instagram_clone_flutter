@@ -16,7 +16,8 @@ abstract class NavigationEvent extends Equatable {
 
   factory NavigationEvent.openLoginPage() = OpenLoginPage;
 
-  factory NavigationEvent.openEditUserPage() = OpenEditUserPage;
+  factory NavigationEvent.openEditUserPage({@required Function thenFunction}) =
+      OpenEditUserPage;
 
   factory NavigationEvent.openSendContentPage({@required String imagePath}) =
       OpenSendContentPage;
@@ -340,14 +341,15 @@ class OpenLoginPage extends NavigationEvent {
 
 @immutable
 class OpenEditUserPage extends NavigationEvent {
-  const OpenEditUserPage._() : super(_NavigationEvent.OpenEditUserPage);
+  const OpenEditUserPage({@required this.thenFunction})
+      : super(_NavigationEvent.OpenEditUserPage);
 
-  factory OpenEditUserPage() {
-    _instance ??= const OpenEditUserPage._();
-    return _instance;
-  }
+  final Function thenFunction;
 
-  static OpenEditUserPage _instance;
+  @override
+  String toString() => 'OpenEditUserPage(thenFunction:${this.thenFunction})';
+  @override
+  List get props => [thenFunction];
 }
 
 @immutable

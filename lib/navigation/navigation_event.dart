@@ -12,7 +12,9 @@ enum _NavigationEvent {
   OpenMainUserPage,
   @object
   OpenLoginPage,
-  @object
+  @Data(fields: [
+    DataField<Function>('thenFunction'),
+  ])
   OpenEditUserPage,
   @Data(fields: [
     DataField<String>('imagePath'),

@@ -16,12 +16,26 @@ class _$User extends User {
   @override
   final String bio;
   @override
+  final int posts;
+  @override
+  final int followers;
+  @override
+  final int followees;
+  @override
   final Image avatar;
 
   factory _$User([void Function(UserBuilder) updates]) =>
       (new UserBuilder()..update(updates)).build();
 
-  _$User._({this.id, this.username, this.fullname, this.bio, this.avatar})
+  _$User._(
+      {this.id,
+      this.username,
+      this.fullname,
+      this.bio,
+      this.posts,
+      this.followers,
+      this.followees,
+      this.avatar})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('User', 'id');
@@ -34,6 +48,15 @@ class _$User extends User {
     }
     if (bio == null) {
       throw new BuiltValueNullFieldError('User', 'bio');
+    }
+    if (posts == null) {
+      throw new BuiltValueNullFieldError('User', 'posts');
+    }
+    if (followers == null) {
+      throw new BuiltValueNullFieldError('User', 'followers');
+    }
+    if (followees == null) {
+      throw new BuiltValueNullFieldError('User', 'followees');
     }
     if (avatar == null) {
       throw new BuiltValueNullFieldError('User', 'avatar');
@@ -55,14 +78,25 @@ class _$User extends User {
         username == other.username &&
         fullname == other.fullname &&
         bio == other.bio &&
+        posts == other.posts &&
+        followers == other.followers &&
+        followees == other.followees &&
         avatar == other.avatar;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), username.hashCode), fullname.hashCode),
-            bio.hashCode),
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc($jc($jc(0, id.hashCode), username.hashCode),
+                            fullname.hashCode),
+                        bio.hashCode),
+                    posts.hashCode),
+                followers.hashCode),
+            followees.hashCode),
         avatar.hashCode));
   }
 }
@@ -86,6 +120,18 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String get bio => _$this._bio;
   set bio(String bio) => _$this._bio = bio;
 
+  int _posts;
+  int get posts => _$this._posts;
+  set posts(int posts) => _$this._posts = posts;
+
+  int _followers;
+  int get followers => _$this._followers;
+  set followers(int followers) => _$this._followers = followers;
+
+  int _followees;
+  int get followees => _$this._followees;
+  set followees(int followees) => _$this._followees = followees;
+
   ImageBuilder _avatar;
   ImageBuilder get avatar => _$this._avatar ??= new ImageBuilder();
   set avatar(ImageBuilder avatar) => _$this._avatar = avatar;
@@ -98,6 +144,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
       _username = _$v.username;
       _fullname = _$v.fullname;
       _bio = _$v.bio;
+      _posts = _$v.posts;
+      _followers = _$v.followers;
+      _followees = _$v.followees;
       _avatar = _$v.avatar?.toBuilder();
       _$v = null;
     }
@@ -127,6 +176,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
               username: username,
               fullname: fullname,
               bio: bio,
+              posts: posts,
+              followers: followers,
+              followees: followees,
               avatar: avatar.build());
     } catch (_) {
       String _$failedField;

@@ -42,6 +42,24 @@ class _$RawUserSerializer implements StructuredSerializer<RawUser> {
         ..add(serializers.serialize(object.bio,
             specifiedType: const FullType(String)));
     }
+    if (object.posts != null) {
+      result
+        ..add('posts')
+        ..add(serializers.serialize(object.posts,
+            specifiedType: const FullType(int)));
+    }
+    if (object.followers != null) {
+      result
+        ..add('followers')
+        ..add(serializers.serialize(object.followers,
+            specifiedType: const FullType(int)));
+    }
+    if (object.followees != null) {
+      result
+        ..add('followees')
+        ..add(serializers.serialize(object.followees,
+            specifiedType: const FullType(int)));
+    }
     if (object.avatar != null) {
       result
         ..add('avatar')
@@ -78,6 +96,18 @@ class _$RawUserSerializer implements StructuredSerializer<RawUser> {
           result.bio = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'posts':
+          result.posts = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'followers':
+          result.followers = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'followees':
+          result.followees = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'avatar':
           result.avatar.replace(serializers.deserialize(value,
               specifiedType: const FullType(RawImage)) as RawImage);
@@ -99,12 +129,26 @@ class _$RawUser extends RawUser {
   @override
   final String bio;
   @override
+  final int posts;
+  @override
+  final int followers;
+  @override
+  final int followees;
+  @override
   final RawImage avatar;
 
   factory _$RawUser([void Function(RawUserBuilder) updates]) =>
       (new RawUserBuilder()..update(updates)).build();
 
-  _$RawUser._({this.id, this.username, this.fullname, this.bio, this.avatar})
+  _$RawUser._(
+      {this.id,
+      this.username,
+      this.fullname,
+      this.bio,
+      this.posts,
+      this.followers,
+      this.followees,
+      this.avatar})
       : super._();
 
   @override
@@ -122,14 +166,25 @@ class _$RawUser extends RawUser {
         username == other.username &&
         fullname == other.fullname &&
         bio == other.bio &&
+        posts == other.posts &&
+        followers == other.followers &&
+        followees == other.followees &&
         avatar == other.avatar;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), username.hashCode), fullname.hashCode),
-            bio.hashCode),
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc($jc($jc(0, id.hashCode), username.hashCode),
+                            fullname.hashCode),
+                        bio.hashCode),
+                    posts.hashCode),
+                followers.hashCode),
+            followees.hashCode),
         avatar.hashCode));
   }
 
@@ -140,6 +195,9 @@ class _$RawUser extends RawUser {
           ..add('username', username)
           ..add('fullname', fullname)
           ..add('bio', bio)
+          ..add('posts', posts)
+          ..add('followers', followers)
+          ..add('followees', followees)
           ..add('avatar', avatar))
         .toString();
   }
@@ -164,6 +222,18 @@ class RawUserBuilder implements Builder<RawUser, RawUserBuilder> {
   String get bio => _$this._bio;
   set bio(String bio) => _$this._bio = bio;
 
+  int _posts;
+  int get posts => _$this._posts;
+  set posts(int posts) => _$this._posts = posts;
+
+  int _followers;
+  int get followers => _$this._followers;
+  set followers(int followers) => _$this._followers = followers;
+
+  int _followees;
+  int get followees => _$this._followees;
+  set followees(int followees) => _$this._followees = followees;
+
   RawImageBuilder _avatar;
   RawImageBuilder get avatar => _$this._avatar ??= new RawImageBuilder();
   set avatar(RawImageBuilder avatar) => _$this._avatar = avatar;
@@ -176,6 +246,9 @@ class RawUserBuilder implements Builder<RawUser, RawUserBuilder> {
       _username = _$v.username;
       _fullname = _$v.fullname;
       _bio = _$v.bio;
+      _posts = _$v.posts;
+      _followers = _$v.followers;
+      _followees = _$v.followees;
       _avatar = _$v.avatar?.toBuilder();
       _$v = null;
     }
@@ -205,6 +278,9 @@ class RawUserBuilder implements Builder<RawUser, RawUserBuilder> {
               username: username,
               fullname: fullname,
               bio: bio,
+              posts: posts,
+              followers: followers,
+              followees: followees,
               avatar: _avatar?.build());
     } catch (_) {
       String _$failedField;

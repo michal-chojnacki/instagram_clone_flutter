@@ -63,6 +63,7 @@ import 'features/profile/presentation/page/user_profile_bloc.dart';
 /// Environment names
 const _mock = 'mock';
 const _prod = 'prod';
+const _dev = 'dev';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -87,6 +88,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       () => RegisterUserUseCase(g<AuthenticationRepository>()));
   final sharedPreferences = await registerModule.prefs;
   gh.factory<SharedPreferences>(() => sharedPreferences);
+  gh.factory<String>(() => registerModule.prodBaseUrl,
+      instanceName: 'baseUrl', registerFor: {_prod});
+  gh.factory<String>(() => registerModule.devBaseUrl,
+      instanceName: 'baseUrl', registerFor: {_dev, _mock});
   gh.factory<UserContentRepository>(() => UserContentRepositoryMockImpl(),
       registerFor: {_mock});
   gh.lazySingleton<UserDataRepository>(() => UserDataRepositoryMockImpl(),
@@ -155,16 +160,16 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
   gh.factory<UserContentRepository>(
       () => UserContentRepositoryImpl(g<ContentService>(), g<ContentMapper>()),
-      registerFor: {_prod});
+      registerFor: {_prod, _dev});
   gh.factory<UserDataRepository>(
       () => UserDataRepositoryImpl(g<UserDataService>(), g<UserMapper>()),
-      registerFor: {_prod});
+      registerFor: {_prod, _dev});
   gh.factory<UserProfileBloc>(() => UserProfileBloc(
       g<ChangeObservationUseCase>(), g<GetObservationStatusUseCase>()));
   gh.factory<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(
           g<AuthenticationService>(), g<AuthenticationLocalDataSource>()),
-      registerFor: {_prod});
+      registerFor: {_prod, _dev});
   gh.factory<EditProfileBloc>(() => EditProfileBloc(
         g<MainBloc>(),
         g<NavigationBloc>(),

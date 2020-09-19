@@ -26,10 +26,21 @@ abstract class RegisterModule {
 
   @lazySingleton
   ChopperClient get chopperClient => ChopperClient(
-        baseUrl: "https://michappsinstagram.herokuapp.com/api/v1",
+        baseUrl: GetIt.I<String>(instanceName: "baseUrl"),
         converter: GetIt.I<BuiltValueConverter>(),
         client: GetIt.I<Client>(),
       );
+
+  @Named("baseUrl")
+  @prod
+  @injectable
+  String get prodBaseUrl => "https://michappsinstagram.herokuapp.com/api/v1";
+
+  @Named("baseUrl")
+  @dev
+  @mock
+  @injectable
+  String get devBaseUrl => "http://10.0.2.2:3000/api/v1";
 
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();

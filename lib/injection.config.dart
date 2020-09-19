@@ -59,11 +59,12 @@ import 'features/profile/data/user_data_repository_mock_impl.dart';
 import 'features/profile/data/user_data_service.dart';
 import 'features/content/data/mapper/user_mapper.dart';
 import 'features/profile/presentation/page/user_profile_bloc.dart';
+import 'features/authenticate/domain/verify_authorization_token_use_case.dart';
 
 /// Environment names
 const _mock = 'mock';
-const _prod = 'prod';
 const _dev = 'dev';
+const _prod = 'prod';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -88,10 +89,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       () => RegisterUserUseCase(g<AuthenticationRepository>()));
   final sharedPreferences = await registerModule.prefs;
   gh.factory<SharedPreferences>(() => sharedPreferences);
-  gh.factory<String>(() => registerModule.prodBaseUrl,
-      instanceName: 'baseUrl', registerFor: {_prod});
   gh.factory<String>(() => registerModule.devBaseUrl,
       instanceName: 'baseUrl', registerFor: {_dev, _mock});
+  gh.factory<String>(() => registerModule.prodBaseUrl,
+      instanceName: 'baseUrl', registerFor: {_prod});
   gh.factory<UserContentRepository>(() => UserContentRepositoryMockImpl(),
       registerFor: {_mock});
   gh.lazySingleton<UserDataRepository>(() => UserDataRepositoryMockImpl(),
@@ -144,8 +145,6 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<AuthenticateUserUseCase>(),
         g<RegisterUserUseCase>(),
       ));
-  gh.lazySingleton<MainBloc>(
-      () => MainBloc(g<LoadAuthorizationTokenUseCase>(), g<NavigationBloc>()));
   gh.factory<MainContentsBloc>(
       () => MainContentsBloc(g<NavigationBloc>(), g<GetMainContentUseCase>()));
   gh.factory<MainUserBloc>(() => MainUserBloc(g<NavigationBloc>()));
@@ -166,17 +165,13 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       registerFor: {_prod, _dev});
   gh.factory<UserProfileBloc>(() => UserProfileBloc(
       g<ChangeObservationUseCase>(), g<GetObservationStatusUseCase>()));
+  gh.factory<VerifyAuthorizationTokenUseCase>(() =>
+      VerifyAuthorizationTokenUseCase(
+          g<ClearAuthenticationTokenUseCase>(), g<GetUserDataUseCase>()));
   gh.factory<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(
           g<AuthenticationService>(), g<AuthenticationLocalDataSource>()),
       registerFor: {_prod, _dev});
-  gh.factory<EditProfileBloc>(() => EditProfileBloc(
-        g<MainBloc>(),
-        g<NavigationBloc>(),
-        g<GetUserDataUseCase>(),
-        g<UpdateUserDataUseCase>(),
-        g<ClearAuthenticationTokenUseCase>(),
-      ));
   gh.factory<GetContentWithQueryUseCase>(() => GetContentWithQueryUseCase(
         g<UserContentRepository>(),
         g<LoadAuthorizationTokenUseCase>(),
@@ -187,12 +182,21 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<LoadAuthorizationTokenUseCase>(),
         g<GetLikesStatusesUseCase>(),
       ));
+  gh.lazySingleton<MainBloc>(() =>
+      MainBloc(g<VerifyAuthorizationTokenUseCase>(), g<NavigationBloc>()));
   gh.factory<SearchForContentBloc>(() => SearchForContentBloc(
       g<GetContentWithQueryUseCase>(), g<GetRecommendedContentUseCase>()));
   gh.factory<SendContentBloc>(
       () => SendContentBloc(g<NavigationBloc>(), g<SendContentUseCase>()));
   gh.factory<UserContentsGridBloc>(() => UserContentsGridBloc(
       g<GetContentsForUserUseCase>(), g<GetUserContentsUseCase>()));
+  gh.factory<EditProfileBloc>(() => EditProfileBloc(
+        g<MainBloc>(),
+        g<NavigationBloc>(),
+        g<GetUserDataUseCase>(),
+        g<UpdateUserDataUseCase>(),
+        g<ClearAuthenticationTokenUseCase>(),
+      ));
 }
 
 class _$RegisterModule extends RegisterModule {}

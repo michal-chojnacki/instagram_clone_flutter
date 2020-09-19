@@ -54,9 +54,9 @@ class ProfileInfoWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  _createStatsColumn(count: 12, name: 'Posts'),
-                  _createStatsColumn(count: 2, name: 'Observers'),
-                  _createStatsColumn(count: 12, name: 'Observing'),
+                  _createStatsColumn(count: user.posts, name: 'Posts'),
+                  _createStatsColumn(count: user.followers, name: 'Observers'),
+                  _createStatsColumn(count: user.followees, name: 'Observing'),
                 ],
               ),
             ),

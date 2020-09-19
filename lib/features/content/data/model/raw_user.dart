@@ -14,6 +14,12 @@ abstract class RawUser implements Built<RawUser, RawUserBuilder> {
   @nullable
   String get bio;
   @nullable
+  int get posts;
+  @nullable
+  int get followers;
+  @nullable
+  int get followees;
+  @nullable
   RawImage get avatar;
 
   RawUser._();

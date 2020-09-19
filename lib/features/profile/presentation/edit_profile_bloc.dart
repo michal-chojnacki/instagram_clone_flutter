@@ -26,8 +26,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     add(EditProfileEvent.fetchProfileData());
   }
 
-  void openEditProfilePage() {
-    _navigationBloc.openEditProfilePage();
+  void openEditProfilePage(Function thenFunction) {
+    _navigationBloc.openEditProfilePage(thenFunction);
   }
 
   void openPickImagePage() {

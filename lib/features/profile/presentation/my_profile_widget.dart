@@ -57,7 +57,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                           "Edit profile",
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: _editProfileBloc.openEditProfilePage,
+                        onPressed: () => _editProfileBloc.openEditProfilePage(
+                            () => _editProfileBloc.fetchProfileData()),
                       ),
                     ),
                     ButtonTheme(

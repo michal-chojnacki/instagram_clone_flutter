@@ -33,8 +33,8 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
     add(NavigationEvent.openSendContentPage(imagePath: imagePath));
   }
 
-  void openEditProfilePage() {
-    add(NavigationEvent.openEditUserPage());
+  void openEditProfilePage(Function thenFunction) {
+    add(NavigationEvent.openEditUserPage(thenFunction: thenFunction));
   }
 
   void openPickImagePage(
@@ -90,8 +90,10 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
                       SendContentPage(imagePath: event.imagePath)))
             },
         openEditUserPage: (event) => {
-              navigatorKey.currentState.push(
-                  MaterialPageRoute(builder: (context) => EditProfilePage()))
+              navigatorKey.currentState
+                  .push(MaterialPageRoute(
+                      builder: (context) => EditProfilePage()))
+                  .then((_) => event.thenFunction.call())
             },
         openPickImagePage: (event) => {
               navigatorKey.currentState.push(MaterialPageRoute(

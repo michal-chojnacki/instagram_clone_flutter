@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/io_client.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/built_value_converter.dart';
 import 'package:instagram_clone/injection.config.dart';
-import 'package:instagram_clone/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 
@@ -15,6 +15,7 @@ const mock = const Environment('mock');
 
 @injectableInit
 Future<void> configureInjection({@required Environment environment}) async {
+  await DotEnv().load((environment == prod) ? '.env/prod' : '.env/dev');
   await $initGetIt(GetIt.instance, environment: environment.name);
 }
 
@@ -27,35 +28,12 @@ abstract class RegisterModule {
 
   @lazySingleton
   ChopperClient get chopperClient => ChopperClient(
-          baseUrl: GetIt.I<String>(instanceName: "baseUrl"),
+          baseUrl: DotEnv().env['API_BASE_URL'],
           converter: GetIt.I<BuiltValueConverter>(),
           client: GetIt.I<Client>(),
           interceptors: [
-            HeadersInterceptor(
-                {'ApiKey': GetIt.I<String>(instanceName: "apiKey")})
+            HeadersInterceptor({'ApiKey': DotEnv().env['API_KEY']})
           ]);
-
-  @Named("baseUrl")
-  @prod
-  @injectable
-  String get prodBaseUrl => ProdBaseUrl;
-
-  @Named("baseUrl")
-  @dev
-  @mock
-  @injectable
-  String get devBaseUrl => StageBaseUrl;
-
-  @Named("apiKey")
-  @prod
-  @injectable
-  String get prodApiKey => ProdApiKey;
-
-  @Named("apiKey")
-  @dev
-  @mock
-  @injectable
-  String get devApiKey => StageApiKey;
 
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();

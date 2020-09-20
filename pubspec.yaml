@@ -26,6 +26,7 @@ dependencies:
   chopper: ^3.0.3
   flutter_stetho: ^0.5.2
   rxdart: ^0.24.1
+  flutter_dotenv: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -42,3 +43,5 @@ dependency_overrides:
 
 flutter:
   uses-material-design: true
+  assets:
+    - .env/

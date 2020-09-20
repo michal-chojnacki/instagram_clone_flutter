@@ -13,6 +13,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _passwordController = TextEditingController();
   String _login, _password, _repeatPassword;
   bool _registerMode = false;
 
@@ -37,6 +38,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             TextFormField(
               decoration: InputDecoration(labelText: 'Password'),
+              controller: _passwordController,
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Please enter some text';
@@ -52,6 +54,9 @@ class _LoginFormState extends State<LoginForm> {
                 validator: (value) {
                   if (_registerMode && value.isEmpty) {
                     return 'Please enter some text';
+                  }
+                  if (_registerMode && value != _passwordController.text) {
+                    return 'Passwords need to match';
                   }
                   return null;
                 },
@@ -77,6 +82,12 @@ class _LoginFormState extends State<LoginForm> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
   }
 
   Future<void> _onLoginClick() async {

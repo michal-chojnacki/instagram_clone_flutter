@@ -28,7 +28,11 @@ class LoginPage extends StatelessWidget {
                     onRegister: (login, password) =>
                         _registerUser(context, login, password),
                   ),
-                  if (state.error) Text("Error"),
+                  if (state.error)
+                    Text(
+                      "Error",
+                      style: TextStyle(color: Theme.of(context).errorColor),
+                    ),
                 ],
               );
             }

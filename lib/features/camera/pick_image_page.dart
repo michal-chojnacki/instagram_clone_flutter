@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/features/camera/take_picture_widget.dart';
 import 'package:instagram_clone/features/content/presentation/common/circular_overlay.dart';
@@ -38,7 +38,7 @@ class _PickImagePageState extends State<PickImagePage> {
       appBar: AppBar(
         leading: new IconButton(
           icon: new Icon(Icons.close),
-          onPressed: () => context.bloc<NavigationBloc>().pop(),
+          onPressed: () => GetIt.I<NavigationBloc>().pop(),
         ),
         title: const Text('Zdjęcie'),
       ),

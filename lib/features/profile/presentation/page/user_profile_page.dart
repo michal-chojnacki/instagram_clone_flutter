@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/core/widgets/primary_button.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_bloc.dart';
@@ -48,17 +49,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
             BlocBuilder<UserProfileBloc, UserProfileState>(
               cubit: _userProfileBloc,
               builder: (context, UserProfileState state) {
-                return RaisedButton(
-                  color: state.observing ? Colors.white : Colors.blue,
-                  child: state.observing
-                      ? Text(
-                          'Observing',
-                          style: TextStyle(color: Colors.black),
-                        )
-                      : Text(
-                          'Observe',
-                          style: TextStyle(color: Colors.white),
-                        ),
+                return PrimaryButton(
+                  text: state.observing ? 'Observing' : 'Observe',
+                  light: state.observing,
                   onPressed: () {
                     _userProfileBloc.changeObservation(
                         user: widget._user, observe: !state.observing);

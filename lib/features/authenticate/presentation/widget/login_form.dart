@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/widgets/primary_button.dart';
 
 class LoginForm extends StatefulWidget {
   final Function onLogIn;
@@ -58,8 +59,20 @@ class _LoginFormState extends State<LoginForm> {
                 obscureText: true,
               ),
             if (!_registerMode)
-            RaisedButton(child: Text('Log in'), onPressed: _onLoginClick),
-            RaisedButton(child: Text('Register'), onPressed: _onRegisterClick),
+              PrimaryButton(text: 'Log in', onPressed: _onLoginClick),
+            PrimaryButton(
+                text: 'Register',
+                light: !_registerMode,
+                onPressed: _onRegisterClick),
+            if (_registerMode)
+              PrimaryButton(
+                  text: 'Back To Log in',
+                  light: true,
+                  onPressed: () {
+                    setState(() {
+                      _registerMode = false;
+                    });
+                  }),
           ],
         ),
       ),

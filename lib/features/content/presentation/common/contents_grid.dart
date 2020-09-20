@@ -25,7 +25,7 @@ class ContentsGrid extends StatelessWidget {
           itemBuilder: (context, index) {
             return InkWell(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: RoundedSquareImage.network(
                     contents[index].content.image.url),
               ),

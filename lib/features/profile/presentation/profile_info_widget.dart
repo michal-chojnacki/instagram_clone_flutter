@@ -40,7 +40,7 @@ class ProfileInfoWidget extends StatelessWidget {
                         height: 32,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.blue,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     )),

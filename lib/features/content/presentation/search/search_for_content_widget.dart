@@ -61,10 +61,16 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
         body: BlocBuilder<SearchForContentBloc, SearchForContentState>(
             cubit: _searchForContentBloc,
             builder: (context, SearchForContentState state) {
-              return ContentsGrid(
-                contents: state.contents.toList(),
-                loading: state.progressbarVisible,
-              );
+              if (state.contents.isEmpty && !state.progressbarVisible) {
+                return Center(
+                  child: Text("No content found with current query."),
+                );
+              } else {
+                return ContentsGrid(
+                  contents: state.contents.toList(),
+                  loading: state.progressbarVisible,
+                );
+              }
             }));
   }
 

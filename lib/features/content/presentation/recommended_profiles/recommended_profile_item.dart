@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/core/widgets/primary_button.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 
 class RecommendedProfileItem extends StatelessWidget {
@@ -23,25 +24,32 @@ class RecommendedProfileItem extends StatelessWidget {
               user.avatar.url,
             ),
           ),
-          SizedBox(width: 16.0,),
+          SizedBox(
+            width: 16.0,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(user.username, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
-                if(user.fullname != null && user.fullname.isNotEmpty) Text(user.fullname, style: TextStyle(fontSize: 12.0),),
+                Text(
+                  user.username,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                ),
+                if (user.fullname != null && user.fullname.isNotEmpty)
+                  Text(
+                    user.fullname,
+                    style: TextStyle(fontSize: 12.0),
+                  ),
               ],
             ),
           ),
-          SizedBox(width: 16.0,),
-          RaisedButton(
-            color: Colors.blue,
-            child: Text(
-              'Observe',
-              style: TextStyle(color: Colors.white),
-            ),
+          SizedBox(
+            width: 16.0,
+          ),
+          PrimaryButton(
+            text: 'Observe',
             onPressed: () => onObserveClick(user),
-          )
+          ),
         ]),
       ),
       onTap: () => onOpenProfileClick(user),

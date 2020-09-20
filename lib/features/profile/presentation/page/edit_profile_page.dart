@@ -79,7 +79,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 state.user.avatar.url,
                               ),
                             ),
-                            Text('Zmień zdjęcie profilowe'),
+                            Text('Chanage your profile photo'),
                           ],
                         ),
                       ),

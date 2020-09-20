@@ -30,7 +30,7 @@ class _RecommendedProfilesWidgetState extends State<RecommendedProfilesWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Propozycje dla Ciebie'),
+        title: const Text('Recommendations for you'),
       ),
       body: BlocBuilder<RecommendedProfilesBloc, RecommendedProfilesState>(
           cubit: _recommendedProfilesBloc,

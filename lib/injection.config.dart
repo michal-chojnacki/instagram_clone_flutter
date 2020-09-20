@@ -63,8 +63,8 @@ import 'features/authenticate/domain/verify_authorization_token_use_case.dart';
 
 /// Environment names
 const _mock = 'mock';
-const _dev = 'dev';
 const _prod = 'prod';
+const _dev = 'dev';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -89,10 +89,14 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       () => RegisterUserUseCase(g<AuthenticationRepository>()));
   final sharedPreferences = await registerModule.prefs;
   gh.factory<SharedPreferences>(() => sharedPreferences);
-  gh.factory<String>(() => registerModule.devBaseUrl,
-      instanceName: 'baseUrl', registerFor: {_dev, _mock});
   gh.factory<String>(() => registerModule.prodBaseUrl,
       instanceName: 'baseUrl', registerFor: {_prod});
+  gh.factory<String>(() => registerModule.devBaseUrl,
+      instanceName: 'baseUrl', registerFor: {_dev, _mock});
+  gh.factory<String>(() => registerModule.prodApiKey,
+      instanceName: 'apiKey', registerFor: {_prod});
+  gh.factory<String>(() => registerModule.devApiKey,
+      instanceName: 'apiKey', registerFor: {_dev, _mock});
   gh.factory<UserContentRepository>(() => UserContentRepositoryMockImpl(),
       registerFor: {_mock});
   gh.lazySingleton<UserDataRepository>(() => UserDataRepositoryMockImpl(),

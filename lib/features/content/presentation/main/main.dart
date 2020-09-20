@@ -25,7 +25,7 @@ class App extends StatelessWidget {
             return MaterialApp(
               title: 'Instagram clone',
               theme: ThemeData(
-                primarySwatch: Colors.blue,
+                primarySwatch: Colors.deepPurple,
               ),
               home: Scaffold(
                 body: Center(

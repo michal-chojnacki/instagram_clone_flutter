@@ -7,6 +7,7 @@ import 'package:http/io_client.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/built_value_converter.dart';
 import 'package:instagram_clone/injection.config.dart';
+import 'package:instagram_clone/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 
@@ -26,21 +27,35 @@ abstract class RegisterModule {
 
   @lazySingleton
   ChopperClient get chopperClient => ChopperClient(
-        baseUrl: GetIt.I<String>(instanceName: "baseUrl"),
-        converter: GetIt.I<BuiltValueConverter>(),
-        client: GetIt.I<Client>(),
-      );
+          baseUrl: GetIt.I<String>(instanceName: "baseUrl"),
+          converter: GetIt.I<BuiltValueConverter>(),
+          client: GetIt.I<Client>(),
+          interceptors: [
+            HeadersInterceptor(
+                {'ApiKey': GetIt.I<String>(instanceName: "apiKey")})
+          ]);
 
   @Named("baseUrl")
   @prod
   @injectable
-  String get prodBaseUrl => "https://michappsinstagram.herokuapp.com/api/v1";
+  String get prodBaseUrl => ProdBaseUrl;
 
   @Named("baseUrl")
   @dev
   @mock
   @injectable
-  String get devBaseUrl => "http://10.0.2.2:3000/api/v1";
+  String get devBaseUrl => StageBaseUrl;
+
+  @Named("apiKey")
+  @prod
+  @injectable
+  String get prodApiKey => ProdApiKey;
+
+  @Named("apiKey")
+  @dev
+  @mock
+  @injectable
+  String get devApiKey => StageApiKey;
 
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();

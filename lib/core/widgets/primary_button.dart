@@ -9,12 +9,16 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      color: light ? Colors.white : Colors.blue,
+    var primaryColor = Theme.of(context).primaryColor;
+    return FlatButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          side: BorderSide(color: primaryColor)),
+      color: light ? Colors.white : primaryColor,
       child: Text(
         text,
         style: light
-            ? TextStyle(color: Colors.blue)
+            ? TextStyle(color: primaryColor)
             : TextStyle(color: Colors.white),
       ),
       onPressed: () => onPressed?.call(),

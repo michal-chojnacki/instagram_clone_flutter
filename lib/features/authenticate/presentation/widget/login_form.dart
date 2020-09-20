@@ -61,7 +61,18 @@ class _LoginFormState extends State<LoginForm> {
             if (!_registerMode)
               PrimaryButton(text: 'Log in', onPressed: _onLoginClick),
             PrimaryButton(
-                text: 'Register', light: true, onPressed: _onRegisterClick),
+                text: 'Register',
+                light: !_registerMode,
+                onPressed: _onRegisterClick),
+            if (_registerMode)
+              PrimaryButton(
+                  text: 'Back To Log in',
+                  light: true,
+                  onPressed: () {
+                    setState(() {
+                      _registerMode = false;
+                    });
+                  }),
           ],
         ),
       ),

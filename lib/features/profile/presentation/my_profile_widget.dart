@@ -42,10 +42,12 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               );
             } else {
               return Container(
+                margin: EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(
                   children: <Widget>[
                     Container(
-                        margin: EdgeInsets.all(16.0),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 16.0),
                         child: ProfileInfoWidget(
                           user: state.user,
                           onSelectAvatar: () =>

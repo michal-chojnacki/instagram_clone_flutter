@@ -40,7 +40,7 @@ class MainUserPage extends StatelessWidget {
                 ),
               ],
               unselectedItemColor: Colors.black12,
-              selectedItemColor: Colors.amber[800],
+              selectedItemColor: Theme.of(context).primaryColor,
               currentIndex: selectedIndex,
               onTap: (index) => _onItemTapped(context, index),
             ),

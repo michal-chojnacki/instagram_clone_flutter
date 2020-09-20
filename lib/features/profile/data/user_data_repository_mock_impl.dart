@@ -25,6 +25,9 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
             username: "elo",
             fullname: "fullname",
             bio: "bio",
+            posts: 1,
+            followees: 2,
+            followers: 3,
             avatar: Image.create(
                 url:
                     "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")));
@@ -52,6 +55,9 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
           username: "elo",
           fullname: "fullname",
           bio: "bio",
+          posts: 1,
+          followees: 2,
+          followers: 3,
           avatar: Image.create(
               url:
                   "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
@@ -60,6 +66,9 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
           username: "elo",
           fullname: "fullname",
           bio: "bio",
+          posts: 1,
+          followees: 2,
+          followers: 3,
           avatar: Image.create(
               url:
                   "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"))

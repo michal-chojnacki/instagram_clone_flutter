@@ -40,7 +40,7 @@ class _PickImagePageState extends State<PickImagePage> {
           icon: new Icon(Icons.close),
           onPressed: () => GetIt.I<NavigationBloc>().pop(),
         ),
-        title: const Text('Zdjęcie'),
+        title: const Text('Photo'),
       ),
       body: FutureBuilder<CameraDescription>(
           future: _chooseCamera(),

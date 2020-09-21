@@ -17,27 +17,32 @@ class _$ContentService extends ContentService {
   final definitionType = ContentService;
 
   @override
-  Future<Response<RawContents>> getMainContent(String authorizationBearer) {
+  Future<Response<RawContents>> getMainContent(
+      String authorizationBearer, int page) {
     final $url = '/main_content';
+    final $params = <String, dynamic>{'page': page};
     final $headers = {'Authorization': authorizationBearer};
-    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    final $request = Request('GET', $url, client.baseUrl,
+        parameters: $params, headers: $headers);
     return client.send<RawContents, RawContents>($request);
   }
 
   @override
   Future<Response<RawContents>> getRecommendedContent(
-      String authorizationBearer) {
+      String authorizationBearer, int page) {
     final $url = '/recommended_content';
+    final $params = <String, dynamic>{'page': page};
     final $headers = {'Authorization': authorizationBearer};
-    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    final $request = Request('GET', $url, client.baseUrl,
+        parameters: $params, headers: $headers);
     return client.send<RawContents, RawContents>($request);
   }
 
   @override
   Future<Response<RawContents>> searchContent(
-      String authorizationBearer, String query) {
+      String authorizationBearer, String query, int page) {
     final $url = '/search_content';
-    final $params = <String, dynamic>{'query': query};
+    final $params = <String, dynamic>{'query': query, 'page': page};
     final $headers = {'Authorization': authorizationBearer};
     final $request = Request('GET', $url, client.baseUrl,
         parameters: $params, headers: $headers);
@@ -46,9 +51,9 @@ class _$ContentService extends ContentService {
 
   @override
   Future<Response<RawContents>> getUserContentById(
-      String authorizationBearer, int userId) {
+      String authorizationBearer, int userId, int page) {
     final $url = '/content';
-    final $params = <String, dynamic>{'user': userId};
+    final $params = <String, dynamic>{'user': userId, 'page': page};
     final $headers = {'Authorization': authorizationBearer};
     final $request = Request('GET', $url, client.baseUrl,
         parameters: $params, headers: $headers);
@@ -56,10 +61,13 @@ class _$ContentService extends ContentService {
   }
 
   @override
-  Future<Response<RawContents>> getUserContent(String authorizationBearer) {
+  Future<Response<RawContents>> getUserContent(
+      String authorizationBearer, int page) {
     final $url = '/content';
+    final $params = <String, dynamic>{'page': page};
     final $headers = {'Authorization': authorizationBearer};
-    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    final $request = Request('GET', $url, client.baseUrl,
+        parameters: $params, headers: $headers);
     return client.send<RawContents, RawContents>($request);
   }
 

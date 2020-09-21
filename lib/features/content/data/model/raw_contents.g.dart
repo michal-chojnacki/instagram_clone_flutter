@@ -25,6 +25,18 @@ class _$RawContentsSerializer implements StructuredSerializer<RawContents> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(RawContent)])));
     }
+    if (object.page != null) {
+      result
+        ..add('page')
+        ..add(serializers.serialize(object.page,
+            specifiedType: const FullType(int)));
+    }
+    if (object.pages != null) {
+      result
+        ..add('pages')
+        ..add(serializers.serialize(object.pages,
+            specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -45,6 +57,14 @@ class _$RawContentsSerializer implements StructuredSerializer<RawContents> {
                       BuiltList, const [const FullType(RawContent)]))
               as BuiltList<Object>);
           break;
+        case 'page':
+          result.page = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'pages':
+          result.pages = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
       }
     }
 
@@ -55,11 +75,15 @@ class _$RawContentsSerializer implements StructuredSerializer<RawContents> {
 class _$RawContents extends RawContents {
   @override
   final BuiltList<RawContent> contents;
+  @override
+  final int page;
+  @override
+  final int pages;
 
   factory _$RawContents([void Function(RawContentsBuilder) updates]) =>
       (new RawContentsBuilder()..update(updates)).build();
 
-  _$RawContents._({this.contents}) : super._();
+  _$RawContents._({this.contents, this.page, this.pages}) : super._();
 
   @override
   RawContents rebuild(void Function(RawContentsBuilder) updates) =>
@@ -71,18 +95,24 @@ class _$RawContents extends RawContents {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is RawContents && contents == other.contents;
+    return other is RawContents &&
+        contents == other.contents &&
+        page == other.page &&
+        pages == other.pages;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, contents.hashCode));
+    return $jf(
+        $jc($jc($jc(0, contents.hashCode), page.hashCode), pages.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('RawContents')
-          ..add('contents', contents))
+          ..add('contents', contents)
+          ..add('page', page)
+          ..add('pages', pages))
         .toString();
   }
 }
@@ -95,11 +125,21 @@ class RawContentsBuilder implements Builder<RawContents, RawContentsBuilder> {
       _$this._contents ??= new ListBuilder<RawContent>();
   set contents(ListBuilder<RawContent> contents) => _$this._contents = contents;
 
+  int _page;
+  int get page => _$this._page;
+  set page(int page) => _$this._page = page;
+
+  int _pages;
+  int get pages => _$this._pages;
+  set pages(int pages) => _$this._pages = pages;
+
   RawContentsBuilder();
 
   RawContentsBuilder get _$this {
     if (_$v != null) {
       _contents = _$v.contents?.toBuilder();
+      _page = _$v.page;
+      _pages = _$v.pages;
       _$v = null;
     }
     return this;
@@ -122,7 +162,9 @@ class RawContentsBuilder implements Builder<RawContents, RawContentsBuilder> {
   _$RawContents build() {
     _$RawContents _$result;
     try {
-      _$result = _$v ?? new _$RawContents._(contents: _contents?.build());
+      _$result = _$v ??
+          new _$RawContents._(
+              contents: _contents?.build(), page: page, pages: pages);
     } catch (_) {
       String _$failedField;
       try {

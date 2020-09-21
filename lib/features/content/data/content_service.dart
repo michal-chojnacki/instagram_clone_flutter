@@ -9,29 +9,35 @@ part "content_service.chopper.dart";
 @ChopperApi(baseUrl: "/")
 abstract class ContentService extends ChopperService {
   @factoryMethod
-  static ContentService create([ChopperClient client]) => _$ContentService(client);
+  static ContentService create([ChopperClient client]) =>
+      _$ContentService(client);
 
   @Get(path: 'main_content')
   Future<Response<RawContents>> getMainContent(
-      @Header("Authorization") String authorizationBearer);
+      @Header("Authorization") String authorizationBearer,
+      @Query("page") int page);
 
   @Get(path: 'recommended_content')
   Future<Response<RawContents>> getRecommendedContent(
-      @Header("Authorization") String authorizationBearer);
+      @Header("Authorization") String authorizationBearer,
+      @Query("page") int page);
 
   @Get(path: 'search_content')
   Future<Response<RawContents>> searchContent(
       @Header("Authorization") String authorizationBearer,
-      @Query("query") String query);
+      @Query("query") String query,
+      @Query("page") int page);
 
   @Get(path: 'content')
   Future<Response<RawContents>> getUserContentById(
       @Header("Authorization") String authorizationBearer,
-      @Query("user") int userId);
+      @Query("user") int userId,
+      @Query("page") int page);
 
   @Get(path: 'content')
   Future<Response<RawContents>> getUserContent(
-      @Header("Authorization") String authorizationBearer);
+      @Header("Authorization") String authorizationBearer,
+      @Query("page") int page);
 
   @Post(path: 'content')
   @multipart

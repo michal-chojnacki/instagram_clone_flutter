@@ -12,30 +12,16 @@ class SearchForContentBloc
     extends Bloc<SearchForContentEvent, SearchForContentState> {
   final GetContentWithQueryUseCase _getContentWithQuery;
   final GetRecommendedContentUseCase _getRecommendedContent;
-  int currentPage = 0;
 
   SearchForContentBloc(this._getContentWithQuery, this._getRecommendedContent)
       : super(SearchForContentState.initial());
 
-  void fetchRecommendedContent({@required bool clearedQuery}) {
-    if (clearedQuery) {
-      currentPage = 0;
-    }
-    if (currentPage != null) {
-      add(SearchForContentEvent.fetchRecommendedContent(page: currentPage));
-      currentPage += 1;
-    }
+  void fetchRecommendedContent({int page = 0}) {
+    add(SearchForContentEvent.fetchRecommendedContent(page: page));
   }
 
-  void fetchContentForQuery({@required String query, @required bool newQuery}) {
-    if (newQuery) {
-      currentPage = 0;
-    }
-    if (currentPage != null) {
-      add(SearchForContentEvent.fetchContentForQuery(
-          query: query, page: currentPage));
-      currentPage += 1;
-    }
+  void fetchContentForQuery({@required String query, int page = 0}) {
+    add(SearchForContentEvent.fetchContentForQuery(query: query, page: page));
   }
 
   @override
@@ -47,26 +33,32 @@ class SearchForContentBloc
 
   Stream<SearchForContentState> _mapFetchRecommendedContent(
       FetchRecommendedContent event) async* {
-    yield SearchForContentState.loading();
+    if (event.page == 0) {
+      yield SearchForContentState.loading();
+    }
     yield (await _getRecommendedContent(event.page)).when(success: (result) {
       return SearchForContentState.success(
-          state.contents + BuiltList.of(result.data));
+          state.contents + BuiltList.of(result.data.list),
+          result.data.page,
+          result.data.page + 1 >= result.data.pages);
     }, error: (result) {
-      currentPage = null;
-      return state;
+      return state.rebuild((b) => b.hasReachedEndOfResults = true);
     });
   }
 
   Stream<SearchForContentState> _mapFetchContentForQuery(
       FetchContentForQuery event) async* {
-    yield SearchForContentState.loading();
+    if (event.page == 0) {
+      yield SearchForContentState.loading();
+    }
     yield (await _getContentWithQuery(event.query, event.page)).when(
         success: (result) {
       return SearchForContentState.success(
-          state.contents + BuiltList.of(result.data));
+          state.contents + BuiltList.of(result.data.list),
+          result.data.page,
+          result.data.page + 1 >= result.data.pages);
     }, error: (result) {
-      currentPage = null;
-      return state;
+      return state.rebuild((b) => b.hasReachedEndOfResults = true);
     });
   }
 }

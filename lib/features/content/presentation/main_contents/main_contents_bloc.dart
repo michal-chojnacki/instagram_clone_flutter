@@ -12,15 +12,12 @@ import 'package:instagram_clone/navigation/navigation_bloc.dart';
 class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
   final NavigationBloc _navigationBloc;
   final GetMainContentUseCase _getMainContent;
-  int _currentPage = -1;
-  int _pageSize = 50;
 
   MainContentsBloc(this._navigationBloc, this._getMainContent)
       : super(MainContentsState.initial());
 
-  void getNextListPage() {
-    _currentPage += 1;
-    add(MainContentsEvent.fetchMainContents(page: _currentPage));
+  void getNextListPage({int page = 0}) {
+    add(MainContentsEvent.fetchMainContents(page: page));
   }
 
   void openUserProfilePage({@required User user}) {
@@ -37,9 +34,10 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
       FetchMainContents event) async* {
     yield (await _getMainContent(event.page)).when(
         success: (result) => MainContentsState.success(
-            state.contents + BuiltList.of(result.data),
-            result.data.length < _pageSize),
+            state.contents + BuiltList.of(result.data.list),
+            result.data.page,
+            result.data.page + 1 >= result.data.pages),
         error: (result) =>
-            state.rebuild((b) => b..hasReachedEndOfResults = true));
+            state.rebuild((b) => b.hasReachedEndOfResults = true));
   }
 }

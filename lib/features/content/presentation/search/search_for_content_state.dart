@@ -5,29 +5,36 @@ import 'package:instagram_clone/features/content/presentation/common/model/perso
 
 part 'search_for_content_state.g.dart';
 
-abstract class SearchForContentState implements Built<SearchForContentState, SearchForContentStateBuilder> {
+abstract class SearchForContentState
+    implements Built<SearchForContentState, SearchForContentStateBuilder> {
   BuiltList<PersonalizedContent> get contents;
-  bool get progressbarVisible;
+  int get page;
+  bool get hasReachedEndOfResults;
 
   SearchForContentState._();
 
-  factory SearchForContentState([updates(SearchForContentStateBuilder b)]) = _$SearchForContentState;
+  factory SearchForContentState([updates(SearchForContentStateBuilder b)]) =
+      _$SearchForContentState;
 
   factory SearchForContentState.initial() {
     return SearchForContentState((b) => b
       ..contents.replace(BuiltList<Content>())
-      ..progressbarVisible = false);
+      ..page = 0
+      ..hasReachedEndOfResults = false);
   }
 
   factory SearchForContentState.loading() {
     return SearchForContentState((b) => b
       ..contents.replace(BuiltList<Content>())
-      ..progressbarVisible = true);
+      ..page = 0
+      ..hasReachedEndOfResults = false);
   }
 
-  factory SearchForContentState.success(BuiltList<PersonalizedContent> items) {
+  factory SearchForContentState.success(BuiltList<PersonalizedContent> items,
+      int page, bool hasReachedEndOfResults) {
     return SearchForContentState((b) => b
       ..contents.replace(items)
-      ..progressbarVisible = false);
+      ..page = page
+      ..hasReachedEndOfResults = hasReachedEndOfResults);
   }
 }

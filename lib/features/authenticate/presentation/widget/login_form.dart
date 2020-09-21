@@ -14,7 +14,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
-  String _login, _password, _repeatPassword;
+  String _login, _password;
   bool _registerMode = false;
 
   @override
@@ -60,7 +60,6 @@ class _LoginFormState extends State<LoginForm> {
                   }
                   return null;
                 },
-                onSaved: (input) => _repeatPassword = input,
                 obscureText: true,
               ),
             if (!_registerMode)

@@ -15,11 +15,12 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
       GetIt.I<SearchForContentBloc>();
   final TextEditingController _editingController = TextEditingController();
   FocusNode _queryFocusNode;
+  Function getNextPage;
 
   @override
   void initState() {
     super.initState();
-    _searchForContentBloc.fetchRecommendedContent(clearedQuery: false);
+    _onClearQuery();
     _queryFocusNode = FocusNode();
   }
 
@@ -61,25 +62,33 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
         body: BlocBuilder<SearchForContentBloc, SearchForContentState>(
             cubit: _searchForContentBloc,
             builder: (context, SearchForContentState state) {
-              if (state.contents.isEmpty && !state.progressbarVisible) {
+              if (state.contents.isEmpty && state.hasReachedEndOfResults) {
                 return Center(
                   child: Text("No content found with current query."),
                 );
               } else {
                 return ContentsGrid(
                   contents: state.contents.toList(),
-                  loading: state.progressbarVisible,
+                  loading:
+                      state.contents.isEmpty && !state.hasReachedEndOfResults,
+                  page: state.page,
+                  hasReachedEndOfResults: state.hasReachedEndOfResults,
+                  getNextPage: getNextPage,
                 );
               }
             }));
   }
 
   void _onQuerySubmitted(String query) {
-    _searchForContentBloc.fetchContentForQuery(query: query, newQuery: true);
+    getNextPage = (page) =>
+        {_searchForContentBloc.fetchContentForQuery(query: query, page: page)};
+    getNextPage(0);
   }
 
   void _onClearQuery() {
     _editingController.text = "";
-    _searchForContentBloc.fetchRecommendedContent(clearedQuery: true);
+    getNextPage =
+        (page) => {_searchForContentBloc.fetchRecommendedContent(page: page)};
+    getNextPage(0);
   }
 }

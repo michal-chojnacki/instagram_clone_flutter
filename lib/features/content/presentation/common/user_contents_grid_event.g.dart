@@ -10,10 +10,10 @@ part of 'user_contents_grid_event.dart';
 abstract class UserContentsGridEvent extends Equatable {
   const UserContentsGridEvent(this._type);
 
-  factory UserContentsGridEvent.fetchUserContent({@required User user}) =
-      FetchUserContent;
+  factory UserContentsGridEvent.fetchUserContent(
+      {@required User user, @required int page}) = FetchUserContent;
 
-  factory UserContentsGridEvent.fetchCurrentUserContent() =
+  factory UserContentsGridEvent.fetchCurrentUserContent({@required int page}) =
       FetchCurrentUserContent;
 
   final _UserContentsGridEvent _type;
@@ -126,26 +126,28 @@ abstract class UserContentsGridEvent extends Equatable {
 
 @immutable
 class FetchUserContent extends UserContentsGridEvent {
-  const FetchUserContent({@required this.user})
+  const FetchUserContent({@required this.user, @required this.page})
       : super(_UserContentsGridEvent.FetchUserContent);
 
   final User user;
 
+  final int page;
+
   @override
-  String toString() => 'FetchUserContent(user:${this.user})';
+  String toString() => 'FetchUserContent(user:${this.user},page:${this.page})';
   @override
-  List get props => [user];
+  List get props => [user, page];
 }
 
 @immutable
 class FetchCurrentUserContent extends UserContentsGridEvent {
-  const FetchCurrentUserContent._()
+  const FetchCurrentUserContent({@required this.page})
       : super(_UserContentsGridEvent.FetchCurrentUserContent);
 
-  factory FetchCurrentUserContent() {
-    _instance ??= const FetchCurrentUserContent._();
-    return _instance;
-  }
+  final int page;
 
-  static FetchCurrentUserContent _instance;
+  @override
+  String toString() => 'FetchCurrentUserContent(page:${this.page})';
+  @override
+  List get props => [page];
 }

@@ -56,7 +56,7 @@ class UserContentRepositoryImpl extends UserContentRepository {
       String authorizationToken, User user, int page) async {
     try {
       final response = await _service.getUserContentById(
-          'Bearer $authorizationToken', user.id);
+          'Bearer $authorizationToken', user.id, page);
       if (response.statusCode == 200) {
         return _mapSuccessfulResponse(response);
       } else {
@@ -71,8 +71,8 @@ class UserContentRepositoryImpl extends UserContentRepository {
   Future<Result<PagedList<Content>>> loadContentWithQuery(
       String authorizationToken, String query, int page) async {
     try {
-      final response =
-          await _service.searchContent('Bearer $authorizationToken', query);
+      final response = await _service.searchContent(
+          'Bearer $authorizationToken', query, page);
       if (response.statusCode == 200) {
         return _mapSuccessfulResponse(response);
       } else {
@@ -87,8 +87,8 @@ class UserContentRepositoryImpl extends UserContentRepository {
   Future<Result<PagedList<Content>>> loadRecommendedContent(
       String authorizationToken, int page) async {
     try {
-      final response =
-          await _service.getRecommendedContent('Bearer $authorizationToken');
+      final response = await _service.getRecommendedContent(
+          'Bearer $authorizationToken', page);
       if (response.statusCode == 200) {
         return _mapSuccessfulResponse(response);
       } else {
@@ -104,7 +104,7 @@ class UserContentRepositoryImpl extends UserContentRepository {
       String authorizationToken, int page) async {
     try {
       final response =
-          await _service.getUserContent('Bearer $authorizationToken');
+          await _service.getUserContent('Bearer $authorizationToken', page);
       if (response.statusCode == 200) {
         return _mapSuccessfulResponse(response);
       } else {

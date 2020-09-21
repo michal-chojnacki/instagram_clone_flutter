@@ -10,20 +10,26 @@ class _$UserContentsGridState extends UserContentsGridState {
   @override
   final BuiltList<PersonalizedContent> contents;
   @override
-  final bool progressBarVisible;
+  final int page;
+  @override
+  final bool hasReachedEndOfResults;
 
   factory _$UserContentsGridState(
           [void Function(UserContentsGridStateBuilder) updates]) =>
       (new UserContentsGridStateBuilder()..update(updates)).build();
 
-  _$UserContentsGridState._({this.contents, this.progressBarVisible})
+  _$UserContentsGridState._(
+      {this.contents, this.page, this.hasReachedEndOfResults})
       : super._() {
     if (contents == null) {
       throw new BuiltValueNullFieldError('UserContentsGridState', 'contents');
     }
-    if (progressBarVisible == null) {
+    if (page == null) {
+      throw new BuiltValueNullFieldError('UserContentsGridState', 'page');
+    }
+    if (hasReachedEndOfResults == null) {
       throw new BuiltValueNullFieldError(
-          'UserContentsGridState', 'progressBarVisible');
+          'UserContentsGridState', 'hasReachedEndOfResults');
     }
   }
 
@@ -41,19 +47,22 @@ class _$UserContentsGridState extends UserContentsGridState {
     if (identical(other, this)) return true;
     return other is UserContentsGridState &&
         contents == other.contents &&
-        progressBarVisible == other.progressBarVisible;
+        page == other.page &&
+        hasReachedEndOfResults == other.hasReachedEndOfResults;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, contents.hashCode), progressBarVisible.hashCode));
+    return $jf($jc($jc($jc(0, contents.hashCode), page.hashCode),
+        hasReachedEndOfResults.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserContentsGridState')
           ..add('contents', contents)
-          ..add('progressBarVisible', progressBarVisible))
+          ..add('page', page)
+          ..add('hasReachedEndOfResults', hasReachedEndOfResults))
         .toString();
   }
 }
@@ -68,17 +77,22 @@ class UserContentsGridStateBuilder
   set contents(ListBuilder<PersonalizedContent> contents) =>
       _$this._contents = contents;
 
-  bool _progressBarVisible;
-  bool get progressBarVisible => _$this._progressBarVisible;
-  set progressBarVisible(bool progressBarVisible) =>
-      _$this._progressBarVisible = progressBarVisible;
+  int _page;
+  int get page => _$this._page;
+  set page(int page) => _$this._page = page;
+
+  bool _hasReachedEndOfResults;
+  bool get hasReachedEndOfResults => _$this._hasReachedEndOfResults;
+  set hasReachedEndOfResults(bool hasReachedEndOfResults) =>
+      _$this._hasReachedEndOfResults = hasReachedEndOfResults;
 
   UserContentsGridStateBuilder();
 
   UserContentsGridStateBuilder get _$this {
     if (_$v != null) {
       _contents = _$v.contents?.toBuilder();
-      _progressBarVisible = _$v.progressBarVisible;
+      _page = _$v.page;
+      _hasReachedEndOfResults = _$v.hasReachedEndOfResults;
       _$v = null;
     }
     return this;
@@ -104,7 +118,8 @@ class UserContentsGridStateBuilder
       _$result = _$v ??
           new _$UserContentsGridState._(
               contents: contents.build(),
-              progressBarVisible: progressBarVisible);
+              page: page,
+              hasReachedEndOfResults: hasReachedEndOfResults);
     } catch (_) {
       String _$failedField;
       try {

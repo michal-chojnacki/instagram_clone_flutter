@@ -23,6 +23,7 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
   void dispose() {
     super.dispose();
     _mainContentsBloc.close();
+    _scrollController.dispose();
   }
 
   @override

@@ -59,8 +59,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 );
               },
             ),
-            UserContentsGrid(
-              user: widget._user,
+            Expanded(
+              child: UserContentsGrid(
+                user: widget._user,
+              ),
             )
           ],
         ),

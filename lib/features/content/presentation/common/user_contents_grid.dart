@@ -21,11 +21,7 @@ class _UserContentsGridState extends State<UserContentsGrid> {
   @override
   void initState() {
     super.initState();
-    if (widget.user != null) {
-      _userContentsGridBloc.fetchProfileData(user: widget.user);
-    } else {
-      _userContentsGridBloc.fetchCurrentUserContent();
-    }
+    getNextPage(0);
   }
 
   @override
@@ -41,8 +37,19 @@ class _UserContentsGridState extends State<UserContentsGrid> {
         builder: (context, UserContentsGridState state) {
           return ContentsGrid(
             contents: state.contents.toList(),
-            loading: state.progressBarVisible,
+            loading: state.contents.isEmpty && !state.hasReachedEndOfResults,
+            page: state.page,
+            hasReachedEndOfResults: state.hasReachedEndOfResults,
+            getNextPage: getNextPage,
           );
         });
+  }
+
+  void getNextPage(int page) {
+    if (widget.user != null) {
+      _userContentsGridBloc.fetchProfileData(user: widget.user, page: page);
+    } else {
+      _userContentsGridBloc.fetchCurrentUserContent(page: page);
+    }
   }
 }

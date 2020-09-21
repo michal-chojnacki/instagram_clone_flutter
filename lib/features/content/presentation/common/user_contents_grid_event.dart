@@ -7,8 +7,11 @@ part "user_contents_grid_event.g.dart";
 enum _UserContentsGridEvent {
   @Data(fields: [
     DataField<User>('user'),
+    DataField<int>('page'),
   ])
   FetchUserContent,
-  @object
+  @Data(fields: [
+    DataField<int>('page'),
+  ])
   FetchCurrentUserContent,
 }

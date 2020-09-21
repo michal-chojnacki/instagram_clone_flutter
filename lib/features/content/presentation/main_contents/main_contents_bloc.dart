@@ -38,6 +38,6 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
             result.data.page,
             result.data.page + 1 >= result.data.pages),
         error: (result) =>
-            state.rebuild((b) => b..hasReachedEndOfResults = true));
+            state.rebuild((b) => b.hasReachedEndOfResults = true));
   }
 }

@@ -10,20 +10,26 @@ class _$SearchForContentState extends SearchForContentState {
   @override
   final BuiltList<PersonalizedContent> contents;
   @override
-  final bool progressbarVisible;
+  final int page;
+  @override
+  final bool hasReachedEndOfResults;
 
   factory _$SearchForContentState(
           [void Function(SearchForContentStateBuilder) updates]) =>
       (new SearchForContentStateBuilder()..update(updates)).build();
 
-  _$SearchForContentState._({this.contents, this.progressbarVisible})
+  _$SearchForContentState._(
+      {this.contents, this.page, this.hasReachedEndOfResults})
       : super._() {
     if (contents == null) {
       throw new BuiltValueNullFieldError('SearchForContentState', 'contents');
     }
-    if (progressbarVisible == null) {
+    if (page == null) {
+      throw new BuiltValueNullFieldError('SearchForContentState', 'page');
+    }
+    if (hasReachedEndOfResults == null) {
       throw new BuiltValueNullFieldError(
-          'SearchForContentState', 'progressbarVisible');
+          'SearchForContentState', 'hasReachedEndOfResults');
     }
   }
 
@@ -41,19 +47,22 @@ class _$SearchForContentState extends SearchForContentState {
     if (identical(other, this)) return true;
     return other is SearchForContentState &&
         contents == other.contents &&
-        progressbarVisible == other.progressbarVisible;
+        page == other.page &&
+        hasReachedEndOfResults == other.hasReachedEndOfResults;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, contents.hashCode), progressbarVisible.hashCode));
+    return $jf($jc($jc($jc(0, contents.hashCode), page.hashCode),
+        hasReachedEndOfResults.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SearchForContentState')
           ..add('contents', contents)
-          ..add('progressbarVisible', progressbarVisible))
+          ..add('page', page)
+          ..add('hasReachedEndOfResults', hasReachedEndOfResults))
         .toString();
   }
 }
@@ -68,17 +77,22 @@ class SearchForContentStateBuilder
   set contents(ListBuilder<PersonalizedContent> contents) =>
       _$this._contents = contents;
 
-  bool _progressbarVisible;
-  bool get progressbarVisible => _$this._progressbarVisible;
-  set progressbarVisible(bool progressbarVisible) =>
-      _$this._progressbarVisible = progressbarVisible;
+  int _page;
+  int get page => _$this._page;
+  set page(int page) => _$this._page = page;
+
+  bool _hasReachedEndOfResults;
+  bool get hasReachedEndOfResults => _$this._hasReachedEndOfResults;
+  set hasReachedEndOfResults(bool hasReachedEndOfResults) =>
+      _$this._hasReachedEndOfResults = hasReachedEndOfResults;
 
   SearchForContentStateBuilder();
 
   SearchForContentStateBuilder get _$this {
     if (_$v != null) {
       _contents = _$v.contents?.toBuilder();
-      _progressbarVisible = _$v.progressbarVisible;
+      _page = _$v.page;
+      _hasReachedEndOfResults = _$v.hasReachedEndOfResults;
       _$v = null;
     }
     return this;
@@ -104,7 +118,8 @@ class SearchForContentStateBuilder
       _$result = _$v ??
           new _$SearchForContentState._(
               contents: contents.build(),
-              progressbarVisible: progressbarVisible);
+              page: page,
+              hasReachedEndOfResults: hasReachedEndOfResults);
     } catch (_) {
       String _$failedField;
       try {

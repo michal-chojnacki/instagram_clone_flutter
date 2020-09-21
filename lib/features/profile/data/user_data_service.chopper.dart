@@ -25,12 +25,11 @@ class _$UserDataService extends UserDataService {
   }
 
   @override
-  Future<Response<RawRecommendedUsers>> getRecommendedUsers(
-      String authorizationBearer) {
+  Future<Response<RawUsers>> getRecommendedUsers(String authorizationBearer) {
     final $url = '/recommended_users';
     final $headers = {'Authorization': authorizationBearer};
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
-    return client.send<RawRecommendedUsers, RawRecommendedUsers>($request);
+    return client.send<RawUsers, RawUsers>($request);
   }
 
   @override
@@ -91,5 +90,27 @@ class _$UserDataService extends UserDataService {
     final $request =
         Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
     return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<RawUsers>> getFollowers(
+      String authorizationBearer, int userId, int page) {
+    final $url = '/followers';
+    final $params = <String, dynamic>{'user': userId, 'page': page};
+    final $headers = {'Authorization': authorizationBearer};
+    final $request = Request('GET', $url, client.baseUrl,
+        parameters: $params, headers: $headers);
+    return client.send<RawUsers, RawUsers>($request);
+  }
+
+  @override
+  Future<Response<RawUsers>> getFollowees(
+      String authorizationBearer, int userId, int page) {
+    final $url = '/followees';
+    final $params = <String, dynamic>{'user': userId, 'page': page};
+    final $headers = {'Authorization': authorizationBearer};
+    final $request = Request('GET', $url, client.baseUrl,
+        parameters: $params, headers: $headers);
+    return client.send<RawUsers, RawUsers>($request);
   }
 }

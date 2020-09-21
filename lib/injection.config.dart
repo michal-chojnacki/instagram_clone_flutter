@@ -25,6 +25,8 @@ import 'features/content/presentation/item/content_item_bloc.dart';
 import 'features/content/data/mapper/content_mapper.dart';
 import 'features/content/data/content_service.dart';
 import 'features/profile/presentation/edit_profile_bloc.dart';
+import 'features/profile/domain/get_all_followees_use_case.dart';
+import 'features/profile/domain/get_all_followers_use_case.dart';
 import 'features/content/domain/get_content_with_query_use_case.dart';
 import 'features/content/domain/get_contents_for_user_use_case.dart';
 import 'features/profile/domain/get_likes_statuses_use_case.dart';
@@ -57,6 +59,7 @@ import 'features/profile/domain/user_data_repository.dart';
 import 'features/profile/data/user_data_repository_impl.dart';
 import 'features/profile/data/user_data_repository_mock_impl.dart';
 import 'features/profile/data/user_data_service.dart';
+import 'features/profile/presentation/user_list/user_list_bloc.dart';
 import 'features/content/data/mapper/user_mapper.dart';
 import 'features/profile/presentation/page/user_profile_bloc.dart';
 import 'features/authenticate/domain/verify_authorization_token_use_case.dart';
@@ -113,6 +116,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
           ));
   gh.factory<ContentMapper>(
       () => ContentMapper(g<ImageMapper>(), g<UserMapper>()));
+  gh.factory<GetAllFolloweesUseCase>(() => GetAllFolloweesUseCase(
+      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+  gh.factory<GetAllFollowersUseCase>(() => GetAllFollowersUseCase(
+      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
   gh.factory<GetLikesStatusesUseCase>(() => GetLikesStatusesUseCase(
       g<LoadAuthorizationTokenUseCase>(), g<UserDataRepository>()));
   gh.factory<GetMainContentUseCase>(() => GetMainContentUseCase(
@@ -159,6 +166,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   gh.factory<UserDataRepository>(
       () => UserDataRepositoryImpl(g<UserDataService>(), g<UserMapper>()),
       registerFor: {_prod, _dev});
+  gh.factory<UserListBloc>(() =>
+      UserListBloc(g<GetAllFollowersUseCase>(), g<GetAllFolloweesUseCase>()));
   gh.factory<UserProfileBloc>(() => UserProfileBloc(
       g<ChangeObservationUseCase>(), g<GetObservationStatusUseCase>()));
   gh.factory<VerifyAuthorizationTokenUseCase>(() =>

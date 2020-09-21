@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
+import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
 class ProfileInfoWidget extends StatelessWidget {
   ProfileInfoWidget({this.onSelectAvatar, @required this.user});
 
+  final NavigationBloc _navigtationBloc = GetIt.I<NavigationBloc>();
   final Function onSelectAvatar;
   final User user;
 
@@ -55,8 +58,16 @@ class ProfileInfoWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   _createStatsColumn(count: user.posts, name: 'Posts'),
-                  _createStatsColumn(count: user.followers, name: 'Observers'),
-                  _createStatsColumn(count: user.followees, name: 'Observing'),
+                  _createStatsColumn(
+                      count: user.followers,
+                      name: 'Followers',
+                      onTap: () =>
+                          _navigtationBloc.openUserFollowersPage(user: user)),
+                  _createStatsColumn(
+                      count: user.followees,
+                      name: 'Followees',
+                      onTap: () =>
+                          _navigtationBloc.openUserFolloweesPage(user: user)),
                 ],
               ),
             ),
@@ -81,10 +92,18 @@ class ProfileInfoWidget extends StatelessWidget {
     );
   }
 
-  Widget _createStatsColumn({@required int count, @required String name}) {
-    return Column(children: <Widget>[
-      Text(count.toString(), style: TextStyle(fontSize: 24.0)),
-      Text(name),
-    ]);
+  Widget _createStatsColumn(
+      {@required int count, @required String name, Function onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: Column(children: <Widget>[
+          Text(count.toString(), style: TextStyle(fontSize: 24.0)),
+          Text(name),
+        ]),
+      ),
+    );
   }
 }

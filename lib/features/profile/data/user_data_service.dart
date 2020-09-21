@@ -5,7 +5,7 @@ import 'package:instagram_clone/features/content/data/model/raw_user.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_like_status.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_like_statuses.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
-import 'package:instagram_clone/features/profile/data/model/raw_recommended_users.dart';
+import 'package:instagram_clone/features/profile/data/model/raw_users.dart';
 
 part "user_data_service.chopper.dart";
 
@@ -21,7 +21,7 @@ abstract class UserDataService extends ChopperService {
       @Header("Authorization") String authorizationBearer);
 
   @Get(path: 'recommended_users')
-  Future<Response<RawRecommendedUsers>> getRecommendedUsers(
+  Future<Response<RawUsers>> getRecommendedUsers(
       @Header("Authorization") String authorizationBearer);
 
   @Get(path: 'observing')
@@ -53,4 +53,16 @@ abstract class UserDataService extends ChopperService {
   Future<Response> updateLikes(
       @Header("Authorization") String authorizationBearer,
       @Body() RawLikeStatus likeStatus);
+
+  @Get(path: 'followers')
+  Future<Response<RawUsers>> getFollowers(
+      @Header("Authorization") String authorizationBearer,
+      @Query("user") int userId,
+      @Query("page") int page);
+
+  @Get(path: 'followees')
+  Future<Response<RawUsers>> getFollowees(
+      @Header("Authorization") String authorizationBearer,
+      @Query("user") int userId,
+      @Query("page") int page);
 }

@@ -1,5 +1,4 @@
 import 'package:injectable/injectable.dart';
-import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
@@ -18,11 +17,7 @@ class GetMainContentUseCase {
   GetMainContentUseCase(
       this._repository, this._loadAuthorizationToken, this._getLikesStatuses);
 
-  Future<Result<List<PersonalizedContent>>> call(int page) async {
-    if (page > 0) {
-      return Result.error(exception: NoNextPageException());
-    }
-
+  Future<Result<PagedList<PersonalizedContent>>> call(int page) async {
     return _loadAuthorizationToken()
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>
@@ -35,22 +30,28 @@ class GetMainContentUseCase {
         .asyncMap((contents) => contents.when(
             success: (result) async {
               var contents = result.data.list;
+              var page = result.data.page;
+              var pages = result.data.pages;
               return (await _getLikesStatuses(
                       contents.map((content) => content.id).toList()))
                   .when(
                       success: (result) =>
-                          Result<List<PersonalizedContent>>.success(
-                              data: contents
-                                  .map((content) => PersonalizedContent.create(
-                                      content: content,
-                                      liked: result.data[content.id]))
-                                  .toList()),
+                          Result<PagedList<PersonalizedContent>>.success(
+                              data: PagedList.create(
+                                  list: contents
+                                      .map((content) =>
+                                          PersonalizedContent.create(
+                                              content: content,
+                                              liked: result.data[content.id]))
+                                      .toList(),
+                                  page: page,
+                                  pages: pages)),
                       error: (result) =>
-                          Result<List<PersonalizedContent>>.error(
+                          Result<PagedList<PersonalizedContent>>.error(
                               exception: result.exception));
             },
             error: (result) => Future.value(
-                Result<List<PersonalizedContent>>.error(
+                Result<PagedList<PersonalizedContent>>.error(
                     exception: result.exception))))
         .single;
   }

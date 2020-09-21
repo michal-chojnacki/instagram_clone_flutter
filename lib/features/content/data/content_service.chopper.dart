@@ -17,10 +17,13 @@ class _$ContentService extends ContentService {
   final definitionType = ContentService;
 
   @override
-  Future<Response<RawContents>> getMainContent(String authorizationBearer) {
+  Future<Response<RawContents>> getMainContent(
+      String authorizationBearer, int page) {
     final $url = '/main_content';
+    final $params = <String, dynamic>{'page': page};
     final $headers = {'Authorization': authorizationBearer};
-    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    final $request = Request('GET', $url, client.baseUrl,
+        parameters: $params, headers: $headers);
     return client.send<RawContents, RawContents>($request);
   }
 

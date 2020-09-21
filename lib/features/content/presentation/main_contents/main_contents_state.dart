@@ -6,23 +6,29 @@ import 'package:instagram_clone/features/content/presentation/common/model/perso
 
 part 'main_contents_state.g.dart';
 
-abstract class MainContentsState implements Built<MainContentsState, MainContentsStateBuilder> {
+abstract class MainContentsState
+    implements Built<MainContentsState, MainContentsStateBuilder> {
   BuiltList<PersonalizedContent> get contents;
+  int get page;
   bool get hasReachedEndOfResults;
 
   MainContentsState._();
 
-  factory MainContentsState([updates(MainContentsStateBuilder b)]) = _$MainContentsState;
+  factory MainContentsState([updates(MainContentsStateBuilder b)]) =
+      _$MainContentsState;
 
   factory MainContentsState.initial() {
     return MainContentsState((b) => b
       ..contents.replace(BuiltList<PersonalizedContent>())
+      ..page = 0
       ..hasReachedEndOfResults = false);
   }
 
-  factory MainContentsState.success(BuiltList<PersonalizedContent> items, bool hasReachedEndOfResults) {
+  factory MainContentsState.success(BuiltList<PersonalizedContent> items,
+      int page, bool hasReachedEndOfResults) {
     return MainContentsState((b) => b
       ..contents.replace(items)
+      ..page = page
       ..hasReachedEndOfResults = hasReachedEndOfResults);
   }
 }

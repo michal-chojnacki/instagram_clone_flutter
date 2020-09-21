@@ -42,7 +42,8 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
               );
             } else {
               return NotificationListener<ScrollNotification>(
-                  onNotification: _handleScrollNotification,
+                  onNotification: (notification) =>
+                      _handleScrollNotification(notification, state),
                   child: ListView.builder(
                       itemCount: calculateListItemCount(state),
                       controller: _scrollController,
@@ -58,10 +59,12 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
     );
   }
 
-  bool _handleScrollNotification(ScrollNotification notification) {
+  bool _handleScrollNotification(
+      ScrollNotification notification, MainContentsState state) {
     if (notification is ScrollEndNotification &&
-        _scrollController.position.extentAfter == 0) {
-      _mainContentsBloc.getNextListPage();
+        _scrollController.position.extentAfter == 0 &&
+        !state.hasReachedEndOfResults) {
+      _mainContentsBloc.getNextListPage(page: state.page + 1);
     }
 
     return false;

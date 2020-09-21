@@ -14,7 +14,8 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
   Future<Result<PagedList<Content>>> loadMainContent(
       String authorizationToken, int page) async {
     if (page > 0) {
-      return Result.success(data: PagedList.create(list: []));
+      return Result.success(
+          data: PagedList.create(list: [], page: 1, pages: 1));
     } else {
       return Result.success(
           data: PagedList.create(list: [
@@ -37,7 +38,7 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
                     url:
                         "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
             publicationTimestamp: new DateTime.now().millisecondsSinceEpoch),
-      ]));
+      ], page: 0, pages: 1));
     }
   }
 

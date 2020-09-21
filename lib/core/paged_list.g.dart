@@ -24,13 +24,16 @@ class _$PagedListSerializer implements StructuredSerializer<PagedList<Object>> {
     final parameterT =
         isUnderspecified ? FullType.object : specifiedType.parameters[0];
 
-    final result = <Object>[];
-    if (object.list != null) {
-      result
-        ..add('list')
-        ..add(serializers.serialize(object.list,
-            specifiedType: new FullType(BuiltList, [parameterT])));
-    }
+    final result = <Object>[
+      'list',
+      serializers.serialize(object.list,
+          specifiedType: new FullType(BuiltList, [parameterT])),
+      'page',
+      serializers.serialize(object.page, specifiedType: const FullType(int)),
+      'pages',
+      serializers.serialize(object.pages, specifiedType: const FullType(int)),
+    ];
+
     return result;
   }
 
@@ -59,6 +62,14 @@ class _$PagedListSerializer implements StructuredSerializer<PagedList<Object>> {
                   specifiedType: new FullType(BuiltList, [parameterT]))
               as BuiltList<Object>);
           break;
+        case 'page':
+          result.page = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'pages':
+          result.pages = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
       }
     }
 
@@ -69,11 +80,24 @@ class _$PagedListSerializer implements StructuredSerializer<PagedList<Object>> {
 class _$PagedList<T> extends PagedList<T> {
   @override
   final BuiltList<T> list;
+  @override
+  final int page;
+  @override
+  final int pages;
 
   factory _$PagedList([void Function(PagedListBuilder<T>) updates]) =>
       (new PagedListBuilder<T>()..update(updates)).build();
 
-  _$PagedList._({this.list}) : super._() {
+  _$PagedList._({this.list, this.page, this.pages}) : super._() {
+    if (list == null) {
+      throw new BuiltValueNullFieldError('PagedList', 'list');
+    }
+    if (page == null) {
+      throw new BuiltValueNullFieldError('PagedList', 'page');
+    }
+    if (pages == null) {
+      throw new BuiltValueNullFieldError('PagedList', 'pages');
+    }
     if (T == dynamic) {
       throw new BuiltValueMissingGenericsError('PagedList', 'T');
     }
@@ -89,17 +113,23 @@ class _$PagedList<T> extends PagedList<T> {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is PagedList && list == other.list;
+    return other is PagedList &&
+        list == other.list &&
+        page == other.page &&
+        pages == other.pages;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, list.hashCode));
+    return $jf($jc($jc($jc(0, list.hashCode), page.hashCode), pages.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PagedList')..add('list', list))
+    return (newBuiltValueToStringHelper('PagedList')
+          ..add('list', list)
+          ..add('page', page)
+          ..add('pages', pages))
         .toString();
   }
 }
@@ -112,11 +142,21 @@ class PagedListBuilder<T>
   ListBuilder<T> get list => _$this._list ??= new ListBuilder<T>();
   set list(ListBuilder<T> list) => _$this._list = list;
 
+  int _page;
+  int get page => _$this._page;
+  set page(int page) => _$this._page = page;
+
+  int _pages;
+  int get pages => _$this._pages;
+  set pages(int pages) => _$this._pages = pages;
+
   PagedListBuilder();
 
   PagedListBuilder<T> get _$this {
     if (_$v != null) {
       _list = _$v.list?.toBuilder();
+      _page = _$v.page;
+      _pages = _$v.pages;
       _$v = null;
     }
     return this;
@@ -139,12 +179,13 @@ class PagedListBuilder<T>
   _$PagedList<T> build() {
     _$PagedList<T> _$result;
     try {
-      _$result = _$v ?? new _$PagedList<T>._(list: _list?.build());
+      _$result = _$v ??
+          new _$PagedList<T>._(list: list.build(), page: page, pages: pages);
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'list';
-        _list?.build();
+        list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'PagedList', _$failedField, e.toString());

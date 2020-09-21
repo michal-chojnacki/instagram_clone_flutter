@@ -1,9 +1,11 @@
+import 'package:chopper/chopper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/data/content_service.dart';
 import 'package:instagram_clone/features/content/data/mapper/content_mapper.dart';
+import 'package:instagram_clone/features/content/data/model/raw_contents.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/domain/user_content_repository.dart';
@@ -22,13 +24,9 @@ class UserContentRepositoryImpl extends UserContentRepository {
       String authorizationToken, int page) async {
     try {
       final response =
-          await _service.getMainContent('Bearer $authorizationToken');
+          await _service.getMainContent('Bearer $authorizationToken', page);
       if (response.statusCode == 200) {
-        return Result.success(
-            data: PagedList.create(
-                list: response.body.contents
-                    .map((rawContent) => _contentsMapper.map(rawContent))
-                    .toList()));
+        return _mapSuccessfulResponse(response);
       } else {
         return Result.error(exception: ServerException());
       }
@@ -60,11 +58,7 @@ class UserContentRepositoryImpl extends UserContentRepository {
       final response = await _service.getUserContentById(
           'Bearer $authorizationToken', user.id);
       if (response.statusCode == 200) {
-        return Result.success(
-            data: PagedList.create(
-                list: response.body.contents
-                    .map((rawContent) => _contentsMapper.map(rawContent))
-                    .toList()));
+        return _mapSuccessfulResponse(response);
       } else {
         return Result.error(exception: ServerException());
       }
@@ -80,11 +74,7 @@ class UserContentRepositoryImpl extends UserContentRepository {
       final response =
           await _service.searchContent('Bearer $authorizationToken', query);
       if (response.statusCode == 200) {
-        return Result.success(
-            data: PagedList.create(
-                list: response.body.contents
-                    .map((rawContent) => _contentsMapper.map(rawContent))
-                    .toList()));
+        return _mapSuccessfulResponse(response);
       } else {
         return Result.error(exception: ServerException());
       }
@@ -100,11 +90,7 @@ class UserContentRepositoryImpl extends UserContentRepository {
       final response =
           await _service.getRecommendedContent('Bearer $authorizationToken');
       if (response.statusCode == 200) {
-        return Result.success(
-            data: PagedList.create(
-                list: response.body.contents
-                    .map((rawContent) => _contentsMapper.map(rawContent))
-                    .toList()));
+        return _mapSuccessfulResponse(response);
       } else {
         return Result.error(exception: ServerException());
       }
@@ -120,11 +106,7 @@ class UserContentRepositoryImpl extends UserContentRepository {
       final response =
           await _service.getUserContent('Bearer $authorizationToken');
       if (response.statusCode == 200) {
-        return Result.success(
-            data: PagedList.create(
-                list: response.body.contents
-                    .map((rawContent) => _contentsMapper.map(rawContent))
-                    .toList()));
+        return _mapSuccessfulResponse(response);
       } else {
         return Result.error(exception: ServerException());
       }
@@ -132,4 +114,14 @@ class UserContentRepositoryImpl extends UserContentRepository {
       return Result.error(exception: e);
     }
   }
+
+  Result<PagedList<Content>> _mapSuccessfulResponse(
+          Response<RawContents> response) =>
+      Result.success(
+          data: PagedList.create(
+              list: response.body.contents
+                  .map((rawContent) => _contentsMapper.map(rawContent))
+                  .toList(),
+              page: response.body.page ?? 0,
+              pages: response.body.pages ?? 1));
 }

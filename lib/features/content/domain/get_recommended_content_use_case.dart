@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
+import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/profile/domain/get_likes_statuses_use_case.dart';
@@ -27,12 +28,13 @@ class GetRecommendedContentUseCase {
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
                 success: (result) =>
-                    _repository.loadRecommendedContent(result.data),
+                    _repository.loadRecommendedContent(result.data, page),
                 error: (result) => Future.value(
-                    Result<List<Content>>.error(exception: result.exception))))
+                    Result<PagedList<Content>>.error(
+                        exception: result.exception))))
         .asyncMap((contents) => contents.when(
             success: (result) async {
-              var contents = result.data;
+              var contents = result.data.list;
               return (await _getLikesStatuses(
                       contents.map((content) => content.id).toList()))
                   .when(

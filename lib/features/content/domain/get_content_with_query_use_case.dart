@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
+import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/authenticate/domain/load_authorization_token_use_case.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
@@ -26,12 +27,13 @@ class GetContentWithQueryUseCase {
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
                 success: (result) =>
-                    _repository.loadContentWithQuery(result.data, query),
+                    _repository.loadContentWithQuery(result.data, query, page),
                 error: (result) => Future.value(
-                    Result<List<Content>>.error(exception: result.exception))))
+                    Result<PagedList<Content>>.error(
+                        exception: result.exception))))
         .asyncMap((contents) => contents.when(
             success: (result) async {
-              var contents = result.data;
+              var contents = result.data.list;
               return (await _getLikesStatuses(
                       contents.map((content) => content.id).toList()))
                   .when(

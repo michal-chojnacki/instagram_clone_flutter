@@ -13,6 +13,7 @@ import 'package:instagram_clone/features/content/presentation/common/page/main_u
 import 'package:instagram_clone/features/content/presentation/single_content/single_content_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/edit_profile_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_page.dart';
+import 'package:instagram_clone/features/profile/presentation/user_list/user_list_page.dart';
 import "package:instagram_clone/navigation/navigation_event.dart";
 
 @lazySingleton
@@ -53,6 +54,14 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
 
   void openSingleContentPage({@required PersonalizedContent content}) {
     add(NavigationEvent.openSingleContentPage(content: content));
+  }
+
+  void openUserFollowersPage({@required User user}) {
+    add(NavigationEvent.openUserFollowersPage(user: user));
+  }
+
+  void openUserFolloweesPage({@required User user}) {
+    add(NavigationEvent.openUserFolloweesPage(user: user));
   }
 
   void openAdjustImagePage(
@@ -117,6 +126,16 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
                   builder: (context) => SingleContentPage(
                         content: event.content,
                       )))
+            },
+        openUserFolloweesPage: (event) => {
+              navigatorKey.currentState.push(MaterialPageRoute(
+                  builder: (context) =>
+                      UserListPage(UserListPageMode.FOLLOWEES, event.user)))
+            },
+        openUserFollowersPage: (event) => {
+              navigatorKey.currentState.push(MaterialPageRoute(
+                  builder: (context) =>
+                      UserListPage(UserListPageMode.FOLLOWERS, event.user)))
             },
         openAdjustImagePage: (event) => {
               navigatorKey.currentState.pushReplacement(MaterialPageRoute(

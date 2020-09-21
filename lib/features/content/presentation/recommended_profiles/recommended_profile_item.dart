@@ -10,7 +10,7 @@ class RecommendedProfileItem extends StatelessWidget {
   RecommendedProfileItem(
       {@required this.user,
       @required this.onOpenProfileClick,
-      @required this.onObserveClick});
+      this.onObserveClick});
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +46,11 @@ class RecommendedProfileItem extends StatelessWidget {
           SizedBox(
             width: 16.0,
           ),
-          PrimaryButton(
-            text: 'Observe',
-            onPressed: () => onObserveClick(user),
-          ),
+          if (onObserveClick != null)
+            PrimaryButton(
+              text: 'Observe',
+              onPressed: () => onObserveClick(user),
+            ),
         ]),
       ),
       onTap: () => onOpenProfileClick(user),

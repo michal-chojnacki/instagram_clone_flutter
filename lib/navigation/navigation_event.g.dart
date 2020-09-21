@@ -40,6 +40,12 @@ abstract class NavigationEvent extends Equatable {
       @required double ratio,
       @required bool circleShaped}) = OpenAdjustImagePage;
 
+  factory NavigationEvent.openUserFollowersPage({@required User user}) =
+      OpenUserFollowersPage;
+
+  factory NavigationEvent.openUserFolloweesPage({@required User user}) =
+      OpenUserFolloweesPage;
+
   final _NavigationEvent _type;
 
 //ignore: missing_return
@@ -52,7 +58,9 @@ abstract class NavigationEvent extends Equatable {
       @required R Function(OpenPickImagePage) openPickImagePage,
       @required R Function(OpenUserProfilePage) openUserProfilePage,
       @required R Function(OpenSingleContentPage) openSingleContentPage,
-      @required R Function(OpenAdjustImagePage) openAdjustImagePage}) {
+      @required R Function(OpenAdjustImagePage) openAdjustImagePage,
+      @required R Function(OpenUserFollowersPage) openUserFollowersPage,
+      @required R Function(OpenUserFolloweesPage) openUserFolloweesPage}) {
     assert(() {
       if (popPage == null ||
           openMainUserPage == null ||
@@ -62,7 +70,9 @@ abstract class NavigationEvent extends Equatable {
           openPickImagePage == null ||
           openUserProfilePage == null ||
           openSingleContentPage == null ||
-          openAdjustImagePage == null) {
+          openAdjustImagePage == null ||
+          openUserFollowersPage == null ||
+          openUserFolloweesPage == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -86,6 +96,10 @@ abstract class NavigationEvent extends Equatable {
         return openSingleContentPage(this as OpenSingleContentPage);
       case _NavigationEvent.OpenAdjustImagePage:
         return openAdjustImagePage(this as OpenAdjustImagePage);
+      case _NavigationEvent.OpenUserFollowersPage:
+        return openUserFollowersPage(this as OpenUserFollowersPage);
+      case _NavigationEvent.OpenUserFolloweesPage:
+        return openUserFolloweesPage(this as OpenUserFolloweesPage);
     }
   }
 
@@ -108,7 +122,11 @@ abstract class NavigationEvent extends Equatable {
       @required
           FutureOr<R> Function(OpenSingleContentPage) openSingleContentPage,
       @required
-          FutureOr<R> Function(OpenAdjustImagePage) openAdjustImagePage}) {
+          FutureOr<R> Function(OpenAdjustImagePage) openAdjustImagePage,
+      @required
+          FutureOr<R> Function(OpenUserFollowersPage) openUserFollowersPage,
+      @required
+          FutureOr<R> Function(OpenUserFolloweesPage) openUserFolloweesPage}) {
     assert(() {
       if (popPage == null ||
           openMainUserPage == null ||
@@ -118,7 +136,9 @@ abstract class NavigationEvent extends Equatable {
           openPickImagePage == null ||
           openUserProfilePage == null ||
           openSingleContentPage == null ||
-          openAdjustImagePage == null) {
+          openAdjustImagePage == null ||
+          openUserFollowersPage == null ||
+          openUserFolloweesPage == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -142,6 +162,10 @@ abstract class NavigationEvent extends Equatable {
         return openSingleContentPage(this as OpenSingleContentPage);
       case _NavigationEvent.OpenAdjustImagePage:
         return openAdjustImagePage(this as OpenAdjustImagePage);
+      case _NavigationEvent.OpenUserFollowersPage:
+        return openUserFollowersPage(this as OpenUserFollowersPage);
+      case _NavigationEvent.OpenUserFolloweesPage:
+        return openUserFolloweesPage(this as OpenUserFolloweesPage);
     }
   }
 
@@ -155,6 +179,8 @@ abstract class NavigationEvent extends Equatable {
       R Function(OpenUserProfilePage) openUserProfilePage,
       R Function(OpenSingleContentPage) openSingleContentPage,
       R Function(OpenAdjustImagePage) openAdjustImagePage,
+      R Function(OpenUserFollowersPage) openUserFollowersPage,
+      R Function(OpenUserFolloweesPage) openUserFolloweesPage,
       @required R Function(NavigationEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -190,6 +216,12 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenAdjustImagePage:
         if (openAdjustImagePage == null) break;
         return openAdjustImagePage(this as OpenAdjustImagePage);
+      case _NavigationEvent.OpenUserFollowersPage:
+        if (openUserFollowersPage == null) break;
+        return openUserFollowersPage(this as OpenUserFollowersPage);
+      case _NavigationEvent.OpenUserFolloweesPage:
+        if (openUserFolloweesPage == null) break;
+        return openUserFolloweesPage(this as OpenUserFolloweesPage);
     }
     return orElse(this);
   }
@@ -204,6 +236,8 @@ abstract class NavigationEvent extends Equatable {
       FutureOr<R> Function(OpenUserProfilePage) openUserProfilePage,
       FutureOr<R> Function(OpenSingleContentPage) openSingleContentPage,
       FutureOr<R> Function(OpenAdjustImagePage) openAdjustImagePage,
+      FutureOr<R> Function(OpenUserFollowersPage) openUserFollowersPage,
+      FutureOr<R> Function(OpenUserFolloweesPage) openUserFolloweesPage,
       @required FutureOr<R> Function(NavigationEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -239,6 +273,12 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenAdjustImagePage:
         if (openAdjustImagePage == null) break;
         return openAdjustImagePage(this as OpenAdjustImagePage);
+      case _NavigationEvent.OpenUserFollowersPage:
+        if (openUserFollowersPage == null) break;
+        return openUserFollowersPage(this as OpenUserFollowersPage);
+      case _NavigationEvent.OpenUserFolloweesPage:
+        if (openUserFolloweesPage == null) break;
+        return openUserFolloweesPage(this as OpenUserFolloweesPage);
     }
     return orElse(this);
   }
@@ -253,7 +293,9 @@ abstract class NavigationEvent extends Equatable {
       FutureOr<void> Function(OpenPickImagePage) openPickImagePage,
       FutureOr<void> Function(OpenUserProfilePage) openUserProfilePage,
       FutureOr<void> Function(OpenSingleContentPage) openSingleContentPage,
-      FutureOr<void> Function(OpenAdjustImagePage) openAdjustImagePage}) {
+      FutureOr<void> Function(OpenAdjustImagePage) openAdjustImagePage,
+      FutureOr<void> Function(OpenUserFollowersPage) openUserFollowersPage,
+      FutureOr<void> Function(OpenUserFolloweesPage) openUserFolloweesPage}) {
     assert(() {
       if (popPage == null &&
           openMainUserPage == null &&
@@ -263,7 +305,9 @@ abstract class NavigationEvent extends Equatable {
           openPickImagePage == null &&
           openUserProfilePage == null &&
           openSingleContentPage == null &&
-          openAdjustImagePage == null) {
+          openAdjustImagePage == null &&
+          openUserFollowersPage == null &&
+          openUserFolloweesPage == null) {
         throw 'provide at least one branch';
       }
       return true;
@@ -296,6 +340,12 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.OpenAdjustImagePage:
         if (openAdjustImagePage == null) break;
         return openAdjustImagePage(this as OpenAdjustImagePage);
+      case _NavigationEvent.OpenUserFollowersPage:
+        if (openUserFollowersPage == null) break;
+        return openUserFollowersPage(this as OpenUserFollowersPage);
+      case _NavigationEvent.OpenUserFolloweesPage:
+        if (openUserFolloweesPage == null) break;
+        return openUserFolloweesPage(this as OpenUserFolloweesPage);
     }
   }
 
@@ -437,4 +487,30 @@ class OpenAdjustImagePage extends NavigationEvent {
       'OpenAdjustImagePage(editable:${this.editable},path:${this.path},onPickedImage:${this.onPickedImage},ratio:${this.ratio},circleShaped:${this.circleShaped})';
   @override
   List get props => [editable, path, onPickedImage, ratio, circleShaped];
+}
+
+@immutable
+class OpenUserFollowersPage extends NavigationEvent {
+  const OpenUserFollowersPage({@required this.user})
+      : super(_NavigationEvent.OpenUserFollowersPage);
+
+  final User user;
+
+  @override
+  String toString() => 'OpenUserFollowersPage(user:${this.user})';
+  @override
+  List get props => [user];
+}
+
+@immutable
+class OpenUserFolloweesPage extends NavigationEvent {
+  const OpenUserFolloweesPage({@required this.user})
+      : super(_NavigationEvent.OpenUserFolloweesPage);
+
+  final User user;
+
+  @override
+  String toString() => 'OpenUserFolloweesPage(user:${this.user})';
+  @override
+  List get props => [user];
 }

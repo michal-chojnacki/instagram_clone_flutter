@@ -10,11 +10,21 @@ import 'package:instagram_clone/features/content/data/model/raw_user.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_like_status.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_like_statuses.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
-import 'package:instagram_clone/features/profile/data/model/raw_recommended_users.dart';
+import 'package:instagram_clone/features/profile/data/model/raw_users.dart';
 
 part 'serializers.g.dart';
 
-@SerializersFor(const [RawCredentials, RawImage, RawUser, RawContent, RawContents,
-    RawToken, RawObservingStatus, RawRecommendedUsers, RawLikeStatuses, RawLikeStatus])
+@SerializersFor(const [
+  RawCredentials,
+  RawImage,
+  RawUser,
+  RawContent,
+  RawContents,
+  RawToken,
+  RawObservingStatus,
+  RawUsers,
+  RawLikeStatuses,
+  RawLikeStatus
+])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

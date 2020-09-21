@@ -42,4 +42,12 @@ enum _NavigationEvent {
     DataField<bool>('circleShaped'),
   ])
   OpenAdjustImagePage,
+  @Data(fields: [
+    DataField<User>('user'),
+  ])
+  OpenUserFollowersPage,
+  @Data(fields: [
+    DataField<User>('user'),
+  ])
+  OpenUserFolloweesPage,
 }

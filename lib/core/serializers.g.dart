@@ -14,9 +14,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(RawLikeStatus.serializer)
       ..add(RawLikeStatuses.serializer)
       ..add(RawObservingStatus.serializer)
-      ..add(RawRecommendedUsers.serializer)
       ..add(RawToken.serializer)
       ..add(RawUser.serializer)
+      ..add(RawUsers.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(RawContent)]),
           () => new ListBuilder<RawContent>())

@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/domain/model/image.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
@@ -88,5 +89,65 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
       String authorizationToken, int contentId, bool like) async {
     _likes[contentId] = like;
     return Result.success(data: null);
+  }
+
+  @override
+  Future<Result<PagedList<User>>> loadFollowees(
+      String authorizationToken, int userId, int page) async {
+    return Result.success(
+        data: PagedList.create(list: [
+      User.create(
+          id: 1,
+          username: "elo",
+          fullname: "fullname",
+          bio: "bio",
+          posts: 1,
+          followees: 2,
+          followers: 3,
+          avatar: Image.create(
+              url:
+                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
+      User.create(
+          id: 2,
+          username: "elo",
+          fullname: "fullname",
+          bio: "bio",
+          posts: 1,
+          followees: 2,
+          followers: 3,
+          avatar: Image.create(
+              url:
+                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"))
+    ], page: page, pages: 1));
+  }
+
+  @override
+  Future<Result<PagedList<User>>> loadFollowers(
+      String authorizationToken, int userId, int page) async {
+    return Result.success(
+        data: PagedList.create(list: [
+      User.create(
+          id: 1,
+          username: "elo",
+          fullname: "fullname",
+          bio: "bio",
+          posts: 1,
+          followees: 2,
+          followers: 3,
+          avatar: Image.create(
+              url:
+                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
+      User.create(
+          id: 2,
+          username: "elo",
+          fullname: "fullname",
+          bio: "bio",
+          posts: 1,
+          followees: 2,
+          followers: 3,
+          avatar: Image.create(
+              url:
+                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"))
+    ], page: page, pages: 1));
   }
 }

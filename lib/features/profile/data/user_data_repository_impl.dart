@@ -1,11 +1,14 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:chopper/chopper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
+import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/data/mapper/user_mapper.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_like_status.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
+import 'package:instagram_clone/features/profile/data/model/raw_users.dart';
 import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/data/user_data_service.dart';
 
@@ -89,7 +92,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
           await _service.getRecommendedUsers('Bearer $authorizationToken');
       if (response.statusCode == 200) {
         return Result.success(
-            data: response.body.recommendations
+            data: response.body.users
                 .map((rawUser) => _userMapper.map(rawUser))
                 .toList());
       } else {
@@ -132,4 +135,45 @@ class UserDataRepositoryImpl extends UserDataRepository {
       return Result.error(exception: e);
     }
   }
+
+  @override
+  Future<Result<PagedList<User>>> loadFollowees(
+      String authorizationToken, int userId, int page) async {
+    try {
+      final response = await _service.getFollowees(
+          'Bearer $authorizationToken', userId, page);
+      if (response.statusCode == 200) {
+        return _mapRawUsers(response);
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
+  }
+
+  @override
+  Future<Result<PagedList<User>>> loadFollowers(
+      String authorizationToken, int userId, int page) async {
+    try {
+      final response = await _service.getFollowers(
+          'Bearer $authorizationToken', userId, page);
+      if (response.statusCode == 200) {
+        return _mapRawUsers(response);
+      } else {
+        return Result.error(exception: ServerException());
+      }
+    } catch (e) {
+      return Result.error(exception: e);
+    }
+  }
+
+  Result<PagedList<User>> _mapRawUsers(Response<RawUsers> response) =>
+      Result.success(
+          data: PagedList.create(
+              list: response.body.users
+                  .map((rawUser) => _userMapper.map(rawUser))
+                  .toList(),
+              page: response.body.page ?? 0,
+              pages: response.body.pages ?? 1));
 }

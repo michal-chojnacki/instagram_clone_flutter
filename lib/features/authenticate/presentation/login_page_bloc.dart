@@ -42,11 +42,11 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
                   _navigationBloc.openMainUserPage();
                   return Stream<LoginPageState>.empty();
                 } else {
-                  return Stream.value(LoginPageState.error());
+                  return Stream.value(LoginPageState.error(false));
                 }
               },
-              error: (_) => Stream.value(LoginPageState.error())))
-          .startWith(LoginPageState.loading());
+              error: (_) => Stream.value(LoginPageState.error(false))))
+          .startWith(LoginPageState.loading(false));
 
   Stream<LoginPageState> _mapRegisterUser(RegisterUser event) =>
       Stream.fromFuture(_registerUser(event.username, event.password))
@@ -56,9 +56,9 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
                   _navigationBloc.openMainUserPage();
                   return Stream<LoginPageState>.empty();
                 } else {
-                  return Stream.value(LoginPageState.error());
+                  return Stream.value(LoginPageState.error(true));
                 }
               },
-              error: (_) => Stream.value(LoginPageState.error())))
-          .startWith(LoginPageState.loading());
+              error: (_) => Stream.value(LoginPageState.error(true))))
+          .startWith(LoginPageState.loading(true));
 }

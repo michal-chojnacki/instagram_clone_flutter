@@ -19,25 +19,33 @@ class LoginPage extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image(
-                    image: AssetImage('assets/logo.png'),
-                    height: 64.0,
-                  ),
-                  SizedBox(height: 48.0),
-                  LoginForm(
-                    onLogIn: (login, password) =>
-                        _authenticateUser(context, login, password),
-                    onRegister: (login, password) =>
-                        _registerUser(context, login, password),
-                  ),
-                  if (state.error)
-                    Text(
-                      "Error",
-                      style: TextStyle(color: Theme.of(context).errorColor),
+              return Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.all(48.0),
+                    child: Image(
+                      image: AssetImage('assets/logo.png'),
+                      height: 64.0,
                     ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      LoginForm(
+                        registerMode: state.registerMode,
+                        onLogIn: (login, password) =>
+                            _authenticateUser(context, login, password),
+                        onRegister: (login, password) =>
+                            _registerUser(context, login, password),
+                      ),
+                      if (state.error)
+                        Text(
+                          "Error",
+                          style: TextStyle(color: Theme.of(context).errorColor),
+                        ),
+                    ],
+                  ),
                 ],
               );
             }

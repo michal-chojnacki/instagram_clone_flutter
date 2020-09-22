@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/core/widgets/animated_fav_icon.dart';
+import 'package:instagram_clone/core/widgets/network_image_with_fallback.dart';
 import 'package:instagram_clone/core/widgets/rounded_square_image.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_bloc.dart';
@@ -48,7 +49,7 @@ class _ContentItemWidgetState extends State<ContentItemWidget> {
                   child: Row(
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundImage: NetworkImage(
+                        backgroundImage: NetworkImageWithFallback(
                           state.content.owner.avatar.url,
                         ),
                       ),

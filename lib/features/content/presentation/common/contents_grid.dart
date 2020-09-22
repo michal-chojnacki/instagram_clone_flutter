@@ -42,11 +42,8 @@ class _ContentsGridState extends State<ContentsGrid> {
                 crossAxisCount: 3, childAspectRatio: 1.0),
             itemBuilder: (context, index) {
               return InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: RoundedSquareImage.network(
-                      widget.contents[index].content.image.url),
-                ),
+                child: RoundedSquareImage.network(
+                    widget.contents[index].content.image.url),
                 onTap: () => context
                     .bloc<MainBloc>()
                     .openSingleContentPage(content: widget.contents[index]),

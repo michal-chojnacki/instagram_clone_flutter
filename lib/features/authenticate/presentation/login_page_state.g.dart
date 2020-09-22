@@ -11,16 +11,22 @@ class _$LoginPageState extends LoginPageState {
   final bool loading;
   @override
   final bool error;
+  @override
+  final bool registerMode;
 
   factory _$LoginPageState([void Function(LoginPageStateBuilder) updates]) =>
       (new LoginPageStateBuilder()..update(updates)).build();
 
-  _$LoginPageState._({this.loading, this.error}) : super._() {
+  _$LoginPageState._({this.loading, this.error, this.registerMode})
+      : super._() {
     if (loading == null) {
       throw new BuiltValueNullFieldError('LoginPageState', 'loading');
     }
     if (error == null) {
       throw new BuiltValueNullFieldError('LoginPageState', 'error');
+    }
+    if (registerMode == null) {
+      throw new BuiltValueNullFieldError('LoginPageState', 'registerMode');
     }
   }
 
@@ -37,19 +43,22 @@ class _$LoginPageState extends LoginPageState {
     if (identical(other, this)) return true;
     return other is LoginPageState &&
         loading == other.loading &&
-        error == other.error;
+        error == other.error &&
+        registerMode == other.registerMode;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, loading.hashCode), error.hashCode));
+    return $jf($jc(
+        $jc($jc(0, loading.hashCode), error.hashCode), registerMode.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('LoginPageState')
           ..add('loading', loading)
-          ..add('error', error))
+          ..add('error', error)
+          ..add('registerMode', registerMode))
         .toString();
   }
 }
@@ -66,12 +75,17 @@ class LoginPageStateBuilder
   bool get error => _$this._error;
   set error(bool error) => _$this._error = error;
 
+  bool _registerMode;
+  bool get registerMode => _$this._registerMode;
+  set registerMode(bool registerMode) => _$this._registerMode = registerMode;
+
   LoginPageStateBuilder();
 
   LoginPageStateBuilder get _$this {
     if (_$v != null) {
       _loading = _$v.loading;
       _error = _$v.error;
+      _registerMode = _$v.registerMode;
       _$v = null;
     }
     return this;
@@ -92,8 +106,9 @@ class LoginPageStateBuilder
 
   @override
   _$LoginPageState build() {
-    final _$result =
-        _$v ?? new _$LoginPageState._(loading: loading, error: error);
+    final _$result = _$v ??
+        new _$LoginPageState._(
+            loading: loading, error: error, registerMode: registerMode);
     replace(_$result);
     return _$result;
   }

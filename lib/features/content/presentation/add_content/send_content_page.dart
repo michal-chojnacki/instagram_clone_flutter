@@ -28,45 +28,58 @@ class _SendContentPageState extends State<SendContentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text('Display the Picture'), actions: <Widget>[
-          InkWell(
-            child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Text("Share", style: TextStyle(color: Colors.white))),
-            onTap: () {
-              _sendContentBloc.sendContent(
-                  _messageController.text ?? "", widget.imagePath);
-            },
-          ),
-        ]),
-        body: BlocBuilder<SendContentBloc, SendContentState>(
-            cubit: _sendContentBloc,
-            builder: (context, SendContentState state) {
-              var progressBarVisible = state.progressBarVisible;
-              print("SendContentPage: $progressBarVisible");
-              return IntrinsicHeight(
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Image.file(File(widget.imagePath), width: 100),
-                    Container(
-                      child: Expanded(
-                        child: TextField(
-                          expands: true,
-                          maxLines: null,
-                          textAlignVertical: TextAlignVertical.top,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Description'),
-                          controller: _messageController,
-                        ),
-                      ),
-                    ),
-                  ],
+    return BlocBuilder<SendContentBloc, SendContentState>(
+        cubit: _sendContentBloc,
+        builder: (context, SendContentState state) {
+          var progressBarVisible = state.progressBarVisible;
+          print("SendContentPage: $progressBarVisible");
+          return Scaffold(
+              appBar:
+                  AppBar(title: Text('Share the Picture'), actions: <Widget>[
+                InkWell(
+                  child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child:
+                          Text("Share", style: TextStyle(color: Colors.white))),
+                  onTap: () {
+                    if (state.progressBarVisible) {
+                      return;
+                    }
+                    _sendContentBloc.sendContent(
+                        _messageController.text ?? "", widget.imagePath);
+                  },
                 ),
-              );
-            }));
+              ]),
+              body: Column(
+                children: [
+                  IntrinsicHeight(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Image.file(File(widget.imagePath), width: 120),
+                        Container(
+                          child: Expanded(
+                            child: TextField(
+                              maxLines: 4,
+                              textAlignVertical: TextAlignVertical.top,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Description'),
+                              controller: _messageController,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  if (state.progressBarVisible)
+                    Center(
+                      child: CircularProgressIndicator(),
+                    )
+                ],
+              ));
+        });
   }
 }

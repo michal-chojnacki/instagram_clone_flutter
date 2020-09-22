@@ -1,4 +1,4 @@
-package com.github.michalchojnacki.instagram_clone
+package com.github.michalchojnacki.instagramclone
 
 import android.os.Bundle
 

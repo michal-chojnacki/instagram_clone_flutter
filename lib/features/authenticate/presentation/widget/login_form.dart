@@ -4,8 +4,9 @@ import 'package:instagram_clone/core/widgets/primary_button.dart';
 class LoginForm extends StatefulWidget {
   final Function onLogIn;
   final Function onRegister;
+  final bool registerMode;
 
-  LoginForm({this.onLogIn, this.onRegister});
+  LoginForm({this.onLogIn, this.onRegister, this.registerMode});
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -15,7 +16,15 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
   String _login, _password;
-  bool _registerMode = false;
+  bool _registerMode;
+
+  @override
+  void initState() {
+    setState(() {
+      _registerMode = widget.registerMode;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

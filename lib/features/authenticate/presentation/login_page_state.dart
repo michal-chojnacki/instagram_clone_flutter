@@ -10,6 +10,8 @@ abstract class LoginPageState
 
   bool get error;
 
+  bool get registerMode;
+
   LoginPageState._();
 
   factory LoginPageState([updates(LoginPageStateBuilder b)]) = _$LoginPageState;
@@ -17,24 +19,28 @@ abstract class LoginPageState
   factory LoginPageState.idle() {
     return LoginPageState((b) => b
       ..loading = false
-      ..error = false);
+      ..error = false
+      ..registerMode = false);
   }
 
-  factory LoginPageState.loading() {
+  factory LoginPageState.loading(bool registerMode) {
     return LoginPageState((b) => b
       ..loading = true
-      ..error = false);
+      ..error = false
+      ..registerMode = registerMode);
   }
 
-  factory LoginPageState.authenticated() {
+  factory LoginPageState.authenticated(bool registerMode) {
     return LoginPageState((b) => b
       ..loading = false
-      ..error = false);
+      ..error = false
+      ..registerMode = registerMode);
   }
 
-  factory LoginPageState.error() {
+  factory LoginPageState.error(bool registerMode) {
     return LoginPageState((b) => b
       ..loading = false
-      ..error = true);
+      ..error = true
+      ..registerMode = registerMode);
   }
 }

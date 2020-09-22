@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/core/widgets/network_image_with_fallback.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
 
@@ -25,7 +26,7 @@ class ProfileInfoWidget extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 64.0,
                       backgroundColor: Colors.black,
-                      backgroundImage: NetworkImage(
+                      backgroundImage: NetworkImageWithFallback(
                         user.avatar.url,
                       ),
                     ),

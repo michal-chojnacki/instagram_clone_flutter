@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/core/widgets/network_image_with_fallback.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';
 
@@ -75,7 +76,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             CircleAvatar(
                               radius: 64.0,
                               backgroundColor: Colors.black,
-                              backgroundImage: NetworkImage(
+                              backgroundImage: NetworkImageWithFallback(
                                 state.user.avatar.url,
                               ),
                             ),

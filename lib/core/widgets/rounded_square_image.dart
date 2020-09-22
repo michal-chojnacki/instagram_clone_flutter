@@ -7,10 +7,15 @@ class RoundedSquareImage extends StatelessWidget {
 
   RoundedSquareImage.network(String src)
       : this(
-            image: (Image.network(
-          src,
-          fit: BoxFit.cover,
-        )));
+            image: (src != null && src.isNotEmpty)
+                ? (Image.network(
+                    src,
+                    fit: BoxFit.cover,
+                  ))
+                : Image(
+                    image: AssetImage('assets/logo.png'),
+                    fit: BoxFit.cover,
+                  ));
 
   @override
   Widget build(BuildContext context) {

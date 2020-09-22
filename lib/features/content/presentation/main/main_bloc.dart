@@ -40,7 +40,13 @@ class MainBloc extends Bloc<MainEvent, dynamic> {
   }
 
   Stream<dynamic> _mapVerifyAuthenticationState() async* {
-    (await _verifyAuthorizationTokenUseCase())
+    var verifyAuthorizationTokenUseCase = _verifyAuthorizationTokenUseCase();
+    List<Future> futures = [
+      Future.delayed(Duration(seconds: 2)),
+      _verifyAuthorizationTokenUseCase()
+    ];
+    await Future.wait(futures);
+    (await verifyAuthorizationTokenUseCase)
         .when(success: (_) => openContentPage(), error: (_) => openLoginPage());
   }
 }

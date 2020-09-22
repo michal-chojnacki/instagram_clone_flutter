@@ -22,6 +22,11 @@ class LoginPage extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Image(
+                    image: AssetImage('assets/logo.png'),
+                    height: 64.0,
+                  ),
+                  SizedBox(height: 48.0),
                   LoginForm(
                     onLogIn: (login, password) =>
                         _authenticateUser(context, login, password),

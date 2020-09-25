@@ -26,13 +26,14 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   @override
   Stream<UserProfileState> mapEventToState(UserProfileEvent event) {
     return event.when(
-        fetchObservation: (event) => _mapFetchObservation(event),
-        changeObservation: (event) => _mapChangeObservation(event));
+        changeObservation: (User user, bool observe) =>
+            _mapChangeObservation(user, observe),
+        fetchObservation: (User user) => _mapFetchObservation(user));
   }
 
-  Stream<UserProfileState> _mapFetchObservation(FetchObservation event) async* {
+  Stream<UserProfileState> _mapFetchObservation(User user) async* {
     yield UserProfileState.loading();
-    bool observing = (await _getObservationStatus(event.user))
+    bool observing = (await _getObservationStatus(user))
         .when(success: (result) => result.data, error: (_) => null);
     if (observing != null) {
       yield UserProfileState.setObservation(observing);
@@ -40,12 +41,12 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   }
 
   Stream<UserProfileState> _mapChangeObservation(
-      ChangeObservation event) async* {
+      User user, bool observe) async* {
     yield UserProfileState.loading();
-    bool success = (await _changeObservation(event.user, event.observe))
+    bool success = (await _changeObservation(user, observe))
         .when(success: (_) => true, error: (_) => false);
     if (success) {
-      yield UserProfileState.setObservation(event.observe);
+      yield UserProfileState.setObservation(observe);
     }
   }
 }

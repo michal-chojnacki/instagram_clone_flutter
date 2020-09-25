@@ -14,11 +14,9 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
   Future<Result<PagedList<Content>>> loadMainContent(
       String authorizationToken, int page) async {
     if (page > 0) {
-      return Result.success(
-          data: PagedList.create(list: [], page: 1, pages: 1));
+      return Result.success(PagedList.create(list: [], page: 1, pages: 1));
     } else {
-      return Result.success(
-          data: PagedList.create(list: [
+      return Result.success(PagedList.create(list: [
         Content.create(
             id: 1,
             likesCount: 2,
@@ -45,7 +43,7 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
   @override
   Future<Result<void>> sendContent(
       String authorizationToken, String message, String imagePath) async {
-    return Result.success(data: null);
+    return Result.success(null);
   }
 
   @override

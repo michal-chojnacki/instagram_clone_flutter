@@ -1,17 +1,10 @@
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "result.g.dart";
+part "result.freezed.dart";
 
-@superEnum
-enum _Result {
-  @generic
-  @Data(fields: [
-    DataField<Generic>('data'),
-  ])
-  Success,
-
-  @Data(fields: [
-    DataField<Exception>('exception'),
-  ])
-  Error,
+@freezed
+abstract class Result<T> with _$Result<T> {
+  const factory Result.success(@nullable T data) = Success<T>;
+  const factory Result.error(Exception exception) = Error<T>;
 }

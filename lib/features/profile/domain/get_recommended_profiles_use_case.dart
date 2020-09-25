@@ -16,10 +16,9 @@ class GetRecommendedProfilesUseCase {
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
-                success: (result) =>
-                    _repository.fetchRecommendedUsers(result.data),
-                error: (result) => Future.value(
-                    Result<List<User>>.error(exception: result.exception))))
+                success: (data) => _repository.fetchRecommendedUsers(data),
+                error: (exception) =>
+                    Future.value(Result<List<User>>.error(exception))))
         .single;
   }
 }

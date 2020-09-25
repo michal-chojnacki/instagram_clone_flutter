@@ -28,10 +28,10 @@ class UserContentRepositoryImpl extends UserContentRepository {
       if (response.statusCode == 200) {
         return _mapSuccessfulResponse(response);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -42,12 +42,12 @@ class UserContentRepositoryImpl extends UserContentRepository {
       final response = await _service.sendContent(
           'Bearer $authorizationToken', message, imagePath);
       if (response.statusCode == 200) {
-        return Result.success(data: null);
+        return Result.success(null);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -60,10 +60,10 @@ class UserContentRepositoryImpl extends UserContentRepository {
       if (response.statusCode == 200) {
         return _mapSuccessfulResponse(response);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -76,10 +76,10 @@ class UserContentRepositoryImpl extends UserContentRepository {
       if (response.statusCode == 200) {
         return _mapSuccessfulResponse(response);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -92,10 +92,10 @@ class UserContentRepositoryImpl extends UserContentRepository {
       if (response.statusCode == 200) {
         return _mapSuccessfulResponse(response);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -108,20 +108,19 @@ class UserContentRepositoryImpl extends UserContentRepository {
       if (response.statusCode == 200) {
         return _mapSuccessfulResponse(response);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
   Result<PagedList<Content>> _mapSuccessfulResponse(
           Response<RawContents> response) =>
-      Result.success(
-          data: PagedList.create(
-              list: response.body.contents
-                  .map((rawContent) => _contentsMapper.map(rawContent))
-                  .toList(),
-              page: response.body.page ?? 0,
-              pages: response.body.pages ?? 1));
+      Result.success(PagedList.create(
+          list: response.body.contents
+              .map((rawContent) => _contentsMapper.map(rawContent))
+              .toList(),
+          page: response.body.page ?? 0,
+          pages: response.body.pages ?? 1));
 }

@@ -24,12 +24,12 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
       if (response.statusCode == 200) {
         var token = response.body.token;
         await _localDataSource.saveToken(token);
-        return Result.success(data: token);
+        return Result.success(token);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -41,12 +41,12 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
       if (response.statusCode == 200) {
         var token = response.body.token;
         await _localDataSource.saveToken(token);
-        return Result.success(data: token);
+        return Result.success(token);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 

@@ -1,12 +1,10 @@
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "send_content_event.g.dart";
+part "send_content_event.freezed.dart";
 
-@superEnum
-enum _SendContentEvent {
-  @Data(fields: [
-    DataField<String>('message'),
-    DataField<String>('imagePath'),
-  ])
-  SendContent,
+@freezed
+abstract class SendContentEvent with _$SendContentEvent {
+  factory SendContentEvent.sendContent(
+      {@required String message, @required String imagePath}) = SendContent;
 }

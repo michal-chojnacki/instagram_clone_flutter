@@ -26,17 +26,15 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
 
   @override
   Stream<MainContentsState> mapEventToState(MainContentsEvent event) {
-    return event.when(
-        fetchMainContents: (event) => _mapFetchMainContents(event));
+    return event.when(fetchMainContents: (page) => _mapFetchMainContents(page));
   }
 
-  Stream<MainContentsState> _mapFetchMainContents(
-      FetchMainContents event) async* {
-    yield (await _getMainContent(event.page)).when(
-        success: (result) => MainContentsState.success(
-            state.contents + BuiltList.of(result.data.list),
-            result.data.page,
-            result.data.page + 1 >= result.data.pages),
+  Stream<MainContentsState> _mapFetchMainContents(int page) async* {
+    yield (await _getMainContent(page)).when(
+        success: (data) => MainContentsState.success(
+            state.contents + BuiltList.of(data.list),
+            data.page,
+            data.page + 1 >= data.pages),
         error: (result) =>
             state.rebuild((b) => b.hasReachedEndOfResults = true));
   }

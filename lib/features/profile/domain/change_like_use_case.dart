@@ -15,10 +15,10 @@ class ChangeLikeUseCase {
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
-                success: (result) =>
-                    _repository.changeLike(result.data, contentId, like),
-                error: (result) => Future.value(
-                    Result<void>.error(exception: result.exception))))
+                success: (data) =>
+                    _repository.changeLike(data, contentId, like),
+                error: (exception) =>
+                    Future.value(Result<void>.error(exception))))
         .single;
   }
 }

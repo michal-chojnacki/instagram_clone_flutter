@@ -12,17 +12,15 @@ class GetLikesStatusesUseCase {
 
   Future<Result<Map<int, bool>>> call(List<int> contentIds) {
     if (contentIds.isEmpty) {
-      return Future.value(
-          Result<Map<int, bool>>.success(data: Map<int, bool>()));
+      return Future.value(Result<Map<int, bool>>.success(Map<int, bool>()));
     }
     return _loadAuthorizationToken()
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
-                success: (result) =>
-                    _repository.getLikes(result.data, contentIds),
-                error: (result) => Future.value(
-                    Result<Map<int, bool>>.error(exception: result.exception))))
+                success: (data) => _repository.getLikes(data, contentIds),
+                error: (exception) =>
+                    Future.value(Result<Map<int, bool>>.error(exception))))
         .single;
   }
 }

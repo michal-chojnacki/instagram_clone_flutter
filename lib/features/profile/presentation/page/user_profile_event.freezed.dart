@@ -14,7 +14,8 @@ class _$UserProfileEventTearOff {
   const _$UserProfileEventTearOff();
 
 // ignore: unused_element
-  ChangeObservation changeObservation({User user, bool observe}) {
+  ChangeObservation changeObservation(
+      {@required User user, @required bool observe}) {
     return ChangeObservation(
       user: user,
       observe: observe,
@@ -22,7 +23,7 @@ class _$UserProfileEventTearOff {
   }
 
 // ignore: unused_element
-  FetchObservation fetchObservation({User user}) {
+  FetchObservation fetchObservation({@required User user}) {
     return FetchObservation(
       user: user,
     );
@@ -124,8 +125,12 @@ class _$ChangeObservationCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$ChangeObservation implements ChangeObservation {
-  const _$ChangeObservation({this.user, this.observe});
+class _$ChangeObservation
+    with DiagnosticableTreeMixin
+    implements ChangeObservation {
+  const _$ChangeObservation({@required this.user, @required this.observe})
+      : assert(user != null),
+        assert(observe != null);
 
   @override
   final User user;
@@ -133,8 +138,17 @@ class _$ChangeObservation implements ChangeObservation {
   final bool observe;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UserProfileEvent.changeObservation(user: $user, observe: $observe)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserProfileEvent.changeObservation'))
+      ..add(DiagnosticsProperty('user', user))
+      ..add(DiagnosticsProperty('observe', observe));
   }
 
   @override
@@ -209,8 +223,8 @@ class _$ChangeObservation implements ChangeObservation {
 }
 
 abstract class ChangeObservation implements UserProfileEvent {
-  const factory ChangeObservation({User user, bool observe}) =
-      _$ChangeObservation;
+  const factory ChangeObservation(
+      {@required User user, @required bool observe}) = _$ChangeObservation;
 
   @override
   User get user;
@@ -251,15 +265,25 @@ class _$FetchObservationCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$FetchObservation implements FetchObservation {
-  const _$FetchObservation({this.user});
+class _$FetchObservation
+    with DiagnosticableTreeMixin
+    implements FetchObservation {
+  const _$FetchObservation({@required this.user}) : assert(user != null);
 
   @override
   final User user;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UserProfileEvent.fetchObservation(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserProfileEvent.fetchObservation'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -330,7 +354,7 @@ class _$FetchObservation implements FetchObservation {
 }
 
 abstract class FetchObservation implements UserProfileEvent {
-  const factory FetchObservation({User user}) = _$FetchObservation;
+  const factory FetchObservation({@required User user}) = _$FetchObservation;
 
   @override
   User get user;

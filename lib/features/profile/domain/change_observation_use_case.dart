@@ -16,10 +16,10 @@ class ChangeObservationUseCase {
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
-                success: (result) =>
-                    _repository.changeObservation(result.data, user, observe),
-                error: (result) => Future.value(
-                    Result<void>.error(exception: result.exception))))
+                success: (data) =>
+                    _repository.changeObservation(data, user, observe),
+                error: (exception) =>
+                    Future.value(Result<void>.error(exception))))
         .single;
   }
 }

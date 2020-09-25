@@ -16,9 +16,9 @@ class GetUserDataUseCase {
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
-                success: (result) => _repository.fetchUserData(result.data),
-                error: (result) => Future.value(
-                    Result<User>.error(exception: result.exception))))
+                success: (data) => _repository.fetchUserData(data),
+                error: (exception) =>
+                    Future.value(Result<User>.error(exception))))
         .single;
   }
 }

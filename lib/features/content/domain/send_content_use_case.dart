@@ -14,9 +14,9 @@ class SendContentUseCase {
     return _loadAuthorizationToken()
         .asStream()
         .asyncMap((authorizationTokenResult) => authorizationTokenResult.when(
-            success: (result) =>
-                _repository.sendContent(result.data, message, imagePath),
-            error: (result) => Future.value(Result<void>.error(exception: result.exception))))
+            success: (data) =>
+                _repository.sendContent(data, message, imagePath),
+            error: (exception) => Future.value(Result<void>.error(exception))))
         .single;
   }
 }

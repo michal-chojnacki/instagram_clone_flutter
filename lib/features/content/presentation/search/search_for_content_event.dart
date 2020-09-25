@@ -1,16 +1,12 @@
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "search_for_content_event.g.dart";
+part "search_for_content_event.freezed.dart";
 
-@superEnum
-enum _SearchForContentEvent {
-  @Data(fields: [
-    DataField<int>('page'),
-  ])
-  FetchRecommendedContent,
-  @Data(fields: [
-    DataField<String>('query'),
-    DataField<int>('page'),
-  ])
-  FetchContentForQuery,
+@freezed
+abstract class SearchForContentEvent with _$SearchForContentEvent {
+  const factory SearchForContentEvent.fetchRecommendedContent(
+      {@required int page}) = FetchRecommendedContent;
+  const factory SearchForContentEvent.fetchContentForQuery(
+      {@required String query, @required int page}) = FetchContentForQuery;
 }

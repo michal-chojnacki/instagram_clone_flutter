@@ -30,12 +30,15 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
   @override
   Stream<LoginPageState> mapEventToState(LoginPageEvent event) {
     return event.when(
-        authenticateUser: (event) => _mapAuthenticateUser(event),
-        registerUser: (event) => _mapRegisterUser(event));
+        authenticateUser: (String username, String password) =>
+            _mapAuthenticateUser(username, password),
+        registerUser: (String username, String password) =>
+            _mapRegisterUser(username, password));
   }
 
-  Stream<LoginPageState> _mapAuthenticateUser(AuthenticateUser event) =>
-      Stream.fromFuture(_authenticateUser(event.username, event.password))
+  Stream<LoginPageState> _mapAuthenticateUser(
+          String username, String password) =>
+      Stream.fromFuture(_authenticateUser(username, password))
           .flatMap((result) => result.when(
               success: (data) {
                 if (data != null) {
@@ -48,8 +51,8 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
               error: (_) => Stream.value(LoginPageState.error(false))))
           .startWith(LoginPageState.loading(false));
 
-  Stream<LoginPageState> _mapRegisterUser(RegisterUser event) =>
-      Stream.fromFuture(_registerUser(event.username, event.password))
+  Stream<LoginPageState> _mapRegisterUser(String username, String password) =>
+      Stream.fromFuture(_registerUser(username, password))
           .flatMap((result) => result.when(
               success: (data) {
                 if (data != null) {

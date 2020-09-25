@@ -27,36 +27,36 @@ class SearchForContentBloc
   @override
   Stream<SearchForContentState> mapEventToState(SearchForContentEvent event) {
     return event.when(
-        fetchRecommendedContent: (event) => _mapFetchRecommendedContent(event),
-        fetchContentForQuery: (event) => _mapFetchContentForQuery(event));
+        fetchRecommendedContent: (int page) =>
+            _mapFetchRecommendedContent(page),
+        fetchContentForQuery: (String query, int page) =>
+            _mapFetchContentForQuery(query, page));
   }
 
-  Stream<SearchForContentState> _mapFetchRecommendedContent(
-      FetchRecommendedContent event) async* {
-    if (event.page == 0) {
+  Stream<SearchForContentState> _mapFetchRecommendedContent(int page) async* {
+    if (page == 0) {
       yield SearchForContentState.loading();
     }
-    yield (await _getRecommendedContent(event.page)).when(success: (result) {
+    yield (await _getRecommendedContent(page)).when(success: (data) {
       return SearchForContentState.success(
-          state.contents + BuiltList.of(result.data.list),
-          result.data.page,
-          result.data.page + 1 >= result.data.pages);
+          state.contents + BuiltList.of(data.list),
+          data.page,
+          data.page + 1 >= data.pages);
     }, error: (result) {
       return state.rebuild((b) => b.hasReachedEndOfResults = true);
     });
   }
 
   Stream<SearchForContentState> _mapFetchContentForQuery(
-      FetchContentForQuery event) async* {
-    if (event.page == 0) {
+      String query, int page) async* {
+    if (page == 0) {
       yield SearchForContentState.loading();
     }
-    yield (await _getContentWithQuery(event.query, event.page)).when(
-        success: (result) {
+    yield (await _getContentWithQuery(query, page)).when(success: (data) {
       return SearchForContentState.success(
-          state.contents + BuiltList.of(result.data.list),
-          result.data.page,
-          result.data.page + 1 >= result.data.pages);
+          state.contents + BuiltList.of(data.list),
+          data.page,
+          data.page + 1 >= data.pages);
     }, error: (result) {
       return state.rebuild((b) => b.hasReachedEndOfResults = true);
     });

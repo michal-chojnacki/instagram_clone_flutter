@@ -16,10 +16,9 @@ class GetObservationStatusUseCase {
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
-                success: (result) =>
-                    _repository.getObservation(result.data, user),
-                error: (result) => Future.value(
-                    Result<bool>.error(exception: result.exception))))
+                success: (data) => _repository.getObservation(data, user),
+                error: (exception) =>
+                    Future.value(Result<bool>.error(exception))))
         .single;
   }
 }

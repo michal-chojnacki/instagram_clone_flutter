@@ -25,31 +25,31 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
   @override
   Stream<UserListState> mapEventToState(UserListEvent event) {
     return event.when(
-        fetchFollowers: (event) => _mapFetchFollowers(event),
-        fetchFollowees: (event) => mapFetchFollowees(event));
+        fetchFollowers: (int page, int userId) =>
+            _mapFetchFollowers(page, userId),
+        fetchFollowees: (int page, int userId) =>
+            mapFetchFollowees(page, userId));
   }
 
-  Stream<UserListState> _mapFetchFollowers(FetchFollowers event) async* {
-    if (event.page == 0) {
+  Stream<UserListState> _mapFetchFollowers(int page, int userId) async* {
+    if (page == 0) {
       yield UserListState.loading();
     }
-    yield (await _getAllFollowersUseCase(event.userId, event.page)).when(
-        success: (result) {
-      return UserListState.success(state.users + BuiltList.of(result.data.list),
-          result.data.page, result.data.page + 1 >= result.data.pages);
+    yield (await _getAllFollowersUseCase(userId, page)).when(success: (data) {
+      return UserListState.success(state.users + BuiltList.of(data.list),
+          data.page, data.page + 1 >= data.pages);
     }, error: (result) {
       return state.rebuild((b) => b.hasReachedEndOfResults = true);
     });
   }
 
-  Stream<UserListState> mapFetchFollowees(FetchFollowees event) async* {
-    if (event.page == 0) {
+  Stream<UserListState> mapFetchFollowees(int page, int userId) async* {
+    if (page == 0) {
       yield UserListState.loading();
     }
-    yield (await _getAllFolloweesUseCase(event.userId, event.page)).when(
-        success: (result) {
-      return UserListState.success(state.users + BuiltList.of(result.data.list),
-          result.data.page, result.data.page + 1 >= result.data.pages);
+    yield (await _getAllFolloweesUseCase(userId, page)).when(success: (data) {
+      return UserListState.success(state.users + BuiltList.of(data.list),
+          data.page, data.page + 1 >= data.pages);
     }, error: (result) {
       return state.rebuild((b) => b.hasReachedEndOfResults = true);
     });

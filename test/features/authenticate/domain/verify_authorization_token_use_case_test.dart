@@ -26,7 +26,7 @@ void main() {
         () async {
       // given
       when(getUserDataUseCase.call())
-          .thenAnswer((_) async => Result.success(data: MockUser()));
+          .thenAnswer((_) async => Result.success(MockUser()));
 
       // when
       var result = await tested.call();
@@ -39,9 +39,9 @@ void main() {
         () async {
       // given
       when(clearAuthenticationTokenUseCase.call())
-          .thenAnswer((_) async => Result.success(data: Void));
-      when(getUserDataUseCase.call()).thenAnswer(
-          (_) async => Result.error(exception: Exception('Fake error')));
+          .thenAnswer((_) async => Result.success(Void));
+      when(getUserDataUseCase.call())
+          .thenAnswer((_) async => Result.error(Exception('Fake error')));
 
       // when
       var result = await tested.call();

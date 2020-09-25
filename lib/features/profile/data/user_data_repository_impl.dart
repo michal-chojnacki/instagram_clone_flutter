@@ -28,12 +28,12 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response = await _service.updateUserData(
           'Bearer $authorizationToken', bio, username, fullname, avatarPath);
       if (response.statusCode == 200) {
-        return Result.success(data: null);
+        return Result.success(null);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -42,12 +42,12 @@ class UserDataRepositoryImpl extends UserDataRepository {
     try {
       final response = await _service.getUser('Bearer $authorizationToken');
       if (response.statusCode == 200) {
-        return Result.success(data: _userMapper.map(response.body));
+        return Result.success(_userMapper.map(response.body));
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -59,12 +59,12 @@ class UserDataRepositoryImpl extends UserDataRepository {
           'Bearer $authorizationToken',
           RawObservingStatus.create(userId: user.id, status: observe));
       if (response.statusCode == 200) {
-        return Result.success(data: null);
+        return Result.success(null);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -75,12 +75,12 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response = await _service.getObservingStatus(
           'Bearer $authorizationToken', user.id);
       if (response.statusCode == 200) {
-        return Result.success(data: response.body.status);
+        return Result.success(response.body.status);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -91,15 +91,14 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response =
           await _service.getRecommendedUsers('Bearer $authorizationToken');
       if (response.statusCode == 200) {
-        return Result.success(
-            data: response.body.users
-                .map((rawUser) => _userMapper.map(rawUser))
-                .toList());
+        return Result.success(response.body.users
+            .map((rawUser) => _userMapper.map(rawUser))
+            .toList());
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -111,12 +110,12 @@ class UserDataRepositoryImpl extends UserDataRepository {
           'Bearer $authorizationToken',
           BuiltList.of(contentIds).toString().replaceAll(' ', ''));
       if (response.statusCode == 200) {
-        return Result.success(data: response.body.statuses.toMap());
+        return Result.success(response.body.statuses.toMap());
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -127,12 +126,12 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response = await _service.updateLikes('Bearer $authorizationToken',
           RawLikeStatus.create(contentId: contentId, status: like));
       if (response.statusCode == 200) {
-        return Result.success(data: null);
+        return Result.success(null);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -145,10 +144,10 @@ class UserDataRepositoryImpl extends UserDataRepository {
       if (response.statusCode == 200) {
         return _mapRawUsers(response);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -161,19 +160,18 @@ class UserDataRepositoryImpl extends UserDataRepository {
       if (response.statusCode == 200) {
         return _mapRawUsers(response);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
   Result<PagedList<User>> _mapRawUsers(Response<RawUsers> response) =>
-      Result.success(
-          data: PagedList.create(
-              list: response.body.users
-                  .map((rawUser) => _userMapper.map(rawUser))
-                  .toList(),
-              page: response.body.page ?? 0,
-              pages: response.body.pages ?? 1));
+      Result.success(PagedList.create(
+          list: response.body.users
+              .map((rawUser) => _userMapper.map(rawUser))
+              .toList(),
+          page: response.body.page ?? 0,
+          pages: response.body.pages ?? 1));
 }

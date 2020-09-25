@@ -722,7 +722,7 @@ packages:
     source: hosted
     version: "1.0.5"
   super_enum:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: super_enum
       url: "https://pub.dartlang.org"

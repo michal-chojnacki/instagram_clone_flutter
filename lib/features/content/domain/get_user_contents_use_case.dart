@@ -20,35 +20,34 @@ class GetUserContentsUseCase {
     return _loadAuthorizationToken()
         .asStream()
         .asyncMap((authorizationTokenResult) => authorizationTokenResult.when(
-            success: (result) => _repository.loadUserContent(result.data, page),
-            error: (result) => Future.value(
-                Result<PagedList<Content>>.error(exception: result.exception))))
+            success: (data) => _repository.loadUserContent(data, page),
+            error: (exception) =>
+                Future.value(Result<PagedList<Content>>.error(exception))))
         .asyncMap((contents) => contents.when(
-            success: (result) async {
-              var contents = result.data.list;
-              var page = result.data.page;
-              var pages = result.data.pages;
+            success: (data) async {
+              var contents = data.list;
+              var page = data.page;
+              var pages = data.pages;
               return (await _getLikesStatuses(
                       contents.map((content) => content.id).toList()))
                   .when(
-                      success: (result) =>
+                      success: (data) =>
                           Result<PagedList<PersonalizedContent>>.success(
-                              data: PagedList.create(
+                              PagedList.create(
                                   list: contents
                                       .map((content) =>
                                           PersonalizedContent.create(
                                               content: content,
-                                              liked: result.data[content.id]))
+                                              liked: data[content.id]))
                                       .toList(),
                                   page: page,
                                   pages: pages)),
-                      error: (result) =>
+                      error: (exception) =>
                           Result<PagedList<PersonalizedContent>>.error(
-                              exception: result.exception));
+                              exception));
             },
-            error: (result) => Future.value(
-                Result<PagedList<PersonalizedContent>>.error(
-                    exception: result.exception))))
+            error: (exception) => Future.value(
+                Result<PagedList<PersonalizedContent>>.error(exception))))
         .single;
   }
 }

@@ -28,34 +28,34 @@ class UserContentsGridBloc
   @override
   Stream<UserContentsGridState> mapEventToState(UserContentsGridEvent event) {
     return event.when(
-      fetchUserContent: (event) => _mapFetchUserContent(event),
-      fetchCurrentUserContent: (event) => _mapFetchCurrentUserContent(event),
+      fetchUserContent: (User user, int page) =>
+          _mapFetchUserContent(user, page),
+      fetchCurrentUserContent: (int page) => _mapFetchCurrentUserContent(page),
     );
   }
 
   Stream<UserContentsGridState> _mapFetchUserContent(
-      FetchUserContent event) async* {
-    if (event.page == 0) {
+      User user, int page) async* {
+    if (page == 0) {
       yield UserContentsGridState.loading();
     }
-    yield (await _getContentsForUser(event.user, event.page)).when(
-        success: (result) => UserContentsGridState.success(
-            state.contents + BuiltList.of(result.data.list),
-            result.data.page,
-            result.data.page + 1 >= result.data.pages),
+    yield (await _getContentsForUser(user, page)).when(
+        success: (data) => UserContentsGridState.success(
+            state.contents + BuiltList.of(data.list),
+            data.page,
+            data.page + 1 >= data.pages),
         error: (_) => state.rebuild((b) => b.hasReachedEndOfResults = true));
   }
 
-  Stream<UserContentsGridState> _mapFetchCurrentUserContent(
-      FetchCurrentUserContent event) async* {
-    if (event.page == 0) {
+  Stream<UserContentsGridState> _mapFetchCurrentUserContent(int page) async* {
+    if (page == 0) {
       yield UserContentsGridState.loading();
     }
-    yield (await _getUserContentsUseCase(event.page)).when(
-        success: (result) => UserContentsGridState.success(
-            state.contents + BuiltList.of(result.data.list),
-            result.data.page,
-            result.data.page + 1 >= result.data.pages),
+    yield (await _getUserContentsUseCase(page)).when(
+        success: (data) => UserContentsGridState.success(
+            state.contents + BuiltList.of(data.list),
+            data.page,
+            data.page + 1 >= data.pages),
         error: (_) => state.rebuild((b) => b.hasReachedEndOfResults = true));
   }
 }

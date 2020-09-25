@@ -1,17 +1,17 @@
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "user_list_event.g.dart";
+part "user_list_event.freezed.dart";
 
-@superEnum
-enum _UserListEvent {
-  @Data(fields: [
-    DataField<int>('page'),
-    DataField<int>('userId'),
-  ])
-  FetchFollowers,
-  @Data(fields: [
-    DataField<int>('page'),
-    DataField<int>('userId'),
-  ])
-  FetchFollowees,
+@freezed
+abstract class UserListEvent with _$UserListEvent {
+  const factory UserListEvent.fetchFollowers({
+    @required int page,
+    @required int userId,
+  }) = FetchFollowers;
+
+  const factory UserListEvent.fetchFollowees({
+    @required int page,
+    @required int userId,
+  }) = FetchFollowees;
 }

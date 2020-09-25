@@ -37,24 +37,22 @@ class RecommendedProfilesBloc
   Stream<RecommendedProfilesState> mapEventToState(
       RecommendedProfilesEvent event) {
     return event.when(
-        fetchRecommendedProfiles: (event) =>
-            _mapFetchRecommendedProfiles(event),
-        observeUser: (event) => _mapObserveUser(event));
+        fetchRecommendedProfiles: () => _mapFetchRecommendedProfiles(),
+        observeUser: (User user) => _mapObserveUser(user));
   }
 
-  Stream<RecommendedProfilesState> _mapFetchRecommendedProfiles(
-      FetchRecommendedProfiles event) async* {
+  Stream<RecommendedProfilesState> _mapFetchRecommendedProfiles() async* {
     yield (await _getRecommendedProfiles()).when(
-        success: (result) => RecommendedProfilesState.success(
-              BuiltList.of(result.data),
+        success: (data) => RecommendedProfilesState.success(
+              BuiltList.of(data),
             ),
         error: (result) => state.rebuild((b) => b..loading = false));
   }
 
-  Stream<RecommendedProfilesState> _mapObserveUser(ObserveUser event) async* {
-    var observeResult = await _changeObservation(event.user, true);
+  Stream<RecommendedProfilesState> _mapObserveUser(User user) async* {
+    var observeResult = await _changeObservation(user, true);
     if (observeResult is Success) {
-      yield state.rebuild((b) => b..users = (b.users..remove(event.user)));
+      yield state.rebuild((b) => b..users = (b.users..remove(user)));
     }
   }
 }

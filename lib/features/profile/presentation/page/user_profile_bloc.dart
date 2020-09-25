@@ -34,7 +34,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   Stream<UserProfileState> _mapFetchObservation(User user) async* {
     yield UserProfileState.loading();
     bool observing = (await _getObservationStatus(user))
-        .when(success: (result) => result.data, error: (_) => null);
+        .when(success: (data) => data, error: (_) => null);
     if (observing != null) {
       yield UserProfileState.setObservation(observing);
     }

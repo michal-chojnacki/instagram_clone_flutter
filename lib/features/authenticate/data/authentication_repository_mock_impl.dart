@@ -12,23 +12,23 @@ class AuthenticationRepositoryMockImpl extends AuthenticationRepository {
   @override
   Future<Result<String>> authenticate(Credentials credentials) async {
     _mockToken = "mock_token";
-    return Result.success(data: _mockToken);
+    return Result.success(_mockToken);
   }
 
   @override
   Future<Result<String>> obtainToken() async {
-    return Result.success(data: _mockToken);
+    return Result.success(_mockToken);
   }
 
   @override
   Future<Result<String>> register(Credentials credentials) async {
     _mockToken = "mock_token";
-    return Result.success(data: _mockToken);
+    return Result.success(_mockToken);
   }
 
   @override
   Future<Result<void>> clearToken() async {
     _mockToken = null;
-    return Result.success(data: null);
+    return Result.success(null);
   }
 }

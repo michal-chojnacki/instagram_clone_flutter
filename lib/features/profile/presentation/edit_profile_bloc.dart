@@ -60,25 +60,27 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
   @override
   Stream<EditProfileState> mapEventToState(EditProfileEvent event) {
     return event.when(
-        fetchProfileData: (event) => _mapFetchProfileData(event),
-        updateProfileData: (event) => _mapUpdateProfileData(event),
-        logout: (_) => _mapLogout());
+        fetchProfileData: () => _mapFetchProfileData(),
+        updateProfileData:
+            (String avatarPath, String username, String fullname, String bio) =>
+                _mapUpdateProfileData(avatarPath, username, fullname, bio),
+        logout: () => _mapLogout());
   }
 
-  Stream<EditProfileState> _mapFetchProfileData(FetchProfileData event) async* {
+  Stream<EditProfileState> _mapFetchProfileData() async* {
     yield EditProfileState.loading();
     yield (await _getUserData()).when(
-        success: (result) => EditProfileState.success(result.data),
+        success: (data) => EditProfileState.success(data),
         error: (_) => EditProfileState.success(null));
   }
 
   Stream<EditProfileState> _mapUpdateProfileData(
-      UpdateProfileData event) async* {
+      String avatarPath, String username, String fullname, String bio) async* {
     (await _updateUserDataUseCase(
-            avatarPath: event.avatarPath,
-            bio: event.bio,
-            username: event.username,
-            fullname: event.fullname))
+            avatarPath: avatarPath,
+            bio: bio,
+            username: username,
+            fullname: fullname))
         .when(success: (_) => {fetchProfileData()}, error: (_) => null);
   }
 

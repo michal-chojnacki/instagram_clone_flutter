@@ -27,6 +27,7 @@ dependencies:
   flutter_stetho: ^0.5.2
   rxdart: ^0.24.1
   flutter_dotenv: ^2.1.0
+  freezed: ^0.12.1
 
 dev_dependencies:
   flutter_test:

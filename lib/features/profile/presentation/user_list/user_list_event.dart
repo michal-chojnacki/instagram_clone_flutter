@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part "user_list_event.freezed.dart";
+part 'user_list_event.freezed.dart';
 
 @freezed
 abstract class UserListEvent with _$UserListEvent {

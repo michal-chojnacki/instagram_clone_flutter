@@ -16,9 +16,9 @@ class ContentMapper implements Mapper<RawContent, Content> {
   Content map(RawContent input) {
     return Content.create(
         id: input.id ?? 0,
-        image: _imageMapper.map(input.image) ?? null,
-        description: input.description ?? "",
-        owner: _userMapper.map(input.owner) ?? null,
+        image: _imageMapper.map(input.image),
+        description: input.description ?? '',
+        owner: _userMapper.map(input.owner),
         likesCount: input.likesCount ?? 0,
         publicationTimestamp: input.publicationTimestamp ?? 0);
   }

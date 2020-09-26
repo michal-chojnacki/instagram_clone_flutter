@@ -12,7 +12,7 @@ class GetLikesStatusesUseCase {
 
   Future<Result<Map<int, bool>>> call(List<int> contentIds) {
     if (contentIds.isEmpty) {
-      return Future.value(Result<Map<int, bool>>.success(Map<int, bool>()));
+      return Future.value(Result<Map<int, bool>>.success(<int, bool>{}));
     }
     return _loadAuthorizationToken()
         .asStream()

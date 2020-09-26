@@ -22,20 +22,20 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
             likesCount: 2,
             image: Image.create(
                 url:
-                    "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"),
-            description: "test description",
+                    'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg'),
+            description: 'test description',
             owner: User.create(
                 id: 1,
-                bio: "bio",
-                fullname: "elo name",
-                username: "elo",
+                bio: 'bio',
+                fullname: 'elo name',
+                username: 'elo',
                 posts: 1,
                 followees: 2,
                 followers: 3,
                 avatar: Image.create(
                     url:
-                        "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
-            publicationTimestamp: new DateTime.now().millisecondsSinceEpoch),
+                        'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')),
+            publicationTimestamp: DateTime.now().millisecondsSinceEpoch),
       ], page: 0, pages: 1));
     }
   }

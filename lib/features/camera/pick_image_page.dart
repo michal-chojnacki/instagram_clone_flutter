@@ -23,8 +23,8 @@ class PickImagePage extends StatefulWidget {
 }
 
 class _PickImagePageState extends State<PickImagePage> {
-  final _imagePicker = new ImagePicker();
-  final _changeNotifier = new StreamController.broadcast();
+  final _imagePicker = ImagePicker();
+  final _changeNotifier = StreamController.broadcast();
 
   @override
   void dispose() {
@@ -36,8 +36,8 @@ class _PickImagePageState extends State<PickImagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: new IconButton(
-          icon: new Icon(Icons.close),
+        leading: IconButton(
+          icon: Icon(Icons.close),
           onPressed: () => GetIt.I<NavigationBloc>().pop(),
         ),
         title: const Text('Photo'),

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:built_value/built_value.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -103,15 +101,14 @@ class _TakePictureWidgetState extends State<TakePictureWidget> {
   }
 
   Future<String> _resizePhoto(String filePath, double ratio) async {
-    ImageProperties properties =
-        await FlutterNativeImage.getImageProperties(filePath);
+    var properties = await FlutterNativeImage.getImageProperties(filePath);
 
     if (properties.orientation == ImageOrientation.rotate270 ||
         properties.orientation == ImageOrientation.rotate90) {
       ratio = 1 / ratio;
     }
-    double targetWidth = properties.width.toDouble();
-    double targetHeight = properties.width.toDouble() * ratio;
+    var targetWidth = properties.width.toDouble();
+    var targetHeight = properties.width.toDouble() * ratio;
     var scale = properties.height / targetHeight;
     if (scale < 1) {
       targetWidth = targetWidth * scale;
@@ -121,7 +118,7 @@ class _TakePictureWidgetState extends State<TakePictureWidget> {
     var offsetVertical = (properties.height - targetHeight) / 2;
     var offsetHorizontal = (properties.width - targetWidth) / 2;
 
-    File croppedFile = await FlutterNativeImage.cropImage(
+    var croppedFile = await FlutterNativeImage.cropImage(
         filePath,
         offsetHorizontal.toInt(),
         offsetVertical.toInt(),

@@ -14,7 +14,7 @@ import 'package:instagram_clone/features/profile/data/model/raw_users.dart';
 
 part 'serializers.g.dart';
 
-@SerializersFor(const [
+@SerializersFor([
   RawCredentials,
   RawImage,
   RawUser,

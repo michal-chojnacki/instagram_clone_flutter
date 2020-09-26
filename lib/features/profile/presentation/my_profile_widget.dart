@@ -56,7 +56,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                     ButtonTheme(
                       minWidth: double.infinity,
                       child: PrimaryButton(
-                        text: "Edit profile",
+                        text: 'Edit profile',
                         onPressed: () => _editProfileBloc.openEditProfilePage(
                             () => _editProfileBloc.fetchProfileData()),
                       ),
@@ -64,7 +64,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                     ButtonTheme(
                       minWidth: double.infinity,
                       child: PrimaryButton(
-                        text: "Logout",
+                        text: 'Logout',
                         light: true,
                         onPressed: _editProfileBloc.logout,
                       ),

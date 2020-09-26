@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part "login_page_event.freezed.dart";
+part 'login_page_event.freezed.dart';
 
 @freezed
 abstract class LoginPageEvent with _$LoginPageEvent {

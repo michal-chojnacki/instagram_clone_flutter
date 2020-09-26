@@ -41,7 +41,7 @@ class MainBloc extends Bloc<MainEvent, dynamic> {
 
   Stream<dynamic> _mapVerifyAuthenticationState() async* {
     var verifyAuthorizationTokenUseCase = _verifyAuthorizationTokenUseCase();
-    List<Future> futures = [
+    var futures = [
       Future.delayed(Duration(seconds: 2)),
       _verifyAuthorizationTokenUseCase()
     ];

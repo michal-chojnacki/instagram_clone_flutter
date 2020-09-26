@@ -31,7 +31,7 @@ class _UserListState extends State<UserListPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-              "${_followersOrFolloweesText().capitalize()} of ${widget.user.username}"),
+              '${_followersOrFolloweesText().capitalize()} of ${widget.user.username}'),
         ),
         body: BlocBuilder(
             cubit: _userListBloc,
@@ -39,7 +39,7 @@ class _UserListState extends State<UserListPage> {
               if (state.users.isEmpty && state.hasReachedEndOfResults) {
                 return Center(
                   child: Text(
-                      "${widget.user.username} has no ${_followersOrFolloweesText()}"),
+                      '${widget.user.username} has no ${_followersOrFolloweesText()}'),
                 );
               } else {
                 return UserListWidget(
@@ -69,11 +69,11 @@ class _UserListState extends State<UserListPage> {
 
   String _followersOrFolloweesText() {
     if (widget.mode == UserListPageMode.FOLLOWERS) {
-      return "followers";
+      return 'followers';
     } else if (widget.mode == UserListPageMode.FOLLOWEES) {
-      return "followees";
+      return 'followees';
     }
-    return "";
+    return '';
   }
 }
 

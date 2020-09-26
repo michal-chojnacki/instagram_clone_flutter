@@ -14,7 +14,7 @@ import 'package:instagram_clone/features/content/presentation/single_content/sin
 import 'package:instagram_clone/features/profile/presentation/page/edit_profile_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_page.dart';
 import 'package:instagram_clone/features/profile/presentation/user_list/user_list_page.dart';
-import "package:instagram_clone/navigation/navigation_event.dart";
+import 'package:instagram_clone/navigation/navigation_event.dart';
 
 @lazySingleton
 class NavigationBloc extends Bloc<NavigationEvent, dynamic> {

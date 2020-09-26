@@ -11,7 +11,7 @@ import 'package:instagram_clone/injection.config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 
-const mock = const Environment('mock');
+const mock = Environment('mock');
 
 @injectableInit
 Future<void> configureInjection({@required Environment environment}) async {
@@ -50,7 +50,7 @@ extension HttpClientProxy on HttpClient {
       return;
     }
     findProxy = (uri) {
-      return "PROXY $proxyAddress;";
+      return 'PROXY $proxyAddress;';
     };
     badCertificateCallback =
         ((X509Certificate cert, String host, int port) => Platform.isAndroid);

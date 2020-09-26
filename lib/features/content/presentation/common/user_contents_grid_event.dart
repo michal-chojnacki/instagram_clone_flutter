@@ -2,7 +2,7 @@ import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part "user_contents_grid_event.freezed.dart";
+part 'user_contents_grid_event.freezed.dart';
 
 @freezed
 abstract class UserContentsGridEvent with _$UserContentsGridEvent {

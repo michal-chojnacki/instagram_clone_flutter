@@ -9,8 +9,8 @@ import 'package:instagram_clone/injection.dart';
 @mock
 @LazySingleton(as: UserDataRepository)
 class UserDataRepositoryMockImpl extends UserDataRepository {
-  final Map<User, bool> _observations = Map();
-  final Map<int, bool> _likes = Map();
+  final Map<User, bool> _observations = {};
+  final Map<int, bool> _likes = {};
 
   @override
   Future<Result<void>> updateUser(String authorizationToken, String avatarPath,
@@ -22,15 +22,15 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
   Future<Result<User>> fetchUserData(String authorizationToken) async {
     return Result.success(User.create(
         id: 1,
-        username: "elo",
-        fullname: "fullname",
-        bio: "bio",
+        username: 'elo',
+        fullname: 'fullname',
+        bio: 'bio',
         posts: 1,
         followees: 2,
         followers: 3,
         avatar: Image.create(
             url:
-                "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")));
+                'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')));
   }
 
   @override
@@ -52,34 +52,34 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
     return Result.success(<User>[
       User.create(
           id: 1,
-          username: "elo",
-          fullname: "fullname",
-          bio: "bio",
+          username: 'elo',
+          fullname: 'fullname',
+          bio: 'bio',
           posts: 1,
           followees: 2,
           followers: 3,
           avatar: Image.create(
               url:
-                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
+                  'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')),
       User.create(
           id: 2,
-          username: "elo",
-          fullname: "fullname",
-          bio: "bio",
+          username: 'elo',
+          fullname: 'fullname',
+          bio: 'bio',
           posts: 1,
           followees: 2,
           followers: 3,
           avatar: Image.create(
               url:
-                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"))
+                  'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg'))
     ]);
   }
 
   @override
   Future<Result<Map<int, bool>>> getLikes(
       String authorizationToken, List<int> contentIds) async {
-    return Result.success(Map.fromIterable(contentIds,
-        key: (item) => item, value: (item) => _likes[item] ?? false));
+    return Result.success(
+        {for (var item in contentIds) item: _likes[item] ?? false});
   }
 
   @override
@@ -95,26 +95,26 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
     return Result.success(PagedList.create(list: [
       User.create(
           id: 1,
-          username: "elo",
-          fullname: "fullname",
-          bio: "bio",
+          username: 'elo',
+          fullname: 'fullname',
+          bio: 'bio',
           posts: 1,
           followees: 2,
           followers: 3,
           avatar: Image.create(
               url:
-                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
+                  'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')),
       User.create(
           id: 2,
-          username: "elo",
-          fullname: "fullname",
-          bio: "bio",
+          username: 'elo',
+          fullname: 'fullname',
+          bio: 'bio',
           posts: 1,
           followees: 2,
           followers: 3,
           avatar: Image.create(
               url:
-                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"))
+                  'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg'))
     ], page: page, pages: 1));
   }
 
@@ -124,26 +124,26 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
     return Result.success(PagedList.create(list: [
       User.create(
           id: 1,
-          username: "elo",
-          fullname: "fullname",
-          bio: "bio",
+          username: 'elo',
+          fullname: 'fullname',
+          bio: 'bio',
           posts: 1,
           followees: 2,
           followers: 3,
           avatar: Image.create(
               url:
-                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
+                  'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')),
       User.create(
           id: 2,
-          username: "elo",
-          fullname: "fullname",
-          bio: "bio",
+          username: 'elo',
+          fullname: 'fullname',
+          bio: 'bio',
           posts: 1,
           followees: 2,
           followers: 3,
           avatar: Image.create(
               url:
-                  "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"))
+                  'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg'))
     ], page: page, pages: 1));
   }
 }

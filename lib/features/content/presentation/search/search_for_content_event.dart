@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part "search_for_content_event.freezed.dart";
+part 'search_for_content_event.freezed.dart';
 
 @freezed
 abstract class SearchForContentEvent with _$SearchForContentEvent {

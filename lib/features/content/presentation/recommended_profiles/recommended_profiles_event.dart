@@ -2,7 +2,7 @@ import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part "recommended_profiles_event.freezed.dart";
+part 'recommended_profiles_event.freezed.dart';
 
 @freezed
 abstract class RecommendedProfilesEvent with _$RecommendedProfilesEvent {

@@ -3,7 +3,7 @@ import 'package:instagram_clone/features/content/presentation/common/model/perso
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part "navigation_event.freezed.dart";
+part 'navigation_event.freezed.dart';
 
 @freezed
 abstract class NavigationEvent with _$NavigationEvent {

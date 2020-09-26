@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part "edit_profile_event.freezed.dart";
+part 'edit_profile_event.freezed.dart';
 
 @freezed
 abstract class EditProfileEvent with _$EditProfileEvent {

@@ -22,7 +22,7 @@ void main() {
     var tested = VerifyAuthorizationTokenUseCase(
         clearAuthenticationTokenUseCase, getUserDataUseCase);
     test(
-        "given getUserDataUseCase returning success when testd called then result is success",
+        'given getUserDataUseCase returning success when testd called then result is success',
         () async {
       // given
       when(getUserDataUseCase.call())
@@ -35,7 +35,7 @@ void main() {
       expect(result is Success, true);
     });
     test(
-        "given getUserDataUseCase returning error when testd called then result is error and clearAuthenticationTokenUseCase is called",
+        'given getUserDataUseCase returning error when testd called then result is error and clearAuthenticationTokenUseCase is called',
         () async {
       // given
       when(clearAuthenticationTokenUseCase.call())

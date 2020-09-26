@@ -31,8 +31,6 @@ class _SendContentPageState extends State<SendContentPage> {
     return BlocBuilder<SendContentBloc, SendContentState>(
         cubit: _sendContentBloc,
         builder: (context, SendContentState state) {
-          var progressBarVisible = state.progressBarVisible;
-          print("SendContentPage: $progressBarVisible");
           return Scaffold(
               appBar:
                   AppBar(title: Text('Share the Picture'), actions: <Widget>[
@@ -41,13 +39,13 @@ class _SendContentPageState extends State<SendContentPage> {
                       alignment: Alignment.center,
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child:
-                          Text("Share", style: TextStyle(color: Colors.white))),
+                          Text('Share', style: TextStyle(color: Colors.white))),
                   onTap: () {
                     if (state.progressBarVisible) {
                       return;
                     }
                     _sendContentBloc.sendContent(
-                        _messageController.text ?? "", widget.imagePath);
+                        _messageController.text ?? '', widget.imagePath);
                   },
                 ),
               ]),

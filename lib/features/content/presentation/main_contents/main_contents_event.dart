@@ -1,11 +1,10 @@
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "main_contents_event.g.dart";
+part 'main_contents_event.freezed.dart';
 
-@superEnum
-enum _MainContentsEvent {
-  @Data(fields: [
-    DataField<int>('page'),
-  ])
-  FetchMainContents,
+@freezed
+abstract class MainContentsEvent with _$MainContentsEvent {
+  const factory MainContentsEvent.fetchMainContents({@required int page}) =
+      FetchMainContents;
 }

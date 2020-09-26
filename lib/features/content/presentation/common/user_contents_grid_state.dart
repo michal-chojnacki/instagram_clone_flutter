@@ -1,32 +1,27 @@
-import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 
-part 'user_contents_grid_state.g.dart';
+part 'user_contents_grid_state.freezed.dart';
 
-abstract class UserContentsGridState
-    implements Built<UserContentsGridState, UserContentsGridStateBuilder> {
-  BuiltList<PersonalizedContent> get contents;
-  int get page;
-  bool get hasReachedEndOfResults;
-
-  UserContentsGridState._();
-
-  factory UserContentsGridState([updates(UserContentsGridStateBuilder b)]) =
-      _$UserContentsGridState;
+@freezed
+abstract class UserContentsGridState with _$UserContentsGridState {
+  factory UserContentsGridState({
+    @required List<PersonalizedContent> contents,
+    @required int page,
+    @required bool hasReachedEndOfResults,
+  }) = _UserContentsGridState;
 
   factory UserContentsGridState.loading() {
-    return UserContentsGridState((b) => b
-      ..contents.replace(BuiltList<PersonalizedContent>())
-      ..page = 0
-      ..hasReachedEndOfResults = false);
+    return UserContentsGridState(
+        contents: [], page: 0, hasReachedEndOfResults: false);
   }
 
-  factory UserContentsGridState.success(BuiltList<PersonalizedContent> items,
-      int page, bool hasReachedEndOfResults) {
-    return UserContentsGridState((b) => b
-      ..contents.replace(items)
-      ..page = page
-      ..hasReachedEndOfResults = hasReachedEndOfResults);
+  factory UserContentsGridState.success(
+      List<PersonalizedContent> items, int page, bool hasReachedEndOfResults) {
+    return UserContentsGridState(
+        contents: items,
+        page: page,
+        hasReachedEndOfResults: hasReachedEndOfResults);
   }
 }

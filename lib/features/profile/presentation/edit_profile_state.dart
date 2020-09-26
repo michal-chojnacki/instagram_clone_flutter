@@ -1,29 +1,21 @@
-import 'package:built_value/built_value.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 
-part 'edit_profile_state.g.dart';
+part 'edit_profile_state.freezed.dart';
 
-abstract class EditProfileState
-    implements Built<EditProfileState, EditProfileStateBuilder> {
-  @nullable
-  User get user;
-
-  bool get progressBarVisible;
-
-  EditProfileState._();
-
-  factory EditProfileState([updates(EditProfileStateBuilder b)]) =
-      _$EditProfileState;
+@freezed
+abstract class EditProfileState with _$EditProfileState {
+  factory EditProfileState({
+    @required bool progressBarVisible,
+    @nullable User user,
+  }) = _EditProfileState;
 
   factory EditProfileState.loading() {
-    return EditProfileState((b) => b
-      ..user = null
-      ..progressBarVisible = true);
+    return EditProfileState(user: null, progressBarVisible: true);
   }
 
   factory EditProfileState.success(User user) {
-    return EditProfileState((b) => b
-      ..user = user.toBuilder()
-      ..progressBarVisible = false);
+    return EditProfileState(user: user, progressBarVisible: false);
   }
 }

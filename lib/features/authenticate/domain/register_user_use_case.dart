@@ -10,6 +10,7 @@ class RegisterUserUseCase {
   RegisterUserUseCase(this._repository);
 
   Future<Result<String>> call(String username, String password) async {
-    return _repository.register(Credentials.create(username: username, password: password));
+    return _repository
+        .register(Credentials(username: username, password: password));
   }
 }

@@ -1,14 +1,13 @@
 import 'package:instagram_clone/features/content/domain/model/user.dart';
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "recommended_profiles_event.g.dart";
+part 'recommended_profiles_event.freezed.dart';
 
-@superEnum
-enum _RecommendedProfilesEvent {
-  @object
-  FetchRecommendedProfiles,
-  @Data(fields: [
-    DataField<User>('user'),
-  ])
-  ObserveUser,
+@freezed
+abstract class RecommendedProfilesEvent with _$RecommendedProfilesEvent {
+  const factory RecommendedProfilesEvent.fetchRecommendedProfiles() =
+      FetchRecommendedProfiles;
+  const factory RecommendedProfilesEvent.observeUser({@required User user}) =
+      ObserveUser;
 }

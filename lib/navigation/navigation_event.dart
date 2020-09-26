@@ -1,53 +1,43 @@
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "navigation_event.g.dart";
+part 'navigation_event.freezed.dart';
 
-@superEnum
-enum _NavigationEvent {
-  @object
-  PopPage,
-  @object
-  OpenMainUserPage,
-  @object
-  OpenLoginPage,
-  @Data(fields: [
-    DataField<Function>('thenFunction'),
-  ])
-  OpenEditUserPage,
-  @Data(fields: [
-    DataField<String>('imagePath'),
-  ])
-  OpenSendContentPage,
-  @Data(fields: [
-    DataField<Function>('onPickedImage'),
-    DataField<double>('ratio'),
-    DataField<bool>('circleShaped'),
-  ])
-  OpenPickImagePage,
-  @Data(fields: [
-    DataField<User>('user'),
-  ])
-  OpenUserProfilePage,
-  @Data(fields: [
-    DataField<PersonalizedContent>('content'),
-  ])
-  OpenSingleContentPage,
-  @Data(fields: [
-    DataField<bool>('editable'),
-    DataField<String>('path'),
-    DataField<Function>('onPickedImage'),
-    DataField<double>('ratio'),
-    DataField<bool>('circleShaped'),
-  ])
-  OpenAdjustImagePage,
-  @Data(fields: [
-    DataField<User>('user'),
-  ])
-  OpenUserFollowersPage,
-  @Data(fields: [
-    DataField<User>('user'),
-  ])
-  OpenUserFolloweesPage,
+@freezed
+abstract class NavigationEvent with _$NavigationEvent {
+  const factory NavigationEvent.popPage() = PopPage;
+  const factory NavigationEvent.openMainUserPage() = OpenMainUserPage;
+  const factory NavigationEvent.openLoginPage() = OpenLoginPage;
+  const factory NavigationEvent.openEditUserPage({
+    @required Function thenFunction,
+  }) = OpenEditUserPage;
+  const factory NavigationEvent.openSendContentPage({
+    @required String imagePath,
+  }) = OpenSendContentPage;
+  const factory NavigationEvent.openPickImagePage({
+    @required Function onPickedImage,
+    @required double ratio,
+    @required bool circleShaped,
+  }) = OpenPickImagePage;
+  const factory NavigationEvent.openUserProfilePage({
+    @required User user,
+  }) = OpenUserProfilePage;
+  const factory NavigationEvent.openSingleContentPage({
+    @required PersonalizedContent content,
+  }) = OpenSingleContentPage;
+  const factory NavigationEvent.openAdjustImagePage({
+    @required bool editable,
+    @required String path,
+    @required Function onPickedImage,
+    @required double ratio,
+    @required bool circleShaped,
+  }) = OpenAdjustImagePage;
+  const factory NavigationEvent.openUserFollowersPage({
+    @required User user,
+  }) = OpenUserFollowersPage;
+  const factory NavigationEvent.openUserFolloweesPage({
+    @required User user,
+  }) = OpenUserFolloweesPage;
 }

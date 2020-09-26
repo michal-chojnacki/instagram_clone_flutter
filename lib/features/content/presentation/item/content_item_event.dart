@@ -1,12 +1,10 @@
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "content_item_event.g.dart";
+part 'content_item_event.freezed.dart';
 
-@superEnum
-enum _ContentItemEvent {
-  @Data(fields: [
-    DataField<bool>('liked'),
-    DataField<int>('contentId'),
-  ])
-  ChangeLikeStatus,
+@freezed
+abstract class ContentItemEvent with _$ContentItemEvent {
+  const factory ContentItemEvent.changeLikeStatus(
+      {@required bool liked, @required int contentId}) = ChangeLikeStatus;
 }

@@ -14,7 +14,7 @@ import 'package:instagram_clone/features/content/presentation/single_content/sin
 import 'package:instagram_clone/features/profile/presentation/page/edit_profile_page.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_page.dart';
 import 'package:instagram_clone/features/profile/presentation/user_list/user_list_page.dart';
-import "package:instagram_clone/navigation/navigation_event.dart";
+import 'package:instagram_clone/navigation/navigation_event.dart';
 
 @lazySingleton
 class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
@@ -85,68 +85,73 @@ class NavigationBloc extends Bloc<NavigationEvent, dynamic> {
   @override
   Stream<dynamic> mapEventToState(NavigationEvent event) async* {
     event.when(
-        openMainUserPage: (event) => {
+        openMainUserPage: () => {
               navigatorKey.currentState.pushReplacement(
                   MaterialPageRoute(builder: (context) => MainUserPage()))
             },
-        openLoginPage: (event) => {
+        openLoginPage: () => {
               navigatorKey.currentState.pushReplacement(
                   MaterialPageRoute(builder: (context) => LoginPage()))
             },
-        openSendContentPage: (event) => {
+        openSendContentPage: (String imagePath) => {
               navigatorKey.currentState.pushReplacement(MaterialPageRoute(
-                  builder: (context) =>
-                      SendContentPage(imagePath: event.imagePath)))
+                  builder: (context) => SendContentPage(imagePath: imagePath)))
             },
-        openEditUserPage: (event) => {
+        openEditUserPage: (Function thenFunction) => {
               navigatorKey.currentState
                   .push(MaterialPageRoute(
                       builder: (context) => EditProfilePage()))
-                  .then((_) => event.thenFunction.call())
+                  .then((_) => thenFunction.call())
             },
-        openPickImagePage: (event) => {
+        openPickImagePage:
+            (Function onPickedImage, double ratio, bool circleShaped) => {
+                  navigatorKey.currentState.push(MaterialPageRoute(
+                      builder: (context) => PickImagePage(
+                          circleShaped: circleShaped,
+                          ratio: ratio,
+                          onImagePicked: (String imagePath, bool editable) =>
+                              openAdjustImagePage(
+                                  editable: editable,
+                                  imagePath: imagePath,
+                                  ratio: ratio,
+                                  circleShaped: circleShaped,
+                                  onImagePicked: onPickedImage))))
+                },
+        openUserProfilePage: (User user) => {
               navigatorKey.currentState.push(MaterialPageRoute(
-                  builder: (context) => PickImagePage(
-                      circleShaped: event.circleShaped,
-                      ratio: event.ratio,
-                      onImagePicked: (String imagePath, bool editable) =>
-                          openAdjustImagePage(
-                              editable: editable,
-                              imagePath: imagePath,
-                              ratio: event.ratio,
-                              circleShaped: event.circleShaped,
-                              onImagePicked: event.onPickedImage))))
+                  builder: (context) => UserProfilePage(user)))
             },
-        openUserProfilePage: (event) => {
-              navigatorKey.currentState.push(MaterialPageRoute(
-                  builder: (context) => UserProfilePage(event.user)))
-            },
-        openSingleContentPage: (event) => {
+        openSingleContentPage: (
+          PersonalizedContent content,
+        ) =>
+            {
               navigatorKey.currentState.push(MaterialPageRoute(
                   builder: (context) => SingleContentPage(
-                        content: event.content,
+                        content: content,
                       )))
             },
-        openUserFolloweesPage: (event) => {
+        openUserFolloweesPage: (User user) => {
               navigatorKey.currentState.push(MaterialPageRoute(
                   builder: (context) =>
-                      UserListPage(UserListPageMode.FOLLOWEES, event.user)))
+                      UserListPage(UserListPageMode.FOLLOWEES, user)))
             },
-        openUserFollowersPage: (event) => {
+        openUserFollowersPage: (User user) => {
               navigatorKey.currentState.push(MaterialPageRoute(
                   builder: (context) =>
-                      UserListPage(UserListPageMode.FOLLOWERS, event.user)))
+                      UserListPage(UserListPageMode.FOLLOWERS, user)))
             },
-        openAdjustImagePage: (event) => {
+        openAdjustImagePage: (bool editable, String path,
+                Function onPickedImage, double ratio, bool circleShaped) =>
+            {
               navigatorKey.currentState.pushReplacement(MaterialPageRoute(
                   builder: (context) => AdjustImagePage(
-                      editable: event.editable,
-                      ratio: event.ratio,
-                      circleShaped: event.circleShaped,
-                      image: File(event.path),
+                      editable: editable,
+                      ratio: ratio,
+                      circleShaped: circleShaped,
+                      image: File(path),
                       onImagePicked: (String imagePath) =>
-                          event.onPickedImage(imagePath))))
+                          onPickedImage(imagePath))))
             },
-        popPage: (event) => {navigatorKey.currentState.pop()});
+        popPage: () => {navigatorKey.currentState.pop()});
   }
 }

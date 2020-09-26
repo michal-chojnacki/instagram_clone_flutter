@@ -1,9 +1,10 @@
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part 'main_event.g.dart';
+part 'main_event.freezed.dart';
 
-@superEnum
-enum _MainEvent {
-  @object
-  VerifyAuthenticationState,
+@freezed
+abstract class MainEvent with _$MainEvent {
+  const factory MainEvent.verifyAuthenticationState() =
+      VerifyAuthenticationState;
 }

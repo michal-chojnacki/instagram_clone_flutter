@@ -12,7 +12,7 @@ abstract class AuthenticationLocalDataSource {
 
 @LazySingleton(as: AuthenticationLocalDataSource)
 class AuthenticationLocalDataSourceImpl extends AuthenticationLocalDataSource {
-  static const _TOKEN = "authentication_token";
+  static const _TOKEN = 'authentication_token';
   final SharedPreferences _sharedPreferences;
   String _token;
 
@@ -21,13 +21,12 @@ class AuthenticationLocalDataSourceImpl extends AuthenticationLocalDataSource {
   @override
   Future<Result<String>> obtainToken() async {
     if (_token != null) {
-      return Result.success(data: _token);
+      return Result.success(_token);
     } else {
       var sharedPrefsToken = _sharedPreferences.getString(_TOKEN);
       return (sharedPrefsToken != null)
-          ? Result.success(data: sharedPrefsToken)
-          : Result.error(
-              exception: Exception("No token saved. Authenticate first!"));
+          ? Result.success(sharedPrefsToken)
+          : Result.error(Exception('No token saved. Authenticate first!'));
     }
   }
 
@@ -35,6 +34,6 @@ class AuthenticationLocalDataSourceImpl extends AuthenticationLocalDataSource {
   Future<Result<void>> saveToken(String token) async {
     _token = token;
     await _sharedPreferences.setString(_TOKEN, token);
-    return Result.success(data: Void);
+    return Result.success(Void);
   }
 }

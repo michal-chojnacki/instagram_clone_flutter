@@ -57,7 +57,7 @@ class _ContentItemWidgetState extends State<ContentItemWidget> {
                         margin: const EdgeInsets.symmetric(horizontal: 2.0),
                       ),
                       Text(state.content.owner.username,
-                          style: new TextStyle(fontWeight: FontWeight.bold)),
+                          style: TextStyle(fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -84,15 +84,14 @@ class _ContentItemWidgetState extends State<ContentItemWidget> {
                     alignment: Alignment.centerLeft,
                     child: RichText(
                       text: TextSpan(
-                          style: new TextStyle(
+                          style: TextStyle(
                             fontSize: 14.0,
                             color: Colors.black,
                           ),
                           children: <TextSpan>[
                             TextSpan(
                                 text: state.content.owner.username,
-                                style:
-                                    new TextStyle(fontWeight: FontWeight.bold)),
+                                style: TextStyle(fontWeight: FontWeight.bold)),
                             TextSpan(text: ' '),
                             TextSpan(text: state.content.description),
                           ]),
@@ -102,7 +101,7 @@ class _ContentItemWidgetState extends State<ContentItemWidget> {
                   child: Text(
                     timeago.format(DateTime.fromMillisecondsSinceEpoch(
                         state.content.publicationTimestamp)),
-                    style: new TextStyle(
+                    style: TextStyle(
                       fontSize: 10.0,
                       color: Colors.grey,
                     ),

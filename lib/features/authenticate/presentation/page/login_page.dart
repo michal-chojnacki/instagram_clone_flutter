@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       if (state.error)
                         Text(
-                          "Error",
+                          'Error',
                           style: TextStyle(color: Theme.of(context).errorColor),
                         ),
                     ],

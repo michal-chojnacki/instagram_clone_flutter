@@ -1,19 +1,12 @@
-import 'package:built_value/built_value.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part 'credentials.g.dart';
+part 'credentials.freezed.dart';
 
-abstract class Credentials implements Built<Credentials, CredentialsBuilder> {
-  String get username;
-  String get password;
-
-  Credentials._();
-
-  factory Credentials([updates(CredentialsBuilder b)]) = _$Credentials;
-
-  factory Credentials.create({@required String username, @required String password }) {
-    return Credentials((b) => b
-      ..username = username
-      ..password = password);
-  }
+@freezed
+abstract class Credentials with _$Credentials {
+  factory Credentials({
+    @required String username,
+    @required String password,
+  }) = _Credentials;
 }

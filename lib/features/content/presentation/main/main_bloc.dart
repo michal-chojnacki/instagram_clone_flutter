@@ -36,12 +36,12 @@ class MainBloc extends Bloc<MainEvent, dynamic> {
   @override
   Stream<dynamic> mapEventToState(MainEvent event) {
     return event.when(
-        verifyAuthenticationState: (_) => _mapVerifyAuthenticationState());
+        verifyAuthenticationState: () => _mapVerifyAuthenticationState());
   }
 
   Stream<dynamic> _mapVerifyAuthenticationState() async* {
     var verifyAuthorizationTokenUseCase = _verifyAuthorizationTokenUseCase();
-    List<Future> futures = [
+    var futures = [
       Future.delayed(Duration(seconds: 2)),
       _verifyAuthorizationTokenUseCase()
     ];

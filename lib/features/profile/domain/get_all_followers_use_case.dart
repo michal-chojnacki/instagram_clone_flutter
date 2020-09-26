@@ -18,10 +18,10 @@ class GetAllFollowersUseCase {
         .asStream()
         .asyncMap((Result<String> authorizationTokenResult) =>
             authorizationTokenResult.when(
-                success: (result) =>
-                    _repository.loadFollowers(result.data, userId, page),
-                error: (result) => Future.value(Result<PagedList<User>>.error(
-                    exception: result.exception))))
+                success: (data) =>
+                    _repository.loadFollowers(data, userId, page),
+                error: (exception) =>
+                    Future.value(Result<PagedList<User>>.error(exception))))
         .single;
   }
 }

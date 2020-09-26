@@ -20,11 +20,13 @@ class SendContentBloc extends Bloc<SendContentEvent, SendContentState> {
 
   @override
   Stream<SendContentState> mapEventToState(SendContentEvent event) {
-    return event.when(sendContent: (event) => _mapSendContent(event));
+    return event.when(
+        sendContent: (String message, String imagePath) =>
+            _mapSendContent(message, imagePath));
   }
 
-  Stream<SendContentState> _mapSendContent(SendContent event) =>
-      Stream.fromFuture(_sendContentUseCase(event.message, event.imagePath))
+  Stream<SendContentState> _mapSendContent(String message, String imagePath) =>
+      Stream.fromFuture(_sendContentUseCase(message, imagePath))
           .flatMap((result) => result.when(
               success: (_) {
                 _navigationBloc.openMainUserPage();

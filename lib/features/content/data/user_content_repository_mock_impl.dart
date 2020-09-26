@@ -14,30 +14,28 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
   Future<Result<PagedList<Content>>> loadMainContent(
       String authorizationToken, int page) async {
     if (page > 0) {
-      return Result.success(
-          data: PagedList.create(list: [], page: 1, pages: 1));
+      return Result.success(PagedList(list: [], page: 1, pages: 1));
     } else {
-      return Result.success(
-          data: PagedList.create(list: [
-        Content.create(
+      return Result.success(PagedList(list: [
+        Content(
             id: 1,
             likesCount: 2,
-            image: Image.create(
+            image: Image(
                 url:
-                    "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg"),
-            description: "test description",
-            owner: User.create(
+                    'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg'),
+            description: 'test description',
+            owner: User(
                 id: 1,
-                bio: "bio",
-                fullname: "elo name",
-                username: "elo",
+                bio: 'bio',
+                fullname: 'elo name',
+                username: 'elo',
                 posts: 1,
                 followees: 2,
                 followers: 3,
-                avatar: Image.create(
+                avatar: Image(
                     url:
-                        "https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg")),
-            publicationTimestamp: new DateTime.now().millisecondsSinceEpoch),
+                        'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')),
+            publicationTimestamp: DateTime.now().millisecondsSinceEpoch),
       ], page: 0, pages: 1));
     }
   }
@@ -45,7 +43,7 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
   @override
   Future<Result<void>> sendContent(
       String authorizationToken, String message, String imagePath) async {
-    return Result.success(data: null);
+    return Result.success(null);
   }
 
   @override

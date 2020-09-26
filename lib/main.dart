@@ -10,10 +10,10 @@ import 'package:instagram_clone/injection.dart';
 
 void main() async {
   if (!kReleaseMode) {
-    Stetho.initialize();
+    await Stetho.initialize();
   }
   WidgetsFlutterBinding.ensureInitialized();
-  await configureInjection(environment: dev);
+  await configureInjection(environment: prod);
   runApp(App());
 }
 

@@ -4,6 +4,7 @@ import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_local_data_source.dart';
 import 'package:instagram_clone/features/authenticate/data/authentication_service.dart';
 import 'package:instagram_clone/features/authenticate/data/model/raw_credentials.dart';
+import 'package:instagram_clone/features/authenticate/data/model/raw_token.dart';
 import 'package:instagram_clone/features/authenticate/domain/authentication_repository.dart';
 import 'package:instagram_clone/features/authenticate/domain/model/credentials.dart';
 
@@ -19,34 +20,36 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   @override
   Future<Result<String>> authenticate(Credentials credentials) async {
     try {
-      final response = await _service.authenticate(RawCredentials.create(
-          username: credentials.username, password: credentials.password));
+      final response = await _service.authenticate(RawCredentials(
+              username: credentials.username, password: credentials.password)
+          .toJson());
       if (response.statusCode == 200) {
-        var token = response.body.token;
+        var token = RawToken.fromJson(response.body).token;
         await _localDataSource.saveToken(token);
-        return Result.success(data: token);
+        return Result.success(token);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
   @override
   Future<Result<String>> register(Credentials credentials) async {
     try {
-      final response = await _service.register(RawCredentials.create(
-          username: credentials.username, password: credentials.password));
+      final response = await _service.register(RawCredentials(
+              username: credentials.username, password: credentials.password)
+          .toJson());
       if (response.statusCode == 200) {
-        var token = response.body.token;
+        var token = RawToken.fromJson(response.body).token;
         await _localDataSource.saveToken(token);
-        return Result.success(data: token);
+        return Result.success(token);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 

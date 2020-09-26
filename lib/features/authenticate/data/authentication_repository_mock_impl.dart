@@ -7,28 +7,28 @@ import 'package:instagram_clone/injection.dart';
 @LazySingleton(as: AuthenticationRepository)
 @mock
 class AuthenticationRepositoryMockImpl extends AuthenticationRepository {
-  String _mockToken = "mock_token";
+  String _mockToken = 'mock_token';
 
   @override
   Future<Result<String>> authenticate(Credentials credentials) async {
-    _mockToken = "mock_token";
-    return Result.success(data: _mockToken);
+    _mockToken = 'mock_token';
+    return Result.success(_mockToken);
   }
 
   @override
   Future<Result<String>> obtainToken() async {
-    return Result.success(data: _mockToken);
+    return Result.success(_mockToken);
   }
 
   @override
   Future<Result<String>> register(Credentials credentials) async {
-    _mockToken = "mock_token";
-    return Result.success(data: _mockToken);
+    _mockToken = 'mock_token';
+    return Result.success(_mockToken);
   }
 
   @override
   Future<Result<void>> clearToken() async {
     _mockToken = null;
-    return Result.success(data: null);
+    return Result.success(null);
   }
 }

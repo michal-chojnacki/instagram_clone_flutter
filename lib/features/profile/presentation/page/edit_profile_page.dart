@@ -36,8 +36,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          leading: new IconButton(
-            icon: new Icon(Icons.close),
+          leading: IconButton(
+            icon: Icon(Icons.close),
             onPressed: () => _editProfileBloc.closeScreen(),
           ),
           title: const Text('Edit profile'),
@@ -52,13 +52,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
             cubit: _editProfileBloc,
             builder: (context, EditProfileState state) {
               if (state.user != null) {
-                _usernameTextEditingController.text = state.user.username ?? "";
-                _bioTextEditingController.text = state.user.bio ?? "";
-                _fullnameTextEditingController.text = state.user.fullname ?? "";
+                _usernameTextEditingController.text = state.user.username ?? '';
+                _bioTextEditingController.text = state.user.bio ?? '';
+                _fullnameTextEditingController.text = state.user.fullname ?? '';
               } else {
-                _usernameTextEditingController.text = "";
-                _bioTextEditingController.text = "";
-                _fullnameTextEditingController.text = "";
+                _usernameTextEditingController.text = '';
+                _bioTextEditingController.text = '';
+                _fullnameTextEditingController.text = '';
               }
               if (state.progressBarVisible) {
                 return Center(

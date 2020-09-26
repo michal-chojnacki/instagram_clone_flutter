@@ -16,11 +16,11 @@ class UserMapper implements Mapper<RawUser, User> {
     if (username == null) {
       return null;
     } else {
-      return User.create(
+      return User(
           id: input.id,
           username: input.username,
-          fullname: input.fullname ?? "",
-          bio: input.bio ?? "",
+          fullname: input.fullname ?? '',
+          bio: input.bio ?? '',
           posts: input.posts ?? 0,
           followees: input.followees ?? 0,
           followers: input.followers ?? 0,

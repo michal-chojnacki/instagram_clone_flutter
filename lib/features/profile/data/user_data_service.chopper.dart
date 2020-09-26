@@ -17,35 +17,35 @@ class _$UserDataService extends UserDataService {
   final definitionType = UserDataService;
 
   @override
-  Future<Response<RawUser>> getUser(String authorizationBearer) {
+  Future<Response<dynamic>> getUser(String authorizationBearer) {
     final $url = '/user';
     final $headers = {'Authorization': authorizationBearer};
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
-    return client.send<RawUser, RawUser>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
-  Future<Response<RawUsers>> getRecommendedUsers(String authorizationBearer) {
+  Future<Response<dynamic>> getRecommendedUsers(String authorizationBearer) {
     final $url = '/recommended_users';
     final $headers = {'Authorization': authorizationBearer};
     final $request = Request('GET', $url, client.baseUrl, headers: $headers);
-    return client.send<RawUsers, RawUsers>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
-  Future<Response<RawObservingStatus>> getObservingStatus(
+  Future<Response<dynamic>> getObservingStatus(
       String authorizationBearer, int userId) {
     final $url = '/observing';
     final $params = <String, dynamic>{'user': userId};
     final $headers = {'Authorization': authorizationBearer};
     final $request = Request('GET', $url, client.baseUrl,
         parameters: $params, headers: $headers);
-    return client.send<RawObservingStatus, RawObservingStatus>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> updateObservingStatus(
-      String authorizationBearer, RawObservingStatus observingStatus) {
+      String authorizationBearer, Map<String, dynamic> observingStatus) {
     final $url = '/observing';
     final $headers = {'Authorization': authorizationBearer};
     final $body = observingStatus;
@@ -71,19 +71,19 @@ class _$UserDataService extends UserDataService {
   }
 
   @override
-  Future<Response<RawLikeStatuses>> getLikeStatuses(
+  Future<Response<dynamic>> getLikeStatuses(
       String authorizationBearer, String ids) {
     final $url = '/likes';
     final $params = <String, dynamic>{'ids': ids};
     final $headers = {'Authorization': authorizationBearer};
     final $request = Request('GET', $url, client.baseUrl,
         parameters: $params, headers: $headers);
-    return client.send<RawLikeStatuses, RawLikeStatuses>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> updateLikes(
-      String authorizationBearer, RawLikeStatus likeStatus) {
+      String authorizationBearer, Map<String, dynamic> likeStatus) {
     final $url = '/likes';
     final $headers = {'Authorization': authorizationBearer};
     final $body = likeStatus;
@@ -93,24 +93,24 @@ class _$UserDataService extends UserDataService {
   }
 
   @override
-  Future<Response<RawUsers>> getFollowers(
+  Future<Response<dynamic>> getFollowers(
       String authorizationBearer, int userId, int page) {
     final $url = '/followers';
     final $params = <String, dynamic>{'user': userId, 'page': page};
     final $headers = {'Authorization': authorizationBearer};
     final $request = Request('GET', $url, client.baseUrl,
         parameters: $params, headers: $headers);
-    return client.send<RawUsers, RawUsers>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
-  Future<Response<RawUsers>> getFollowees(
+  Future<Response<dynamic>> getFollowees(
       String authorizationBearer, int userId, int page) {
     final $url = '/followees';
     final $params = <String, dynamic>{'user': userId, 'page': page};
     final $headers = {'Authorization': authorizationBearer};
     final $request = Request('GET', $url, client.baseUrl,
         parameters: $params, headers: $headers);
-    return client.send<RawUsers, RawUsers>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 }

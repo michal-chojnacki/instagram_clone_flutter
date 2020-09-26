@@ -1,12 +1,12 @@
-import 'package:built_collection/built_collection.dart';
-import 'package:chopper/chopper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/data/mapper/user_mapper.dart';
+import 'package:instagram_clone/features/content/data/model/raw_user.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_like_status.dart';
+import 'package:instagram_clone/features/profile/data/model/raw_like_statuses.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_users.dart';
 import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
@@ -28,12 +28,12 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response = await _service.updateUserData(
           'Bearer $authorizationToken', bio, username, fullname, avatarPath);
       if (response.statusCode == 200) {
-        return Result.success(data: null);
+        return Result.success(null);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -42,12 +42,13 @@ class UserDataRepositoryImpl extends UserDataRepository {
     try {
       final response = await _service.getUser('Bearer $authorizationToken');
       if (response.statusCode == 200) {
-        return Result.success(data: _userMapper.map(response.body));
+        var rawUser = RawUser.fromJson(response.body);
+        return Result.success(_userMapper.map(rawUser));
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -57,14 +58,14 @@ class UserDataRepositoryImpl extends UserDataRepository {
     try {
       final response = await _service.updateObservingStatus(
           'Bearer $authorizationToken',
-          RawObservingStatus.create(userId: user.id, status: observe));
+          RawObservingStatus(userId: user.id, status: observe).toJson());
       if (response.statusCode == 200) {
-        return Result.success(data: null);
+        return Result.success(null);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -75,12 +76,13 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response = await _service.getObservingStatus(
           'Bearer $authorizationToken', user.id);
       if (response.statusCode == 200) {
-        return Result.success(data: response.body.status);
+        return Result.success(
+            RawObservingStatus.fromJson(response.body).status);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -91,15 +93,14 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response =
           await _service.getRecommendedUsers('Bearer $authorizationToken');
       if (response.statusCode == 200) {
+        var rawUsers = RawUsers.fromJson(response.body);
         return Result.success(
-            data: response.body.users
-                .map((rawUser) => _userMapper.map(rawUser))
-                .toList());
+            rawUsers.users.map((rawUser) => _userMapper.map(rawUser)).toList());
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -109,14 +110,15 @@ class UserDataRepositoryImpl extends UserDataRepository {
     try {
       final response = await _service.getLikeStatuses(
           'Bearer $authorizationToken',
-          BuiltList.of(contentIds).toString().replaceAll(' ', ''));
+          contentIds.toString().replaceAll(' ', ''));
       if (response.statusCode == 200) {
-        return Result.success(data: response.body.statuses.toMap());
+        var rawLikeStatuses = RawLikeStatuses.fromJson(response.body);
+        return Result.success(rawLikeStatuses.statuses);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -125,14 +127,14 @@ class UserDataRepositoryImpl extends UserDataRepository {
       String authorizationToken, int contentId, bool like) async {
     try {
       final response = await _service.updateLikes('Bearer $authorizationToken',
-          RawLikeStatus.create(contentId: contentId, status: like));
+          RawLikeStatus(contentId: contentId, status: like).toJson());
       if (response.statusCode == 200) {
-        return Result.success(data: null);
+        return Result.success(null);
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -143,12 +145,12 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response = await _service.getFollowees(
           'Bearer $authorizationToken', userId, page);
       if (response.statusCode == 200) {
-        return _mapRawUsers(response);
+        return _mapRawUsers(RawUsers.fromJson(response.body));
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
@@ -159,21 +161,20 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response = await _service.getFollowers(
           'Bearer $authorizationToken', userId, page);
       if (response.statusCode == 200) {
-        return _mapRawUsers(response);
+        return _mapRawUsers(RawUsers.fromJson(response.body));
       } else {
-        return Result.error(exception: ServerException());
+        return Result.error(ServerException());
       }
     } catch (e) {
-      return Result.error(exception: e);
+      return Result.error(e);
     }
   }
 
-  Result<PagedList<User>> _mapRawUsers(Response<RawUsers> response) =>
-      Result.success(
-          data: PagedList.create(
-              list: response.body.users
-                  .map((rawUser) => _userMapper.map(rawUser))
-                  .toList(),
-              page: response.body.page ?? 0,
-              pages: response.body.pages ?? 1));
+  Result<PagedList<User>> _mapRawUsers(RawUsers response) =>
+      Result.success(PagedList(
+          list: response.users
+              .map((rawUser) => _userMapper.map(rawUser))
+              .toList(),
+          page: response.page ?? 0,
+          pages: response.pages ?? 1));
 }

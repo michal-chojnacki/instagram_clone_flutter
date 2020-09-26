@@ -28,12 +28,15 @@ class ContentItemBloc extends Bloc<ContentItemEvent, ContentItemState> {
 
   @override
   Stream<ContentItemState> mapEventToState(ContentItemEvent event) {
-    return event.when(changeLikeStatus: (event) => _mapChangeLikeStatus(event));
+    return event.when(
+        changeLikeStatus: (bool liked, int contentId) =>
+            _mapChangeLikeStatus(liked, contentId));
   }
 
-  Stream<ContentItemState> _mapChangeLikeStatus(ChangeLikeStatus event) async* {
-    yield (await _changeLikeUseCase(event.contentId, event.liked)).when(
-        success: (result) => ContentItemState.setLikeStatus(state, event.liked),
-        error: (result) => ContentItemState.setLikeStatus(state, !event.liked));
+  Stream<ContentItemState> _mapChangeLikeStatus(
+      bool liked, int contentId) async* {
+    yield (await _changeLikeUseCase(contentId, liked)).when(
+        success: (_) => ContentItemState.setLikeStatus(state, liked),
+        error: (_) => ContentItemState.setLikeStatus(state, !liked));
   }
 }

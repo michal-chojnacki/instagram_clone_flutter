@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -5,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/features/camera/take_picture_widget.dart';
 import 'package:instagram_clone/features/content/presentation/common/circular_overlay.dart';
 import 'package:instagram_clone/navigation/navigation_bloc.dart';
-import 'package:super_enum/super_enum.dart';
 
 class PickImagePage extends StatefulWidget {
   final double ratio;
@@ -23,8 +24,8 @@ class PickImagePage extends StatefulWidget {
 }
 
 class _PickImagePageState extends State<PickImagePage> {
-  final _imagePicker = new ImagePicker();
-  final _changeNotifier = new StreamController.broadcast();
+  final _imagePicker = ImagePicker();
+  final _changeNotifier = StreamController.broadcast();
 
   @override
   void dispose() {
@@ -36,8 +37,8 @@ class _PickImagePageState extends State<PickImagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: new IconButton(
-          icon: new Icon(Icons.close),
+        leading: IconButton(
+          icon: Icon(Icons.close),
           onPressed: () => GetIt.I<NavigationBloc>().pop(),
         ),
         title: const Text('Photo'),

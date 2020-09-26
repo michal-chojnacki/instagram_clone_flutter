@@ -1,18 +1,16 @@
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "edit_profile_event.g.dart";
+part 'edit_profile_event.freezed.dart';
 
-@superEnum
-enum _EditProfileEvent {
-  @object
-  FetchProfileData,
-  @Data(fields: [
-    DataField<String>('avatarPath'),
-    DataField<String>('username'),
-    DataField<String>('fullname'),
-    DataField<String>('bio'),
-  ])
-  UpdateProfileData,
-  @object
-  Logout,
+@freezed
+abstract class EditProfileEvent with _$EditProfileEvent {
+  const factory EditProfileEvent.fetchProfileData() = FetchProfileData;
+  const factory EditProfileEvent.updateProfileData({
+    @nullable String avatarPath,
+    @nullable String username,
+    @nullable String fullname,
+    @nullable String bio,
+  }) = UpdateProfileData;
+  const factory EditProfileEvent.logout() = Logout;
 }

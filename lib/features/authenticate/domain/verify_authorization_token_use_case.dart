@@ -15,10 +15,10 @@ class VerifyAuthorizationTokenUseCase {
 
   Future<Result<void>> call() async {
     return (await _getUserDataUseCase.call()).when(
-        success: (_) => Result.success(data: Void),
-        error: (result) async {
+        success: (_) => Result.success(Void),
+        error: (Exception exception) async {
           await _clearAuthenticationTokenUseCase.call();
-          return Result.error(exception: result.exception);
+          return Result.error(exception);
         });
   }
 }

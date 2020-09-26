@@ -6,12 +6,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/io_client.dart';
 import 'package:injectable/injectable.dart';
-import 'package:instagram_clone/core/built_value_converter.dart';
 import 'package:instagram_clone/injection.config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 
-const mock = const Environment('mock');
+const mock = Environment('mock');
 
 @injectableInit
 Future<void> configureInjection({@required Environment environment}) async {
@@ -29,7 +28,7 @@ abstract class RegisterModule {
   @lazySingleton
   ChopperClient get chopperClient => ChopperClient(
           baseUrl: DotEnv().env['API_BASE_URL'],
-          converter: GetIt.I<BuiltValueConverter>(),
+          converter: JsonConverter(),
           client: GetIt.I<Client>(),
           interceptors: [
             HeadersInterceptor({'ApiKey': DotEnv().env['API_KEY']})
@@ -50,7 +49,7 @@ extension HttpClientProxy on HttpClient {
       return;
     }
     findProxy = (uri) {
-      return "PROXY $proxyAddress;";
+      return 'PROXY $proxyAddress;';
     };
     badCertificateCallback =
         ((X509Certificate cert, String host, int port) => Platform.isAndroid);

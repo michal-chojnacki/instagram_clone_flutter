@@ -6,6 +6,7 @@ import 'package:instagram_clone/features/content/presentation/main_contents/main
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
 
 class MainContentsWidget extends StatefulWidget {
+  @override
   _MainContentsWidgetState createState() => _MainContentsWidgetState();
 }
 
@@ -38,7 +39,7 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
             if (state.contents.isEmpty) {
               return Center(
                 child: state.hasReachedEndOfResults
-                    ? Text("There is no content...")
+                    ? Text('There is no content...')
                     : CircularProgressIndicator(),
               );
             } else {

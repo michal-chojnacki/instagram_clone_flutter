@@ -1,5 +1,4 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
@@ -31,31 +30,28 @@ void main() {
         'given getUserContentsUseCase returning empty list when fetchCurrentUserContent then loading and then success with empty list is returned',
         build: () {
           when(getUserContentsUseCase.call(0)).thenAnswer((_) async =>
-              Result.success(
-                  data: PagedList.create(list: [], page: 0, pages: 1)));
+              Result.success(PagedList(list: [], page: 0, pages: 1)));
           return UserContentsGridBloc(
               getContentsForUserUseCase, getUserContentsUseCase);
         },
         act: (bloc) => bloc.fetchCurrentUserContent(),
         expect: [
           UserContentsGridState.loading(),
-          UserContentsGridState.success(
-              BuiltList<PersonalizedContent>(), 0, true)
+          UserContentsGridState.success([], 0, true)
         ]);
 
     blocTest(
         'given getUserContentsUseCase returning error when fetchCurrentUserContent then loading and then success with empty list is returned',
         build: () {
-          when(getUserContentsUseCase.call(0)).thenAnswer((_) async =>
-              Result.error(exception: Exception('Fake exception')));
+          when(getUserContentsUseCase.call(0)).thenAnswer(
+              (_) async => Result.error(Exception('Fake exception')));
           return UserContentsGridBloc(
               getContentsForUserUseCase, getUserContentsUseCase);
         },
         act: (bloc) => bloc.fetchCurrentUserContent(),
         expect: [
           UserContentsGridState.loading(),
-          UserContentsGridState.success(
-              BuiltList<PersonalizedContent>(), 0, true)
+          UserContentsGridState.success([], 0, true)
         ]);
 
     blocTest(
@@ -63,18 +59,14 @@ void main() {
         build: () {
           when(getUserContentsUseCase.call(0)).thenAnswer((_) async =>
               Result.success(
-                  data: PagedList.create(
-                      list: personalizedContentList, page: 0, pages: 1)));
+                  PagedList(list: personalizedContentList, page: 0, pages: 1)));
           return UserContentsGridBloc(
               getContentsForUserUseCase, getUserContentsUseCase);
         },
         act: (bloc) => bloc.fetchCurrentUserContent(),
         expect: [
           UserContentsGridState.loading(),
-          UserContentsGridState.success(
-              BuiltList<PersonalizedContent>.of(personalizedContentList),
-              0,
-              true)
+          UserContentsGridState.success(personalizedContentList, 0, true)
         ]);
   });
 }

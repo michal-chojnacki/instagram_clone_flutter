@@ -1,27 +1,22 @@
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/features/content/data/model/raw_image.dart';
 import 'package:instagram_clone/features/content/data/model/raw_user.dart';
 
+part 'raw_content.freezed.dart';
 part 'raw_content.g.dart';
 
-abstract class RawContent implements Built<RawContent, RawContentBuilder> {
-  @nullable
-  int get id;
-  @nullable
-  RawImage get image;
-  @nullable
-  String get description;
-  @nullable
-  RawUser get owner;
-  @nullable
-  int get likesCount;
-  @nullable
-  int get publicationTimestamp;
+@freezed
+abstract class RawContent with _$RawContent {
+  factory RawContent({
+    @nullable int id,
+    @nullable RawImage image,
+    @nullable String description,
+    @nullable RawUser owner,
+    @nullable int likesCount,
+    @nullable int publicationTimestamp,
+  }) = _RawContent;
 
-  RawContent._();
-
-  factory RawContent([updates(RawContentBuilder b)]) = _$RawContent;
-
-  static Serializer<RawContent> get serializer => _$rawContentSerializer;
+  factory RawContent.fromJson(Map<String, dynamic> json) =>
+      _$RawContentFromJson(json);
 }

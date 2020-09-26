@@ -45,7 +45,7 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
             focusNode: _queryFocusNode,
             controller: _editingController,
             decoration: InputDecoration(
-              hintText: "Search",
+              hintText: 'Search',
               border: InputBorder.none,
               hintStyle: TextStyle(color: Colors.white30),
             ),
@@ -64,7 +64,7 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
             builder: (context, SearchForContentState state) {
               if (state.contents.isEmpty && state.hasReachedEndOfResults) {
                 return Center(
-                  child: Text("No content found with current query."),
+                  child: Text('No content found with current query.'),
                 );
               } else {
                 return ContentsGrid(
@@ -86,7 +86,7 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
   }
 
   void _onClearQuery() {
-    _editingController.text = "";
+    _editingController.text = '';
     getNextPage =
         (page) => {_searchForContentBloc.fetchRecommendedContent(page: page)};
     getNextPage(0);

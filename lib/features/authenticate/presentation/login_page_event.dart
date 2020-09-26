@@ -1,17 +1,13 @@
-import 'package:super_enum/super_enum.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part "login_page_event.g.dart";
+part 'login_page_event.freezed.dart';
 
-@superEnum
-enum _LoginPageEvent {
-  @Data(fields: [
-    DataField<String>('username'),
-    DataField<String>('password'),
-  ])
-  AuthenticateUser,
-    @Data(fields: [
-    DataField<String>('username'),
-    DataField<String>('password'),
-  ])
-  RegisterUser,
+@freezed
+abstract class LoginPageEvent with _$LoginPageEvent {
+  const factory LoginPageEvent.authenticateUser(
+      {@required String username,
+      @required String password}) = AuthenticateUser;
+  const factory LoginPageEvent.registerUser(
+      {@required String username, @required String password}) = RegisterUser;
 }

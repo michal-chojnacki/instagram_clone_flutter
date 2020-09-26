@@ -41,7 +41,7 @@ class _RecommendedProfilesWidgetState extends State<RecommendedProfilesWidget> {
               );
             } else if (state.users.isEmpty) {
               return Center(
-                child: Text("No recommendations currently"),
+                child: Text('No recommendations currently'),
               );
             } else {
               return NotificationListener<ScrollNotification>(

@@ -43,13 +43,15 @@ class RecommendedProfilesBloc
   Stream<RecommendedProfilesState> _mapFetchRecommendedProfiles() async* {
     yield (await _getRecommendedProfiles()).when(
         success: (data) => RecommendedProfilesState.success(data),
-        error: (result) => state.copyWith(loading: false));
+        error: (_) => state.copyWith(loading: false));
   }
 
   Stream<RecommendedProfilesState> _mapObserveUser(User user) async* {
     var observeResult = await _changeObservation(user, true);
     if (observeResult is Success) {
-      yield state.copyWith(users: (state.users..remove(user)));
+      yield state.copyWith(
+          users: state.users.toList()
+            ..removeWhere((element) => element.id == user.id));
     }
   }
 }

@@ -20,10 +20,10 @@ class _$EditProfileEventTearOff {
 
 // ignore: unused_element
   UpdateProfileData updateProfileData(
-      {@required String avatarPath,
-      @required String username,
-      @required String fullname,
-      @required String bio}) {
+      {@nullable String avatarPath,
+      @nullable String username,
+      @nullable String fullname,
+      @nullable String bio}) {
     return UpdateProfileData(
       avatarPath: avatarPath,
       username: username,
@@ -49,14 +49,20 @@ mixin _$EditProfileEvent {
     @required Result fetchProfileData(),
     @required
         Result updateProfileData(
-            String avatarPath, String username, String fullname, String bio),
+            @nullable String avatarPath,
+            @nullable String username,
+            @nullable String fullname,
+            @nullable String bio),
     @required Result logout(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result fetchProfileData(),
     Result updateProfileData(
-        String avatarPath, String username, String fullname, String bio),
+        @nullable String avatarPath,
+        @nullable String username,
+        @nullable String fullname,
+        @nullable String bio),
     Result logout(),
     @required Result orElse(),
   });
@@ -143,7 +149,10 @@ class _$FetchProfileData
     @required Result fetchProfileData(),
     @required
         Result updateProfileData(
-            String avatarPath, String username, String fullname, String bio),
+            @nullable String avatarPath,
+            @nullable String username,
+            @nullable String fullname,
+            @nullable String bio),
     @required Result logout(),
   }) {
     assert(fetchProfileData != null);
@@ -157,7 +166,10 @@ class _$FetchProfileData
   Result maybeWhen<Result extends Object>({
     Result fetchProfileData(),
     Result updateProfileData(
-        String avatarPath, String username, String fullname, String bio),
+        @nullable String avatarPath,
+        @nullable String username,
+        @nullable String fullname,
+        @nullable String bio),
     Result logout(),
     @required Result orElse(),
   }) {
@@ -206,7 +218,11 @@ abstract class $UpdateProfileDataCopyWith<$Res> {
   factory $UpdateProfileDataCopyWith(
           UpdateProfileData value, $Res Function(UpdateProfileData) then) =
       _$UpdateProfileDataCopyWithImpl<$Res>;
-  $Res call({String avatarPath, String username, String fullname, String bio});
+  $Res call(
+      {@nullable String avatarPath,
+      @nullable String username,
+      @nullable String fullname,
+      @nullable String bio});
 }
 
 /// @nodoc
@@ -242,22 +258,22 @@ class _$UpdateProfileData
     with DiagnosticableTreeMixin
     implements UpdateProfileData {
   const _$UpdateProfileData(
-      {@required this.avatarPath,
-      @required this.username,
-      @required this.fullname,
-      @required this.bio})
-      : assert(avatarPath != null),
-        assert(username != null),
-        assert(fullname != null),
-        assert(bio != null);
+      {@nullable this.avatarPath,
+      @nullable this.username,
+      @nullable this.fullname,
+      @nullable this.bio});
 
   @override
+  @nullable
   final String avatarPath;
   @override
+  @nullable
   final String username;
   @override
+  @nullable
   final String fullname;
   @override
+  @nullable
   final String bio;
 
   @override
@@ -311,7 +327,10 @@ class _$UpdateProfileData
     @required Result fetchProfileData(),
     @required
         Result updateProfileData(
-            String avatarPath, String username, String fullname, String bio),
+            @nullable String avatarPath,
+            @nullable String username,
+            @nullable String fullname,
+            @nullable String bio),
     @required Result logout(),
   }) {
     assert(fetchProfileData != null);
@@ -325,7 +344,10 @@ class _$UpdateProfileData
   Result maybeWhen<Result extends Object>({
     Result fetchProfileData(),
     Result updateProfileData(
-        String avatarPath, String username, String fullname, String bio),
+        @nullable String avatarPath,
+        @nullable String username,
+        @nullable String fullname,
+        @nullable String bio),
     Result logout(),
     @required Result orElse(),
   }) {
@@ -367,14 +389,18 @@ class _$UpdateProfileData
 
 abstract class UpdateProfileData implements EditProfileEvent {
   const factory UpdateProfileData(
-      {@required String avatarPath,
-      @required String username,
-      @required String fullname,
-      @required String bio}) = _$UpdateProfileData;
+      {@nullable String avatarPath,
+      @nullable String username,
+      @nullable String fullname,
+      @nullable String bio}) = _$UpdateProfileData;
 
+  @nullable
   String get avatarPath;
+  @nullable
   String get username;
+  @nullable
   String get fullname;
+  @nullable
   String get bio;
   $UpdateProfileDataCopyWith<UpdateProfileData> get copyWith;
 }
@@ -424,7 +450,10 @@ class _$Logout with DiagnosticableTreeMixin implements Logout {
     @required Result fetchProfileData(),
     @required
         Result updateProfileData(
-            String avatarPath, String username, String fullname, String bio),
+            @nullable String avatarPath,
+            @nullable String username,
+            @nullable String fullname,
+            @nullable String bio),
     @required Result logout(),
   }) {
     assert(fetchProfileData != null);
@@ -438,7 +467,10 @@ class _$Logout with DiagnosticableTreeMixin implements Logout {
   Result maybeWhen<Result extends Object>({
     Result fetchProfileData(),
     Result updateProfileData(
-        String avatarPath, String username, String fullname, String bio),
+        @nullable String avatarPath,
+        @nullable String username,
+        @nullable String fullname,
+        @nullable String bio),
     Result logout(),
     @required Result orElse(),
   }) {

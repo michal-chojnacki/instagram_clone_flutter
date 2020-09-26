@@ -1,30 +1,24 @@
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:instagram_clone/features/content/data/model/raw_image.dart';
 
+part 'raw_user.freezed.dart';
 part 'raw_user.g.dart';
 
-abstract class RawUser implements Built<RawUser, RawUserBuilder> {
-  @nullable
-  int get id;
-  @nullable
-  String get username;
-  @nullable
-  String get fullname;
-  @nullable
-  String get bio;
-  @nullable
-  int get posts;
-  @nullable
-  int get followers;
-  @nullable
-  int get followees;
-  @nullable
-  RawImage get avatar;
+@freezed
+abstract class RawUser with _$RawUser {
+  factory RawUser({
+    @nullable int id,
+    @nullable String username,
+    @nullable String fullname,
+    @nullable String bio,
+    @nullable int posts,
+    @nullable int followers,
+    @nullable int followees,
+    @nullable RawImage avatar,
+  }) = _RawUser;
 
-  RawUser._();
-
-  factory RawUser([updates(RawUserBuilder b)]) = _$RawUser;
-
-  static Serializer<RawUser> get serializer => _$rawUserSerializer;
+  factory RawUser.fromJson(Map<String, dynamic> json) =>
+      _$RawUserFromJson(json);
 }

@@ -17,7 +17,6 @@ import 'features/authenticate/domain/authentication_repository.dart';
 import 'features/authenticate/data/authentication_repository_impl.dart';
 import 'features/authenticate/data/authentication_repository_mock_impl.dart';
 import 'features/authenticate/data/authentication_service.dart';
-import 'core/built_value_converter.dart';
 import 'features/profile/domain/change_like_use_case.dart';
 import 'features/profile/domain/change_observation_use_case.dart';
 import 'features/authenticate/domain/clear_authentication_token_use_case.dart';
@@ -78,7 +77,6 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   gh.lazySingleton<AuthenticationRepository>(
       () => AuthenticationRepositoryMockImpl(),
       registerFor: {_mock});
-  gh.factory<BuiltValueConverter>(() => BuiltValueConverter());
   gh.lazySingleton<ChopperClient>(() => registerModule.chopperClient);
   gh.factory<ClearAuthenticationTokenUseCase>(
       () => ClearAuthenticationTokenUseCase(g<AuthenticationRepository>()));

@@ -7,10 +7,10 @@ part 'edit_profile_event.freezed.dart';
 abstract class EditProfileEvent with _$EditProfileEvent {
   const factory EditProfileEvent.fetchProfileData() = FetchProfileData;
   const factory EditProfileEvent.updateProfileData({
-    @required String avatarPath,
-    @required String username,
-    @required String fullname,
-    @required String bio,
+    @nullable String avatarPath,
+    @nullable String username,
+    @nullable String fullname,
+    @nullable String bio,
   }) = UpdateProfileData;
   const factory EditProfileEvent.logout() = Logout;
 }

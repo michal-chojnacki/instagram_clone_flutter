@@ -81,7 +81,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
             bio: bio,
             username: username,
             fullname: fullname))
-        .when(success: (_) => {fetchProfileData()}, error: (_) => null);
+        .when(success: (_) => fetchProfileData(), error: (_) => null);
   }
 
   Stream<EditProfileState> _mapLogout() async* {

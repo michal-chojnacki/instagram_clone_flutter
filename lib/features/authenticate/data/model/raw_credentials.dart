@@ -1,25 +1,16 @@
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
+part 'raw_credentials.freezed.dart';
 part 'raw_credentials.g.dart';
 
-abstract class RawCredentials
-    implements Built<RawCredentials, RawCredentialsBuilder> {
-  String get username;
-  String get password;
+@freezed
+abstract class RawCredentials with _$RawCredentials {
+  factory RawCredentials({
+    @required String username,
+    @required String password,
+  }) = _RawCredentials;
 
-  RawCredentials._();
-
-  factory RawCredentials([updates(RawCredentialsBuilder b)]) = _$RawCredentials;
-
-  factory RawCredentials.create(
-      {@required String username, @required String password}) {
-    return RawCredentials((b) => b
-      ..username = username
-      ..password = password);
-  }
-
-  static Serializer<RawCredentials> get serializer =>
-      _$rawCredentialsSerializer;
+  factory RawCredentials.fromJson(Map<String, dynamic> json) =>
+      _$RawCredentialsFromJson(json);
 }

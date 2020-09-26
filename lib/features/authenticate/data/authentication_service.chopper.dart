@@ -17,18 +17,18 @@ class _$AuthenticationService extends AuthenticationService {
   final definitionType = AuthenticationService;
 
   @override
-  Future<Response<RawToken>> authenticate(RawCredentials rawCredentials) {
+  Future<Response<dynamic>> authenticate(Map<String, dynamic> rawCredentials) {
     final $url = '/authenticate';
     final $body = rawCredentials;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<RawToken, RawToken>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 
   @override
-  Future<Response<RawToken>> register(RawCredentials rawCredentials) {
+  Future<Response<dynamic>> register(Map<String, dynamic> rawCredentials) {
     final $url = '/register';
     final $body = rawCredentials;
     final $request = Request('POST', $url, client.baseUrl, body: $body);
-    return client.send<RawToken, RawToken>($request);
+    return client.send<dynamic, dynamic>($request);
   }
 }

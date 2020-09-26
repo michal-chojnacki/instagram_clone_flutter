@@ -1,5 +1,4 @@
-import 'package:built_collection/built_collection.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/result.dart';
@@ -43,16 +42,14 @@ class RecommendedProfilesBloc
 
   Stream<RecommendedProfilesState> _mapFetchRecommendedProfiles() async* {
     yield (await _getRecommendedProfiles()).when(
-        success: (data) => RecommendedProfilesState.success(
-              BuiltList.of(data),
-            ),
-        error: (result) => state.rebuild((b) => b..loading = false));
+        success: (data) => RecommendedProfilesState.success(data),
+        error: (result) => state.copyWith(loading: false));
   }
 
   Stream<RecommendedProfilesState> _mapObserveUser(User user) async* {
     var observeResult = await _changeObservation(user, true);
     if (observeResult is Success) {
-      yield state.rebuild((b) => b..users = (b.users..remove(user)));
+      yield state.copyWith(users: (state.users..remove(user)));
     }
   }
 }

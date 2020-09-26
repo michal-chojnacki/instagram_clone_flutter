@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/profile/domain/get_all_followees_use_case.dart';
@@ -36,10 +35,10 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
       yield UserListState.loading();
     }
     yield (await _getAllFollowersUseCase(userId, page)).when(success: (data) {
-      return UserListState.success(state.users + BuiltList.of(data.list),
-          data.page, data.page + 1 >= data.pages);
+      return UserListState.success(state.users + data.list.toList(), data.page,
+          data.page + 1 >= data.pages);
     }, error: (result) {
-      return state.rebuild((b) => b.hasReachedEndOfResults = true);
+      return state.copyWith(hasReachedEndOfResults: true);
     });
   }
 
@@ -48,10 +47,10 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
       yield UserListState.loading();
     }
     yield (await _getAllFolloweesUseCase(userId, page)).when(success: (data) {
-      return UserListState.success(state.users + BuiltList.of(data.list),
-          data.page, data.page + 1 >= data.pages);
+      return UserListState.success(state.users + data.list.toList(), data.page,
+          data.page + 1 >= data.pages);
     }, error: (result) {
-      return state.rebuild((b) => b.hasReachedEndOfResults = true);
+      return state.copyWith(hasReachedEndOfResults: true);
     });
   }
 }

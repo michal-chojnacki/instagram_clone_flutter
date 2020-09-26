@@ -1,5 +1,4 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
@@ -38,8 +37,7 @@ void main() {
         act: (bloc) => bloc.fetchCurrentUserContent(),
         expect: [
           UserContentsGridState.loading(),
-          UserContentsGridState.success(
-              BuiltList<PersonalizedContent>(), 0, true)
+          UserContentsGridState.success([], 0, true)
         ]);
 
     blocTest(
@@ -53,8 +51,7 @@ void main() {
         act: (bloc) => bloc.fetchCurrentUserContent(),
         expect: [
           UserContentsGridState.loading(),
-          UserContentsGridState.success(
-              BuiltList<PersonalizedContent>(), 0, true)
+          UserContentsGridState.success([], 0, true)
         ]);
 
     blocTest(
@@ -69,10 +66,7 @@ void main() {
         act: (bloc) => bloc.fetchCurrentUserContent(),
         expect: [
           UserContentsGridState.loading(),
-          UserContentsGridState.success(
-              BuiltList<PersonalizedContent>.of(personalizedContentList),
-              0,
-              true)
+          UserContentsGridState.success(personalizedContentList, 0, true)
         ]);
   });
 }

@@ -1,24 +1,18 @@
-library main_contents_state;
-
-import 'package:built_value/built_value.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/features/content/domain/model/content.dart';
 
-part 'content_item_state.g.dart';
+part 'content_item_state.freezed.dart';
 
-abstract class ContentItemState
-    implements Built<ContentItemState, ContentItemStateBuilder> {
-  Content get content;
-  bool get liked;
-
-  ContentItemState._();
-
-  factory ContentItemState([updates(ContentItemStateBuilder b)]) =
-      _$ContentItemState;
+@freezed
+abstract class ContentItemState with _$ContentItemState {
+  factory ContentItemState({
+    @required Content content,
+    @required bool liked,
+  }) = _ContentItemState;
 
   factory ContentItemState.initial(Content content, bool liked) {
-    return ContentItemState((b) => b
-      ..content = content.toBuilder()
-      ..liked = liked);
+    return ContentItemState(content: content, liked: liked);
   }
 
   factory ContentItemState.setLikeStatus(
@@ -29,9 +23,9 @@ abstract class ContentItemState
     } else if (newLikedStatus == false && prevState.liked == true) {
       newLikesCount -= 1;
     }
-    return ContentItemState((b) => b
-      ..liked = newLikedStatus
-      ..content = prevState.content.toBuilder()
-      ..content.likesCount = newLikesCount);
+    return ContentItemState(
+        liked: newLikedStatus,
+        content: (prevState.content.toBuilder()..likesCount = newLikesCount)
+            .build());
   }
 }

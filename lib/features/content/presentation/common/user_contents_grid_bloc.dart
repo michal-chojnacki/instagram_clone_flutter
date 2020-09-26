@@ -1,5 +1,4 @@
-import 'package:built_collection/built_collection.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/features/content/domain/get_user_contents_use_case.dart';
@@ -41,10 +40,10 @@ class UserContentsGridBloc
     }
     yield (await _getContentsForUser(user, page)).when(
         success: (data) => UserContentsGridState.success(
-            state.contents + BuiltList.of(data.list),
+            state.contents + data.list.toList(),
             data.page,
             data.page + 1 >= data.pages),
-        error: (_) => state.rebuild((b) => b.hasReachedEndOfResults = true));
+        error: (_) => state.copyWith(hasReachedEndOfResults: true));
   }
 
   Stream<UserContentsGridState> _mapFetchCurrentUserContent(int page) async* {
@@ -53,9 +52,9 @@ class UserContentsGridBloc
     }
     yield (await _getUserContentsUseCase(page)).when(
         success: (data) => UserContentsGridState.success(
-            state.contents + BuiltList.of(data.list),
+            state.contents + data.list.toList(),
             data.page,
             data.page + 1 >= data.pages),
-        error: (_) => state.rebuild((b) => b.hasReachedEndOfResults = true));
+        error: (_) => state.copyWith(hasReachedEndOfResults: true));
   }
 }

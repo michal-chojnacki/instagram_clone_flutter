@@ -181,6 +181,8 @@ abstract class $ObserveUserCopyWith<$Res> {
           ObserveUser value, $Res Function(ObserveUser) then) =
       _$ObserveUserCopyWithImpl<$Res>;
   $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -201,6 +203,16 @@ class _$ObserveUserCopyWithImpl<$Res>
     return _then(ObserveUser(
       user: user == freezed ? _value.user : user as User,
     ));
+  }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    if (_value.user == null) {
+      return null;
+    }
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 

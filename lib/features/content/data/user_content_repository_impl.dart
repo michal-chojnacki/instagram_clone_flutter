@@ -117,7 +117,7 @@ class UserContentRepositoryImpl extends UserContentRepository {
 
   Result<PagedList<Content>> _mapSuccessfulResponse(
           Response<RawContents> response) =>
-      Result.success(PagedList.create(
+      Result.success(PagedList(
           list: response.body.contents
               .map((rawContent) => _contentsMapper.map(rawContent))
               .toList(),

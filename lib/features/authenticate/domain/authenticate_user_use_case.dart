@@ -10,6 +10,7 @@ class AuthenticateUserUseCase {
   AuthenticateUserUseCase(this.repository);
 
   Future<Result<String>> call(String username, String password) async {
-    return repository.authenticate(Credentials.create(username: username, password: password));
+    return repository
+        .authenticate(Credentials(username: username, password: password));
   }
 }

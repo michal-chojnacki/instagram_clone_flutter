@@ -42,6 +42,8 @@ abstract class $EditProfileStateCopyWith<$Res> {
           EditProfileState value, $Res Function(EditProfileState) then) =
       _$EditProfileStateCopyWithImpl<$Res>;
   $Res call({bool progressBarVisible, @nullable User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -65,6 +67,16 @@ class _$EditProfileStateCopyWithImpl<$Res>
       user: user == freezed ? _value.user : user as User,
     ));
   }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    if (_value.user == null) {
+      return null;
+    }
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -75,6 +87,9 @@ abstract class _$EditProfileStateCopyWith<$Res>
       __$EditProfileStateCopyWithImpl<$Res>;
   @override
   $Res call({bool progressBarVisible, @nullable User user});
+
+  @override
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc

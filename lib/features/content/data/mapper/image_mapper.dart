@@ -11,7 +11,7 @@ class ImageMapper implements Mapper<RawImage, Image> {
     if (url == null) {
       return null;
     } else {
-      return Image.create(url: input.url);
+      return Image(url: input.url);
     }
   }
 }

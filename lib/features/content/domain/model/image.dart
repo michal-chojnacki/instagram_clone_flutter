@@ -1,20 +1,11 @@
-import 'package:built_value/built_value.dart';
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part 'image.g.dart';
+part 'image.freezed.dart';
 
-abstract class Image extends Object with EquatableMixin implements Built<Image, ImageBuilder> {
-  String get url;
-
-  Image._();
-
-  factory Image([updates(ImageBuilder b)]) = _$Image;
-
-  factory Image.create({@required String url}) {
-    return Image((b) => b..url = url);
-  }
-
-  @override
-  List<Object> get props => [url];
+@freezed
+abstract class Image with _$Image {
+  factory Image({
+    @required String url,
+  }) = _Image;
 }

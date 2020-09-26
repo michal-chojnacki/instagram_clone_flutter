@@ -25,7 +25,6 @@ abstract class ContentItemState with _$ContentItemState {
     }
     return ContentItemState(
         liked: newLikedStatus,
-        content: (prevState.content.toBuilder()..likesCount = newLikesCount)
-            .build());
+        content: prevState.content.copyWith(likesCount: newLikesCount));
   }
 }

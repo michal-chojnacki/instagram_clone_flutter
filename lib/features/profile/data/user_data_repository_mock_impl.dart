@@ -20,7 +20,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
 
   @override
   Future<Result<User>> fetchUserData(String authorizationToken) async {
-    return Result.success(User.create(
+    return Result.success(User(
         id: 1,
         username: 'elo',
         fullname: 'fullname',
@@ -28,7 +28,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
         posts: 1,
         followees: 2,
         followers: 3,
-        avatar: Image.create(
+        avatar: Image(
             url:
                 'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')));
   }
@@ -50,7 +50,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
   Future<Result<List<User>>> fetchRecommendedUsers(
       String authorizationToken) async {
     return Result.success(<User>[
-      User.create(
+      User(
           id: 1,
           username: 'elo',
           fullname: 'fullname',
@@ -58,10 +58,10 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
           posts: 1,
           followees: 2,
           followers: 3,
-          avatar: Image.create(
+          avatar: Image(
               url:
                   'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')),
-      User.create(
+      User(
           id: 2,
           username: 'elo',
           fullname: 'fullname',
@@ -69,7 +69,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
           posts: 1,
           followees: 2,
           followers: 3,
-          avatar: Image.create(
+          avatar: Image(
               url:
                   'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg'))
     ]);
@@ -92,8 +92,8 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
   @override
   Future<Result<PagedList<User>>> loadFollowees(
       String authorizationToken, int userId, int page) async {
-    return Result.success(PagedList.create(list: [
-      User.create(
+    return Result.success(PagedList(list: [
+      User(
           id: 1,
           username: 'elo',
           fullname: 'fullname',
@@ -101,10 +101,10 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
           posts: 1,
           followees: 2,
           followers: 3,
-          avatar: Image.create(
+          avatar: Image(
               url:
                   'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')),
-      User.create(
+      User(
           id: 2,
           username: 'elo',
           fullname: 'fullname',
@@ -112,7 +112,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
           posts: 1,
           followees: 2,
           followers: 3,
-          avatar: Image.create(
+          avatar: Image(
               url:
                   'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg'))
     ], page: page, pages: 1));
@@ -121,8 +121,8 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
   @override
   Future<Result<PagedList<User>>> loadFollowers(
       String authorizationToken, int userId, int page) async {
-    return Result.success(PagedList.create(list: [
-      User.create(
+    return Result.success(PagedList(list: [
+      User(
           id: 1,
           username: 'elo',
           fullname: 'fullname',
@@ -130,10 +130,10 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
           posts: 1,
           followees: 2,
           followers: 3,
-          avatar: Image.create(
+          avatar: Image(
               url:
                   'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')),
-      User.create(
+      User(
           id: 2,
           username: 'elo',
           fullname: 'fullname',
@@ -141,7 +141,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
           posts: 1,
           followees: 2,
           followers: 3,
-          avatar: Image.create(
+          avatar: Image(
               url:
                   'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg'))
     ], page: page, pages: 1));

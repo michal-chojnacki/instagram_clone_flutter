@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'content_item_state.dart';
+part of 'personalized_content.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -10,12 +10,12 @@ part of 'content_item_state.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-class _$ContentItemStateTearOff {
-  const _$ContentItemStateTearOff();
+class _$PersonalizedContentTearOff {
+  const _$PersonalizedContentTearOff();
 
 // ignore: unused_element
-  _ContentItemState call({@required Content content, @required bool liked}) {
-    return _ContentItemState(
+  _PersonalizedContent call({@required Content content, @required bool liked}) {
+    return _PersonalizedContent(
       content: content,
       liked: liked,
     );
@@ -24,34 +24,34 @@ class _$ContentItemStateTearOff {
 
 /// @nodoc
 // ignore: unused_element
-const $ContentItemState = _$ContentItemStateTearOff();
+const $PersonalizedContent = _$PersonalizedContentTearOff();
 
 /// @nodoc
-mixin _$ContentItemState {
+mixin _$PersonalizedContent {
   Content get content;
   bool get liked;
 
-  $ContentItemStateCopyWith<ContentItemState> get copyWith;
+  $PersonalizedContentCopyWith<PersonalizedContent> get copyWith;
 }
 
 /// @nodoc
-abstract class $ContentItemStateCopyWith<$Res> {
-  factory $ContentItemStateCopyWith(
-          ContentItemState value, $Res Function(ContentItemState) then) =
-      _$ContentItemStateCopyWithImpl<$Res>;
+abstract class $PersonalizedContentCopyWith<$Res> {
+  factory $PersonalizedContentCopyWith(
+          PersonalizedContent value, $Res Function(PersonalizedContent) then) =
+      _$PersonalizedContentCopyWithImpl<$Res>;
   $Res call({Content content, bool liked});
 
   $ContentCopyWith<$Res> get content;
 }
 
 /// @nodoc
-class _$ContentItemStateCopyWithImpl<$Res>
-    implements $ContentItemStateCopyWith<$Res> {
-  _$ContentItemStateCopyWithImpl(this._value, this._then);
+class _$PersonalizedContentCopyWithImpl<$Res>
+    implements $PersonalizedContentCopyWith<$Res> {
+  _$PersonalizedContentCopyWithImpl(this._value, this._then);
 
-  final ContentItemState _value;
+  final PersonalizedContent _value;
   // ignore: unused_field
-  final $Res Function(ContentItemState) _then;
+  final $Res Function(PersonalizedContent) _then;
 
   @override
   $Res call({
@@ -76,11 +76,11 @@ class _$ContentItemStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ContentItemStateCopyWith<$Res>
-    implements $ContentItemStateCopyWith<$Res> {
-  factory _$ContentItemStateCopyWith(
-          _ContentItemState value, $Res Function(_ContentItemState) then) =
-      __$ContentItemStateCopyWithImpl<$Res>;
+abstract class _$PersonalizedContentCopyWith<$Res>
+    implements $PersonalizedContentCopyWith<$Res> {
+  factory _$PersonalizedContentCopyWith(_PersonalizedContent value,
+          $Res Function(_PersonalizedContent) then) =
+      __$PersonalizedContentCopyWithImpl<$Res>;
   @override
   $Res call({Content content, bool liked});
 
@@ -89,22 +89,22 @@ abstract class _$ContentItemStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ContentItemStateCopyWithImpl<$Res>
-    extends _$ContentItemStateCopyWithImpl<$Res>
-    implements _$ContentItemStateCopyWith<$Res> {
-  __$ContentItemStateCopyWithImpl(
-      _ContentItemState _value, $Res Function(_ContentItemState) _then)
-      : super(_value, (v) => _then(v as _ContentItemState));
+class __$PersonalizedContentCopyWithImpl<$Res>
+    extends _$PersonalizedContentCopyWithImpl<$Res>
+    implements _$PersonalizedContentCopyWith<$Res> {
+  __$PersonalizedContentCopyWithImpl(
+      _PersonalizedContent _value, $Res Function(_PersonalizedContent) _then)
+      : super(_value, (v) => _then(v as _PersonalizedContent));
 
   @override
-  _ContentItemState get _value => super._value as _ContentItemState;
+  _PersonalizedContent get _value => super._value as _PersonalizedContent;
 
   @override
   $Res call({
     Object content = freezed,
     Object liked = freezed,
   }) {
-    return _then(_ContentItemState(
+    return _then(_PersonalizedContent(
       content: content == freezed ? _value.content : content as Content,
       liked: liked == freezed ? _value.liked : liked as bool,
     ));
@@ -112,10 +112,10 @@ class __$ContentItemStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_ContentItemState
+class _$_PersonalizedContent
     with DiagnosticableTreeMixin
-    implements _ContentItemState {
-  _$_ContentItemState({@required this.content, @required this.liked})
+    implements _PersonalizedContent {
+  _$_PersonalizedContent({@required this.content, @required this.liked})
       : assert(content != null),
         assert(liked != null);
 
@@ -126,14 +126,14 @@ class _$_ContentItemState
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ContentItemState(content: $content, liked: $liked)';
+    return 'PersonalizedContent(content: $content, liked: $liked)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ContentItemState'))
+      ..add(DiagnosticsProperty('type', 'PersonalizedContent'))
       ..add(DiagnosticsProperty('content', content))
       ..add(DiagnosticsProperty('liked', liked));
   }
@@ -141,7 +141,7 @@ class _$_ContentItemState
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ContentItemState &&
+        (other is _PersonalizedContent &&
             (identical(other.content, content) ||
                 const DeepCollectionEquality()
                     .equals(other.content, content)) &&
@@ -156,18 +156,20 @@ class _$_ContentItemState
       const DeepCollectionEquality().hash(liked);
 
   @override
-  _$ContentItemStateCopyWith<_ContentItemState> get copyWith =>
-      __$ContentItemStateCopyWithImpl<_ContentItemState>(this, _$identity);
+  _$PersonalizedContentCopyWith<_PersonalizedContent> get copyWith =>
+      __$PersonalizedContentCopyWithImpl<_PersonalizedContent>(
+          this, _$identity);
 }
 
-abstract class _ContentItemState implements ContentItemState {
-  factory _ContentItemState({@required Content content, @required bool liked}) =
-      _$_ContentItemState;
+abstract class _PersonalizedContent implements PersonalizedContent {
+  factory _PersonalizedContent(
+      {@required Content content,
+      @required bool liked}) = _$_PersonalizedContent;
 
   @override
   Content get content;
   @override
   bool get liked;
   @override
-  _$ContentItemStateCopyWith<_ContentItemState> get copyWith;
+  _$PersonalizedContentCopyWith<_PersonalizedContent> get copyWith;
 }

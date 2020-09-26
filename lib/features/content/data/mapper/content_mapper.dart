@@ -14,7 +14,7 @@ class ContentMapper implements Mapper<RawContent, Content> {
 
   @override
   Content map(RawContent input) {
-    return Content.create(
+    return Content(
         id: input.id ?? 0,
         image: _imageMapper.map(input.image),
         description: input.description ?? '',

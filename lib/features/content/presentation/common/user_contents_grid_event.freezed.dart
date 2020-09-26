@@ -98,6 +98,8 @@ abstract class $FetchUserContentCopyWith<$Res>
       _$FetchUserContentCopyWithImpl<$Res>;
   @override
   $Res call({User user, int page});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -120,6 +122,16 @@ class _$FetchUserContentCopyWithImpl<$Res>
       user: user == freezed ? _value.user : user as User,
       page: page == freezed ? _value.page : page as int,
     ));
+  }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    if (_value.user == null) {
+      return null;
+    }
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 

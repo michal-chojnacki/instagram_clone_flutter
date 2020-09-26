@@ -30,7 +30,7 @@ void main() {
         'given getUserContentsUseCase returning empty list when fetchCurrentUserContent then loading and then success with empty list is returned',
         build: () {
           when(getUserContentsUseCase.call(0)).thenAnswer((_) async =>
-              Result.success(PagedList.create(list: [], page: 0, pages: 1)));
+              Result.success(PagedList(list: [], page: 0, pages: 1)));
           return UserContentsGridBloc(
               getContentsForUserUseCase, getUserContentsUseCase);
         },
@@ -58,8 +58,8 @@ void main() {
         'given getUserContentsUseCase returning not empty list when fetchCurrentUserContent then loading and then success with the same list is returned',
         build: () {
           when(getUserContentsUseCase.call(0)).thenAnswer((_) async =>
-              Result.success(PagedList.create(
-                  list: personalizedContentList, page: 0, pages: 1)));
+              Result.success(
+                  PagedList(list: personalizedContentList, page: 0, pages: 1)));
           return UserContentsGridBloc(
               getContentsForUserUseCase, getUserContentsUseCase);
         },

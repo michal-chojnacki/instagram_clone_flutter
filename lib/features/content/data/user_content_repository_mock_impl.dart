@@ -14,17 +14,17 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
   Future<Result<PagedList<Content>>> loadMainContent(
       String authorizationToken, int page) async {
     if (page > 0) {
-      return Result.success(PagedList.create(list: [], page: 1, pages: 1));
+      return Result.success(PagedList(list: [], page: 1, pages: 1));
     } else {
-      return Result.success(PagedList.create(list: [
-        Content.create(
+      return Result.success(PagedList(list: [
+        Content(
             id: 1,
             likesCount: 2,
-            image: Image.create(
+            image: Image(
                 url:
                     'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg'),
             description: 'test description',
-            owner: User.create(
+            owner: User(
                 id: 1,
                 bio: 'bio',
                 fullname: 'elo name',
@@ -32,7 +32,7 @@ class UserContentRepositoryMockImpl extends UserContentRepository {
                 posts: 1,
                 followees: 2,
                 followers: 3,
-                avatar: Image.create(
+                avatar: Image(
                     url:
                         'https://upload.wikimedia.org/wikipedia/commons/1/16/Zenon_Martyniuk_%28member_of_Polish_band_Akcent%29_2018_.jpg')),
             publicationTimestamp: DateTime.now().millisecondsSinceEpoch),

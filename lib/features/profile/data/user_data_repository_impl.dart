@@ -168,7 +168,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
   }
 
   Result<PagedList<User>> _mapRawUsers(Response<RawUsers> response) =>
-      Result.success(PagedList.create(
+      Result.success(PagedList(
           list: response.body.users
               .map((rawUser) => _userMapper.map(rawUser))
               .toList(),

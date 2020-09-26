@@ -35,12 +35,11 @@ class GetContentsForUserUseCase {
                   .when(
                       success: (data) =>
                           Result<PagedList<PersonalizedContent>>.success(
-                              PagedList.create(
+                              PagedList(
                                   list: contents
-                                      .map((content) =>
-                                          PersonalizedContent.create(
-                                              content: content,
-                                              liked: data[content.id]))
+                                      .map((content) => PersonalizedContent(
+                                          content: content,
+                                          liked: data[content.id]))
                                       .toList(),
                                   page: page,
                                   pages: pages)),

@@ -70,6 +70,8 @@ abstract class $UserProfileEventCopyWith<$Res> {
           UserProfileEvent value, $Res Function(UserProfileEvent) then) =
       _$UserProfileEventCopyWithImpl<$Res>;
   $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -89,6 +91,16 @@ class _$UserProfileEventCopyWithImpl<$Res>
       user: user == freezed ? _value.user : user as User,
     ));
   }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    if (_value.user == null) {
+      return null;
+    }
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -99,6 +111,9 @@ abstract class $ChangeObservationCopyWith<$Res>
       _$ChangeObservationCopyWithImpl<$Res>;
   @override
   $Res call({User user, bool observe});
+
+  @override
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -241,6 +256,9 @@ abstract class $FetchObservationCopyWith<$Res>
       _$FetchObservationCopyWithImpl<$Res>;
   @override
   $Res call({User user});
+
+  @override
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc

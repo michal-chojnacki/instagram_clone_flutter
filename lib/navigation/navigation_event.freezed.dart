@@ -1263,6 +1263,8 @@ abstract class $OpenUserProfilePageCopyWith<$Res> {
           OpenUserProfilePage value, $Res Function(OpenUserProfilePage) then) =
       _$OpenUserProfilePageCopyWithImpl<$Res>;
   $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -1283,6 +1285,16 @@ class _$OpenUserProfilePageCopyWithImpl<$Res>
     return _then(OpenUserProfilePage(
       user: user == freezed ? _value.user : user as User,
     ));
+  }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    if (_value.user == null) {
+      return null;
+    }
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 
@@ -1449,6 +1461,8 @@ abstract class $OpenSingleContentPageCopyWith<$Res> {
           $Res Function(OpenSingleContentPage) then) =
       _$OpenSingleContentPageCopyWithImpl<$Res>;
   $Res call({PersonalizedContent content});
+
+  $PersonalizedContentCopyWith<$Res> get content;
 }
 
 /// @nodoc
@@ -1470,6 +1484,16 @@ class _$OpenSingleContentPageCopyWithImpl<$Res>
       content:
           content == freezed ? _value.content : content as PersonalizedContent,
     ));
+  }
+
+  @override
+  $PersonalizedContentCopyWith<$Res> get content {
+    if (_value.content == null) {
+      return null;
+    }
+    return $PersonalizedContentCopyWith<$Res>(_value.content, (value) {
+      return _then(_value.copyWith(content: value));
+    });
   }
 }
 
@@ -1889,6 +1913,8 @@ abstract class $OpenUserFollowersPageCopyWith<$Res> {
           $Res Function(OpenUserFollowersPage) then) =
       _$OpenUserFollowersPageCopyWithImpl<$Res>;
   $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -1909,6 +1935,16 @@ class _$OpenUserFollowersPageCopyWithImpl<$Res>
     return _then(OpenUserFollowersPage(
       user: user == freezed ? _value.user : user as User,
     ));
+  }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    if (_value.user == null) {
+      return null;
+    }
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 
@@ -2077,6 +2113,8 @@ abstract class $OpenUserFolloweesPageCopyWith<$Res> {
           $Res Function(OpenUserFolloweesPage) then) =
       _$OpenUserFolloweesPageCopyWithImpl<$Res>;
   $Res call({User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -2097,6 +2135,16 @@ class _$OpenUserFolloweesPageCopyWithImpl<$Res>
     return _then(OpenUserFolloweesPage(
       user: user == freezed ? _value.user : user as User,
     ));
+  }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    if (_value.user == null) {
+      return null;
+    }
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 

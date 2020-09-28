@@ -36,12 +36,11 @@ import 'features/profile/domain/get_recommended_profiles_use_case.dart';
 import 'features/content/domain/get_user_contents_use_case.dart';
 import 'features/profile/domain/get_user_data_use_case.dart';
 import 'features/content/data/mapper/image_mapper.dart';
+import 'features/content/presentation/init/init_bloc.dart';
 import 'features/authenticate/domain/load_authorization_token_use_case.dart';
 import 'features/authenticate/presentation/login_page_bloc.dart';
-import 'features/content/presentation/main/main_bloc.dart';
 import 'features/content/presentation/main_contents/main_contents_bloc.dart';
-import 'features/content/presentation/common/page/main_user_bloc.dart';
-import 'navigation/navigation_bloc.dart';
+import 'features/content/presentation/common/main_user_bloc.dart';
 import 'features/content/presentation/common/model/personalized_content.dart';
 import 'features/content/presentation/recommended_profiles/recommended_profiles_bloc.dart';
 import 'injection.dart';
@@ -58,9 +57,9 @@ import 'features/profile/domain/user_data_repository.dart';
 import 'features/profile/data/user_data_repository_impl.dart';
 import 'features/profile/data/user_data_repository_mock_impl.dart';
 import 'features/profile/data/user_data_service.dart';
-import 'features/profile/presentation/user_list/user_list_bloc.dart';
+import 'features/profile/presentation/user_list_bloc.dart';
 import 'features/content/data/mapper/user_mapper.dart';
-import 'features/profile/presentation/page/user_profile_bloc.dart';
+import 'features/profile/presentation/user_profile_bloc.dart';
 import 'features/authenticate/domain/verify_authorization_token_use_case.dart';
 
 /// Environment names
@@ -85,7 +84,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   gh.factory<ImageMapper>(() => ImageMapper());
   gh.factory<LoadAuthorizationTokenUseCase>(
       () => LoadAuthorizationTokenUseCase(g<AuthenticationRepository>()));
-  gh.lazySingleton<NavigationBloc>(() => NavigationBloc());
+  gh.factory<MainUserBloc>(() => MainUserBloc());
   gh.factory<RegisterUserUseCase>(
       () => RegisterUserUseCase(g<AuthenticationRepository>()));
   final sharedPreferences = await registerModule.prefs;
@@ -107,11 +106,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   gh.factory<ChangeObservationUseCase>(() => ChangeObservationUseCase(
       g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
   gh.factoryParam<ContentItemBloc, PersonalizedContent, dynamic>(
-      (personalizedContent, _) => ContentItemBloc(
-            g<NavigationBloc>(),
-            g<ChangeLikeUseCase>(),
-            personalizedContent,
-          ));
+      (personalizedContent, _) =>
+          ContentItemBloc(g<ChangeLikeUseCase>(), personalizedContent));
   gh.factory<ContentMapper>(
       () => ContentMapper(g<ImageMapper>(), g<UserMapper>()));
   gh.factory<GetAllFolloweesUseCase>(() => GetAllFolloweesUseCase(
@@ -141,19 +137,12 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       ));
   gh.factory<GetUserDataUseCase>(() => GetUserDataUseCase(
       g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
-  gh.factory<LoginPageBloc>(() => LoginPageBloc(
-        g<NavigationBloc>(),
-        g<AuthenticateUserUseCase>(),
-        g<RegisterUserUseCase>(),
-      ));
+  gh.factory<LoginPageBloc>(() =>
+      LoginPageBloc(g<AuthenticateUserUseCase>(), g<RegisterUserUseCase>()));
   gh.factory<MainContentsBloc>(
-      () => MainContentsBloc(g<NavigationBloc>(), g<GetMainContentUseCase>()));
-  gh.factory<MainUserBloc>(() => MainUserBloc(g<NavigationBloc>()));
+      () => MainContentsBloc(g<GetMainContentUseCase>()));
   gh.factory<RecommendedProfilesBloc>(() => RecommendedProfilesBloc(
-        g<NavigationBloc>(),
-        g<GetRecommendedProfilesUseCase>(),
-        g<ChangeObservationUseCase>(),
-      ));
+      g<GetRecommendedProfilesUseCase>(), g<ChangeObservationUseCase>()));
   gh.factory<SendContentUseCase>(() => SendContentUseCase(
       g<UserContentRepository>(), g<LoadAuthorizationTokenUseCase>()));
   gh.factory<UpdateUserDataUseCase>(() => UpdateUserDataUseCase(
@@ -175,6 +164,11 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       () => AuthenticationRepositoryImpl(
           g<AuthenticationService>(), g<AuthenticationLocalDataSource>()),
       registerFor: {_prod, _dev});
+  gh.factory<EditProfileBloc>(() => EditProfileBloc(
+        g<GetUserDataUseCase>(),
+        g<UpdateUserDataUseCase>(),
+        g<ClearAuthenticationTokenUseCase>(),
+      ));
   gh.factory<GetContentWithQueryUseCase>(() => GetContentWithQueryUseCase(
         g<UserContentRepository>(),
         g<LoadAuthorizationTokenUseCase>(),
@@ -185,21 +179,12 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
         g<LoadAuthorizationTokenUseCase>(),
         g<GetLikesStatusesUseCase>(),
       ));
-  gh.lazySingleton<MainBloc>(() =>
-      MainBloc(g<VerifyAuthorizationTokenUseCase>(), g<NavigationBloc>()));
+  gh.factory<InitBloc>(() => InitBloc(g<VerifyAuthorizationTokenUseCase>()));
   gh.factory<SearchForContentBloc>(() => SearchForContentBloc(
       g<GetContentWithQueryUseCase>(), g<GetRecommendedContentUseCase>()));
-  gh.factory<SendContentBloc>(
-      () => SendContentBloc(g<NavigationBloc>(), g<SendContentUseCase>()));
+  gh.factory<SendContentBloc>(() => SendContentBloc(g<SendContentUseCase>()));
   gh.factory<UserContentsGridBloc>(() => UserContentsGridBloc(
       g<GetContentsForUserUseCase>(), g<GetUserContentsUseCase>()));
-  gh.factory<EditProfileBloc>(() => EditProfileBloc(
-        g<MainBloc>(),
-        g<NavigationBloc>(),
-        g<GetUserDataUseCase>(),
-        g<UpdateUserDataUseCase>(),
-        g<ClearAuthenticationTokenUseCase>(),
-      ));
 }
 
 class _$RegisterModule extends RegisterModule {}

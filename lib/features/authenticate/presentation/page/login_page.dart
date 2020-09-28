@@ -4,12 +4,20 @@ import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_bloc.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_state.dart';
 import 'package:instagram_clone/features/authenticate/presentation/widget/login_form.dart';
+import 'package:instagram_clone/features/content/presentation/page/main_user_page.dart';
 
 class LoginPage extends StatelessWidget {
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => LoginPage());
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => GetIt.I<LoginPageBloc>(),
+      create: (BuildContext context) => GetIt.I<LoginPageBloc>()
+        ..sideEffects.listen((sideEffect) => sideEffect.when(
+            openMainUserPage: () =>
+                Navigator.of(context).pushReplacement(MainUserPage.route()))),
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: BlocBuilder<LoginPageBloc, LoginPageState>(

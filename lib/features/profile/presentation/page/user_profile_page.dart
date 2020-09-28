@@ -3,12 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/core/widgets/primary_button.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
-import 'package:instagram_clone/features/content/presentation/common/user_contents_grid.dart';
-import 'package:instagram_clone/features/profile/presentation/page/user_profile_bloc.dart';
-import 'package:instagram_clone/features/profile/presentation/page/user_profile_state.dart';
-import 'package:instagram_clone/features/profile/presentation/profile_info_widget.dart';
+import 'package:instagram_clone/features/content/presentation/widget/user_contents_grid.dart';
+import 'package:instagram_clone/features/profile/presentation/user_profile_bloc.dart';
+import 'package:instagram_clone/features/profile/presentation/user_profile_state.dart';
+import 'package:instagram_clone/features/profile/presentation/widget/profile_info_widget.dart';
 
 class UserProfilePage extends StatefulWidget {
+  static Route route(User user) {
+    return MaterialPageRoute<void>(builder: (_) => UserProfilePage(user));
+  }
+
   final User _user;
 
   UserProfilePage(this._user);

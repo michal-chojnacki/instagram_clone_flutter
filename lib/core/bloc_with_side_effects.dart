@@ -10,12 +10,13 @@ abstract class BlocWithSideEffect<Event, State, SideEffect>
   Stream<SideEffect> get sideEffects => _sideEffectsStreamController.stream;
 
   void addSideEffect(SideEffect sideEffect) {
+    if (_sideEffectsStreamController.isClosed) return;
     _sideEffectsStreamController.add(sideEffect);
   }
 
   @override
-  Future<void> close() {
-    _sideEffectsStreamController.close();
+  Future<void> close() async {
+    await _sideEffectsStreamController.close();
     return super.close();
   }
 }

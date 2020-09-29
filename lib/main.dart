@@ -10,7 +10,7 @@ void main() async {
     await Stetho.initialize();
   }
   WidgetsFlutterBinding.ensureInitialized();
-  await configureInjection(environment: dev);
+  await configureInjection(environment: prod);
   runApp(App());
 }
 

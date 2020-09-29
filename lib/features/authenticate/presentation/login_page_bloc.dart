@@ -1,21 +1,20 @@
-import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:instagram_clone/core/bloc_with_side_effects.dart';
 
 import 'package:instagram_clone/features/authenticate/domain/authenticate_user_use_case.dart';
 import 'package:instagram_clone/features/authenticate/domain/register_user_use_case.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_event.dart';
+import 'package:instagram_clone/features/authenticate/presentation/login_page_side_effect.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_state.dart';
-import 'package:instagram_clone/navigation/navigation_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 @injectable
-class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
-  final NavigationBloc _navigationBloc;
+class LoginPageBloc extends BlocWithSideEffect<LoginPageEvent, LoginPageState,
+    LoginPageSideEffect> {
   final AuthenticateUserUseCase _authenticateUser;
   final RegisterUserUseCase _registerUser;
 
-  LoginPageBloc(
-      this._navigationBloc, this._authenticateUser, this._registerUser)
+  LoginPageBloc(this._authenticateUser, this._registerUser)
       : super(LoginPageState.idle());
 
   void authenticateUser(String username, String password) {
@@ -42,7 +41,7 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
           .flatMap((result) => result.when(
               success: (data) {
                 if (data != null) {
-                  _navigationBloc.openMainUserPage();
+                  addSideEffect(LoginPageSideEffect.openMainUserPage());
                   return Stream<LoginPageState>.empty();
                 } else {
                   return Stream.value(LoginPageState.error(false));
@@ -56,7 +55,7 @@ class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState> {
           .flatMap((result) => result.when(
               success: (data) {
                 if (data != null) {
-                  _navigationBloc.openMainUserPage();
+                  addSideEffect(LoginPageSideEffect.openMainUserPage());
                   return Stream<LoginPageState>.empty();
                 } else {
                   return Stream.value(LoginPageState.error(true));

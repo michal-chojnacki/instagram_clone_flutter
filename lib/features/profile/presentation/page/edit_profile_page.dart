@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:instagram_clone/core/widgets/network_image_with_fallback.dart';
+import 'package:instagram_clone/features/camera/page/pick_image_page.dart';
+import 'package:instagram_clone/features/content/presentation/page/init_page.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_bloc.dart';
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';
 
 class EditProfilePage extends StatefulWidget {
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => EditProfilePage());
+  }
+
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -19,6 +25,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
+    _editProfileBloc.sideEffects.listen((sideEffect) => sideEffect.when(
+        openInitPage: () => Navigator.of(context).pushReplacement(
+            InitPage.route(mode: InitPageMode.PROGRESS_INDICTATOR))));
     _editProfileBloc.fetchProfileData();
   }
 
@@ -37,14 +46,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () => _editProfileBloc.closeScreen(),
-          ),
+              icon: Icon(Icons.close),
+              onPressed: () => Navigator.of(context).pop()),
           title: const Text('Edit profile'),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.check),
-              onPressed: _updateProfile,
+              onPressed: () => _updateProfile(context),
             )
           ],
         ),
@@ -103,10 +111,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void _pickImage(BuildContext context) {
-    _editProfileBloc.openPickImagePage();
+    Navigator.of(context).push(PickImagePage.route(
+        ratio: 1.0,
+        circleShaped: true,
+        onImagePicked: (imagePath) {
+          _editProfileBloc.updateProfileData(avatarPath: imagePath);
+          Navigator.of(context).pop();
+        }));
   }
 
-  Future<void> _updateProfile() async {
+  Future<void> _updateProfile(BuildContext context) async {
     final user = _editProfileBloc.state.user;
     if (user == null) {
       return;
@@ -119,6 +133,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     bio = (bio == user.bio) ? null : bio;
     _editProfileBloc.updateProfileData(
         username: username, bio: bio, fullname: fullname);
-    _editProfileBloc.closeScreen();
+    Navigator.of(context).pop();
   }
 }

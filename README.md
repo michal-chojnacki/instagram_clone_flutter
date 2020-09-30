@@ -6,7 +6,7 @@ InstagramClone is an app which enables users to share their photos with others. 
 The purpose of implementation this app was to educate myself about app development in Flutter and backend in Ruby on Rails. Because that I wrote it in my free time, it might contains little bugs like lacking progress indicators in some places or the screens not being refreshed when coming back to them. Besides of this type of details it should work as expected. At least there are no major issues I know about. :)
 
 ## APK
-APK of the app is available here: https://github.com/michal-chojnacki/instagram_clone_flutter/releases/download/v1.0.2/app-release.apk
+APK of the app is available here: https://github.com/michal-chojnacki/instagram_clone_flutter/releases/latest/download/app-release.apk
 
 ## architecture
 App was written with the clean architecture approach, with frequent usage of BLoC architecture. Unfortuantely because of the lack of time, code formatting might be not perfect in some places. 

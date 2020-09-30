@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/core/widgets/show_error_widget.dart';
 import 'package:instagram_clone/features/content/presentation/widget/content_item_widget.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
@@ -36,7 +37,9 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
       body: BlocBuilder<MainContentsBloc, MainContentsState>(
           cubit: _mainContentsBloc,
           builder: (context, MainContentsState state) {
-            if (state.contents.isEmpty) {
+            if (state.onRetry != null) {
+              return ShowErrorWidget(onTryAgainPressed: state.onRetry);
+            } else if (state.contents.isEmpty) {
               return Center(
                 child: state.hasReachedEndOfResults
                     ? Text('There is no content...')

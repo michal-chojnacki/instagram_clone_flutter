@@ -15,10 +15,13 @@ class _$RecommendedProfilesStateTearOff {
 
 // ignore: unused_element
   _RecommendedProfilesState call(
-      {@required List<User> users, @required bool loading}) {
+      {@required List<User> users,
+      @required bool loading,
+      @nullable Function onRetry}) {
     return _RecommendedProfilesState(
       users: users,
       loading: loading,
+      onRetry: onRetry,
     );
   }
 }
@@ -31,6 +34,8 @@ const $RecommendedProfilesState = _$RecommendedProfilesStateTearOff();
 mixin _$RecommendedProfilesState {
   List<User> get users;
   bool get loading;
+  @nullable
+  Function get onRetry;
 
   $RecommendedProfilesStateCopyWith<RecommendedProfilesState> get copyWith;
 }
@@ -40,7 +45,7 @@ abstract class $RecommendedProfilesStateCopyWith<$Res> {
   factory $RecommendedProfilesStateCopyWith(RecommendedProfilesState value,
           $Res Function(RecommendedProfilesState) then) =
       _$RecommendedProfilesStateCopyWithImpl<$Res>;
-  $Res call({List<User> users, bool loading});
+  $Res call({List<User> users, bool loading, @nullable Function onRetry});
 }
 
 /// @nodoc
@@ -56,10 +61,12 @@ class _$RecommendedProfilesStateCopyWithImpl<$Res>
   $Res call({
     Object users = freezed,
     Object loading = freezed,
+    Object onRetry = freezed,
   }) {
     return _then(_value.copyWith(
       users: users == freezed ? _value.users : users as List<User>,
       loading: loading == freezed ? _value.loading : loading as bool,
+      onRetry: onRetry == freezed ? _value.onRetry : onRetry as Function,
     ));
   }
 }
@@ -71,7 +78,7 @@ abstract class _$RecommendedProfilesStateCopyWith<$Res>
           $Res Function(_RecommendedProfilesState) then) =
       __$RecommendedProfilesStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<User> users, bool loading});
+  $Res call({List<User> users, bool loading, @nullable Function onRetry});
 }
 
 /// @nodoc
@@ -90,10 +97,12 @@ class __$RecommendedProfilesStateCopyWithImpl<$Res>
   $Res call({
     Object users = freezed,
     Object loading = freezed,
+    Object onRetry = freezed,
   }) {
     return _then(_RecommendedProfilesState(
       users: users == freezed ? _value.users : users as List<User>,
       loading: loading == freezed ? _value.loading : loading as bool,
+      onRetry: onRetry == freezed ? _value.onRetry : onRetry as Function,
     ));
   }
 }
@@ -102,7 +111,8 @@ class __$RecommendedProfilesStateCopyWithImpl<$Res>
 class _$_RecommendedProfilesState
     with DiagnosticableTreeMixin
     implements _RecommendedProfilesState {
-  _$_RecommendedProfilesState({@required this.users, @required this.loading})
+  _$_RecommendedProfilesState(
+      {@required this.users, @required this.loading, @nullable this.onRetry})
       : assert(users != null),
         assert(loading != null);
 
@@ -110,10 +120,13 @@ class _$_RecommendedProfilesState
   final List<User> users;
   @override
   final bool loading;
+  @override
+  @nullable
+  final Function onRetry;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecommendedProfilesState(users: $users, loading: $loading)';
+    return 'RecommendedProfilesState(users: $users, loading: $loading, onRetry: $onRetry)';
   }
 
   @override
@@ -122,7 +135,8 @@ class _$_RecommendedProfilesState
     properties
       ..add(DiagnosticsProperty('type', 'RecommendedProfilesState'))
       ..add(DiagnosticsProperty('users', users))
-      ..add(DiagnosticsProperty('loading', loading));
+      ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('onRetry', onRetry));
   }
 
   @override
@@ -132,14 +146,18 @@ class _$_RecommendedProfilesState
             (identical(other.users, users) ||
                 const DeepCollectionEquality().equals(other.users, users)) &&
             (identical(other.loading, loading) ||
-                const DeepCollectionEquality().equals(other.loading, loading)));
+                const DeepCollectionEquality()
+                    .equals(other.loading, loading)) &&
+            (identical(other.onRetry, onRetry) ||
+                const DeepCollectionEquality().equals(other.onRetry, onRetry)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(users) ^
-      const DeepCollectionEquality().hash(loading);
+      const DeepCollectionEquality().hash(loading) ^
+      const DeepCollectionEquality().hash(onRetry);
 
   @override
   _$RecommendedProfilesStateCopyWith<_RecommendedProfilesState> get copyWith =>
@@ -150,12 +168,16 @@ class _$_RecommendedProfilesState
 abstract class _RecommendedProfilesState implements RecommendedProfilesState {
   factory _RecommendedProfilesState(
       {@required List<User> users,
-      @required bool loading}) = _$_RecommendedProfilesState;
+      @required bool loading,
+      @nullable Function onRetry}) = _$_RecommendedProfilesState;
 
   @override
   List<User> get users;
   @override
   bool get loading;
+  @override
+  @nullable
+  Function get onRetry;
   @override
   _$RecommendedProfilesStateCopyWith<_RecommendedProfilesState> get copyWith;
 }

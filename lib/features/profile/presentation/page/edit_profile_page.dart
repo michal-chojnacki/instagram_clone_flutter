@@ -27,7 +27,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.initState();
     _editProfileBloc.sideEffects.listen((sideEffect) => sideEffect.when(
         openInitPage: () => Navigator.of(context).pushReplacement(
-            InitPage.route(mode: InitPageMode.PROGRESS_INDICTATOR))));
+            InitPage.route(mode: InitPageMode.PROGRESS_INDICTATOR)),
+        updatedProfile: () => Navigator.of(context).pop()));
     _editProfileBloc.fetchProfileData();
   }
 
@@ -120,7 +121,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         }));
   }
 
-  Future<void> _updateProfile(BuildContext context) async {
+  void _updateProfile(BuildContext context) {
     final user = _editProfileBloc.state.user;
     if (user == null) {
       return;
@@ -133,6 +134,5 @@ class _EditProfilePageState extends State<EditProfilePage> {
     bio = (bio == user.bio) ? null : bio;
     _editProfileBloc.updateProfileData(
         username: username, bio: bio, fullname: fullname);
-    Navigator.of(context).pop();
   }
 }

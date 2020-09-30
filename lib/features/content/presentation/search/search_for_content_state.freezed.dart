@@ -17,11 +17,13 @@ class _$SearchForContentStateTearOff {
   _SearchForContentState call(
       {@required List<PersonalizedContent> contents,
       @required int page,
-      @required bool hasReachedEndOfResults}) {
+      @required bool hasReachedEndOfResults,
+      @nullable Function onRetry}) {
     return _SearchForContentState(
       contents: contents,
       page: page,
       hasReachedEndOfResults: hasReachedEndOfResults,
+      onRetry: onRetry,
     );
   }
 }
@@ -35,6 +37,8 @@ mixin _$SearchForContentState {
   List<PersonalizedContent> get contents;
   int get page;
   bool get hasReachedEndOfResults;
+  @nullable
+  Function get onRetry;
 
   $SearchForContentStateCopyWith<SearchForContentState> get copyWith;
 }
@@ -47,7 +51,8 @@ abstract class $SearchForContentStateCopyWith<$Res> {
   $Res call(
       {List<PersonalizedContent> contents,
       int page,
-      bool hasReachedEndOfResults});
+      bool hasReachedEndOfResults,
+      @nullable Function onRetry});
 }
 
 /// @nodoc
@@ -64,6 +69,7 @@ class _$SearchForContentStateCopyWithImpl<$Res>
     Object contents = freezed,
     Object page = freezed,
     Object hasReachedEndOfResults = freezed,
+    Object onRetry = freezed,
   }) {
     return _then(_value.copyWith(
       contents: contents == freezed
@@ -73,6 +79,7 @@ class _$SearchForContentStateCopyWithImpl<$Res>
       hasReachedEndOfResults: hasReachedEndOfResults == freezed
           ? _value.hasReachedEndOfResults
           : hasReachedEndOfResults as bool,
+      onRetry: onRetry == freezed ? _value.onRetry : onRetry as Function,
     ));
   }
 }
@@ -87,7 +94,8 @@ abstract class _$SearchForContentStateCopyWith<$Res>
   $Res call(
       {List<PersonalizedContent> contents,
       int page,
-      bool hasReachedEndOfResults});
+      bool hasReachedEndOfResults,
+      @nullable Function onRetry});
 }
 
 /// @nodoc
@@ -106,6 +114,7 @@ class __$SearchForContentStateCopyWithImpl<$Res>
     Object contents = freezed,
     Object page = freezed,
     Object hasReachedEndOfResults = freezed,
+    Object onRetry = freezed,
   }) {
     return _then(_SearchForContentState(
       contents: contents == freezed
@@ -115,6 +124,7 @@ class __$SearchForContentStateCopyWithImpl<$Res>
       hasReachedEndOfResults: hasReachedEndOfResults == freezed
           ? _value.hasReachedEndOfResults
           : hasReachedEndOfResults as bool,
+      onRetry: onRetry == freezed ? _value.onRetry : onRetry as Function,
     ));
   }
 }
@@ -126,7 +136,8 @@ class _$_SearchForContentState
   _$_SearchForContentState(
       {@required this.contents,
       @required this.page,
-      @required this.hasReachedEndOfResults})
+      @required this.hasReachedEndOfResults,
+      @nullable this.onRetry})
       : assert(contents != null),
         assert(page != null),
         assert(hasReachedEndOfResults != null);
@@ -137,10 +148,13 @@ class _$_SearchForContentState
   final int page;
   @override
   final bool hasReachedEndOfResults;
+  @override
+  @nullable
+  final Function onRetry;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SearchForContentState(contents: $contents, page: $page, hasReachedEndOfResults: $hasReachedEndOfResults)';
+    return 'SearchForContentState(contents: $contents, page: $page, hasReachedEndOfResults: $hasReachedEndOfResults, onRetry: $onRetry)';
   }
 
   @override
@@ -150,8 +164,9 @@ class _$_SearchForContentState
       ..add(DiagnosticsProperty('type', 'SearchForContentState'))
       ..add(DiagnosticsProperty('contents', contents))
       ..add(DiagnosticsProperty('page', page))
-      ..add(DiagnosticsProperty(
-          'hasReachedEndOfResults', hasReachedEndOfResults));
+      ..add(
+          DiagnosticsProperty('hasReachedEndOfResults', hasReachedEndOfResults))
+      ..add(DiagnosticsProperty('onRetry', onRetry));
   }
 
   @override
@@ -165,7 +180,9 @@ class _$_SearchForContentState
                 const DeepCollectionEquality().equals(other.page, page)) &&
             (identical(other.hasReachedEndOfResults, hasReachedEndOfResults) ||
                 const DeepCollectionEquality().equals(
-                    other.hasReachedEndOfResults, hasReachedEndOfResults)));
+                    other.hasReachedEndOfResults, hasReachedEndOfResults)) &&
+            (identical(other.onRetry, onRetry) ||
+                const DeepCollectionEquality().equals(other.onRetry, onRetry)));
   }
 
   @override
@@ -173,7 +190,8 @@ class _$_SearchForContentState
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(contents) ^
       const DeepCollectionEquality().hash(page) ^
-      const DeepCollectionEquality().hash(hasReachedEndOfResults);
+      const DeepCollectionEquality().hash(hasReachedEndOfResults) ^
+      const DeepCollectionEquality().hash(onRetry);
 
   @override
   _$SearchForContentStateCopyWith<_SearchForContentState> get copyWith =>
@@ -185,7 +203,8 @@ abstract class _SearchForContentState implements SearchForContentState {
   factory _SearchForContentState(
       {@required List<PersonalizedContent> contents,
       @required int page,
-      @required bool hasReachedEndOfResults}) = _$_SearchForContentState;
+      @required bool hasReachedEndOfResults,
+      @nullable Function onRetry}) = _$_SearchForContentState;
 
   @override
   List<PersonalizedContent> get contents;
@@ -193,6 +212,9 @@ abstract class _SearchForContentState implements SearchForContentState {
   int get page;
   @override
   bool get hasReachedEndOfResults;
+  @override
+  @nullable
+  Function get onRetry;
   @override
   _$SearchForContentStateCopyWith<_SearchForContentState> get copyWith;
 }

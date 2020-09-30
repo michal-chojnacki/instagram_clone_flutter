@@ -12,7 +12,8 @@ abstract class UserDataService extends ChopperService {
       _$UserDataService(client);
 
   @Get(path: 'user')
-  Future<Response> getUser(@Header('Authorization') String authorizationBearer);
+  Future<Response> getUser(@Header('Authorization') String authorizationBearer,
+      @Query('user') int userId);
 
   @Get(path: 'recommended_users')
   Future<Response> getRecommendedUsers(

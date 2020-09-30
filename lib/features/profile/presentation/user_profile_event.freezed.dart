@@ -28,6 +28,13 @@ class _$UserProfileEventTearOff {
       user: user,
     );
   }
+
+// ignore: unused_element
+  RefreshUserData refreshUserData({@required User user}) {
+    return RefreshUserData(
+      user: user,
+    );
+  }
 }
 
 /// @nodoc
@@ -42,22 +49,26 @@ mixin _$UserProfileEvent {
   Result when<Result extends Object>({
     @required Result changeObservation(User user, bool observe),
     @required Result fetchObservation(User user),
+    @required Result refreshUserData(User user),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result changeObservation(User user, bool observe),
     Result fetchObservation(User user),
+    Result refreshUserData(User user),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result changeObservation(ChangeObservation value),
     @required Result fetchObservation(FetchObservation value),
+    @required Result refreshUserData(RefreshUserData value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result changeObservation(ChangeObservation value),
     Result fetchObservation(FetchObservation value),
+    Result refreshUserData(RefreshUserData value),
     @required Result orElse(),
   });
 
@@ -191,9 +202,11 @@ class _$ChangeObservation
   Result when<Result extends Object>({
     @required Result changeObservation(User user, bool observe),
     @required Result fetchObservation(User user),
+    @required Result refreshUserData(User user),
   }) {
     assert(changeObservation != null);
     assert(fetchObservation != null);
+    assert(refreshUserData != null);
     return changeObservation(user, observe);
   }
 
@@ -202,6 +215,7 @@ class _$ChangeObservation
   Result maybeWhen<Result extends Object>({
     Result changeObservation(User user, bool observe),
     Result fetchObservation(User user),
+    Result refreshUserData(User user),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -216,9 +230,11 @@ class _$ChangeObservation
   Result map<Result extends Object>({
     @required Result changeObservation(ChangeObservation value),
     @required Result fetchObservation(FetchObservation value),
+    @required Result refreshUserData(RefreshUserData value),
   }) {
     assert(changeObservation != null);
     assert(fetchObservation != null);
+    assert(refreshUserData != null);
     return changeObservation(this);
   }
 
@@ -227,6 +243,7 @@ class _$ChangeObservation
   Result maybeMap<Result extends Object>({
     Result changeObservation(ChangeObservation value),
     Result fetchObservation(FetchObservation value),
+    Result refreshUserData(RefreshUserData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -325,9 +342,11 @@ class _$FetchObservation
   Result when<Result extends Object>({
     @required Result changeObservation(User user, bool observe),
     @required Result fetchObservation(User user),
+    @required Result refreshUserData(User user),
   }) {
     assert(changeObservation != null);
     assert(fetchObservation != null);
+    assert(refreshUserData != null);
     return fetchObservation(user);
   }
 
@@ -336,6 +355,7 @@ class _$FetchObservation
   Result maybeWhen<Result extends Object>({
     Result changeObservation(User user, bool observe),
     Result fetchObservation(User user),
+    Result refreshUserData(User user),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -350,9 +370,11 @@ class _$FetchObservation
   Result map<Result extends Object>({
     @required Result changeObservation(ChangeObservation value),
     @required Result fetchObservation(FetchObservation value),
+    @required Result refreshUserData(RefreshUserData value),
   }) {
     assert(changeObservation != null);
     assert(fetchObservation != null);
+    assert(refreshUserData != null);
     return fetchObservation(this);
   }
 
@@ -361,6 +383,7 @@ class _$FetchObservation
   Result maybeMap<Result extends Object>({
     Result changeObservation(ChangeObservation value),
     Result fetchObservation(FetchObservation value),
+    Result refreshUserData(RefreshUserData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -378,4 +401,142 @@ abstract class FetchObservation implements UserProfileEvent {
   User get user;
   @override
   $FetchObservationCopyWith<FetchObservation> get copyWith;
+}
+
+/// @nodoc
+abstract class $RefreshUserDataCopyWith<$Res>
+    implements $UserProfileEventCopyWith<$Res> {
+  factory $RefreshUserDataCopyWith(
+          RefreshUserData value, $Res Function(RefreshUserData) then) =
+      _$RefreshUserDataCopyWithImpl<$Res>;
+  @override
+  $Res call({User user});
+
+  @override
+  $UserCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class _$RefreshUserDataCopyWithImpl<$Res>
+    extends _$UserProfileEventCopyWithImpl<$Res>
+    implements $RefreshUserDataCopyWith<$Res> {
+  _$RefreshUserDataCopyWithImpl(
+      RefreshUserData _value, $Res Function(RefreshUserData) _then)
+      : super(_value, (v) => _then(v as RefreshUserData));
+
+  @override
+  RefreshUserData get _value => super._value as RefreshUserData;
+
+  @override
+  $Res call({
+    Object user = freezed,
+  }) {
+    return _then(RefreshUserData(
+      user: user == freezed ? _value.user : user as User,
+    ));
+  }
+}
+
+/// @nodoc
+class _$RefreshUserData
+    with DiagnosticableTreeMixin
+    implements RefreshUserData {
+  const _$RefreshUserData({@required this.user}) : assert(user != null);
+
+  @override
+  final User user;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserProfileEvent.refreshUserData(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserProfileEvent.refreshUserData'))
+      ..add(DiagnosticsProperty('user', user));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is RefreshUserData &&
+            (identical(other.user, user) ||
+                const DeepCollectionEquality().equals(other.user, user)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(user);
+
+  @override
+  $RefreshUserDataCopyWith<RefreshUserData> get copyWith =>
+      _$RefreshUserDataCopyWithImpl<RefreshUserData>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result changeObservation(User user, bool observe),
+    @required Result fetchObservation(User user),
+    @required Result refreshUserData(User user),
+  }) {
+    assert(changeObservation != null);
+    assert(fetchObservation != null);
+    assert(refreshUserData != null);
+    return refreshUserData(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result changeObservation(User user, bool observe),
+    Result fetchObservation(User user),
+    Result refreshUserData(User user),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (refreshUserData != null) {
+      return refreshUserData(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result changeObservation(ChangeObservation value),
+    @required Result fetchObservation(FetchObservation value),
+    @required Result refreshUserData(RefreshUserData value),
+  }) {
+    assert(changeObservation != null);
+    assert(fetchObservation != null);
+    assert(refreshUserData != null);
+    return refreshUserData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result changeObservation(ChangeObservation value),
+    Result fetchObservation(FetchObservation value),
+    Result refreshUserData(RefreshUserData value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (refreshUserData != null) {
+      return refreshUserData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RefreshUserData implements UserProfileEvent {
+  const factory RefreshUserData({@required User user}) = _$RefreshUserData;
+
+  @override
+  User get user;
+  @override
+  $RefreshUserDataCopyWith<RefreshUserData> get copyWith;
 }

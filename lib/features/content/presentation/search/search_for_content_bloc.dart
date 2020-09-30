@@ -13,7 +13,7 @@ class SearchForContentBloc
   final GetRecommendedContentUseCase _getRecommendedContent;
 
   SearchForContentBloc(this._getContentWithQuery, this._getRecommendedContent)
-      : super(SearchForContentState.initial());
+      : super(SearchForContentState.loading());
 
   void fetchRecommendedContent({int page = 0}) {
     add(SearchForContentEvent.fetchRecommendedContent(page: page));
@@ -40,7 +40,8 @@ class SearchForContentBloc
       return SearchForContentState.success(state.contents + data.list.toList(),
           data.page, data.page + 1 >= data.pages);
     }, error: (result) {
-      return state.copyWith(hasReachedEndOfResults: true);
+      return SearchForContentState.error(
+          () => fetchRecommendedContent(page: page), state.contents, page);
     });
   }
 
@@ -53,7 +54,10 @@ class SearchForContentBloc
       return SearchForContentState.success(state.contents + data.list.toList(),
           data.page, data.page + 1 >= data.pages);
     }, error: (result) {
-      return state.copyWith(hasReachedEndOfResults: true);
+      return SearchForContentState.error(
+          () => fetchContentForQuery(page: page, query: query),
+          state.contents,
+          page);
     });
   }
 }

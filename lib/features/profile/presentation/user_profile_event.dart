@@ -10,4 +10,6 @@ abstract class UserProfileEvent with _$UserProfileEvent {
       {@required User user, @required bool observe}) = ChangeObservation;
   const factory UserProfileEvent.fetchObservation({@required User user}) =
       FetchObservation;
+  const factory UserProfileEvent.refreshUserData({@required User user}) =
+      RefreshUserData;
 }

@@ -4,8 +4,10 @@ import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_list_page.dart';
 
 class ProfileInfoWidget extends StatelessWidget {
-  ProfileInfoWidget({this.onSelectAvatar, @required this.user});
+  ProfileInfoWidget(
+      {this.onBackFromUserListPage, this.onSelectAvatar, @required this.user});
 
+  final Function onBackFromUserListPage;
   final Function onSelectAvatar;
   final User user;
 
@@ -60,15 +62,17 @@ class ProfileInfoWidget extends StatelessWidget {
                   _createStatsColumn(
                       count: user.followers,
                       name: 'Followers',
-                      onTap: () => Navigator.of(context).push(
-                          UserListPage.route(
-                              UserListPageMode.FOLLOWERS, user))),
+                      onTap: () => Navigator.of(context)
+                          .push(UserListPage.route(
+                              UserListPageMode.FOLLOWERS, user))
+                          .then((_) => onBackFromUserListPage())),
                   _createStatsColumn(
                       count: user.followees,
                       name: 'Followees',
-                      onTap: () => Navigator.of(context).push(
-                          UserListPage.route(
-                              UserListPageMode.FOLLOWEES, user))),
+                      onTap: () => Navigator.of(context)
+                          .push(UserListPage.route(
+                              UserListPageMode.FOLLOWEES, user))
+                          .then((_) => onBackFromUserListPage())),
                 ],
               ),
             ),

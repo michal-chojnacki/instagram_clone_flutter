@@ -15,10 +15,13 @@ class _$UserProfileStateTearOff {
 
 // ignore: unused_element
   _UserProfileState call(
-      {@required bool observing, @required bool progressBarVisible}) {
+      {@required bool observing,
+      @required bool progressBarVisible,
+      @nullable User user}) {
     return _UserProfileState(
       observing: observing,
       progressBarVisible: progressBarVisible,
+      user: user,
     );
   }
 }
@@ -31,6 +34,8 @@ const $UserProfileState = _$UserProfileStateTearOff();
 mixin _$UserProfileState {
   bool get observing;
   bool get progressBarVisible;
+  @nullable
+  User get user;
 
   $UserProfileStateCopyWith<UserProfileState> get copyWith;
 }
@@ -40,7 +45,9 @@ abstract class $UserProfileStateCopyWith<$Res> {
   factory $UserProfileStateCopyWith(
           UserProfileState value, $Res Function(UserProfileState) then) =
       _$UserProfileStateCopyWithImpl<$Res>;
-  $Res call({bool observing, bool progressBarVisible});
+  $Res call({bool observing, bool progressBarVisible, @nullable User user});
+
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -56,13 +63,25 @@ class _$UserProfileStateCopyWithImpl<$Res>
   $Res call({
     Object observing = freezed,
     Object progressBarVisible = freezed,
+    Object user = freezed,
   }) {
     return _then(_value.copyWith(
       observing: observing == freezed ? _value.observing : observing as bool,
       progressBarVisible: progressBarVisible == freezed
           ? _value.progressBarVisible
           : progressBarVisible as bool,
+      user: user == freezed ? _value.user : user as User,
     ));
+  }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    if (_value.user == null) {
+      return null;
+    }
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 
@@ -73,7 +92,10 @@ abstract class _$UserProfileStateCopyWith<$Res>
           _UserProfileState value, $Res Function(_UserProfileState) then) =
       __$UserProfileStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool observing, bool progressBarVisible});
+  $Res call({bool observing, bool progressBarVisible, @nullable User user});
+
+  @override
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -91,12 +113,14 @@ class __$UserProfileStateCopyWithImpl<$Res>
   $Res call({
     Object observing = freezed,
     Object progressBarVisible = freezed,
+    Object user = freezed,
   }) {
     return _then(_UserProfileState(
       observing: observing == freezed ? _value.observing : observing as bool,
       progressBarVisible: progressBarVisible == freezed
           ? _value.progressBarVisible
           : progressBarVisible as bool,
+      user: user == freezed ? _value.user : user as User,
     ));
   }
 }
@@ -106,7 +130,9 @@ class _$_UserProfileState
     with DiagnosticableTreeMixin
     implements _UserProfileState {
   _$_UserProfileState(
-      {@required this.observing, @required this.progressBarVisible})
+      {@required this.observing,
+      @required this.progressBarVisible,
+      @nullable this.user})
       : assert(observing != null),
         assert(progressBarVisible != null);
 
@@ -114,10 +140,13 @@ class _$_UserProfileState
   final bool observing;
   @override
   final bool progressBarVisible;
+  @override
+  @nullable
+  final User user;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserProfileState(observing: $observing, progressBarVisible: $progressBarVisible)';
+    return 'UserProfileState(observing: $observing, progressBarVisible: $progressBarVisible, user: $user)';
   }
 
   @override
@@ -126,7 +155,8 @@ class _$_UserProfileState
     properties
       ..add(DiagnosticsProperty('type', 'UserProfileState'))
       ..add(DiagnosticsProperty('observing', observing))
-      ..add(DiagnosticsProperty('progressBarVisible', progressBarVisible));
+      ..add(DiagnosticsProperty('progressBarVisible', progressBarVisible))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -138,14 +168,17 @@ class _$_UserProfileState
                     .equals(other.observing, observing)) &&
             (identical(other.progressBarVisible, progressBarVisible) ||
                 const DeepCollectionEquality()
-                    .equals(other.progressBarVisible, progressBarVisible)));
+                    .equals(other.progressBarVisible, progressBarVisible)) &&
+            (identical(other.user, user) ||
+                const DeepCollectionEquality().equals(other.user, user)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(observing) ^
-      const DeepCollectionEquality().hash(progressBarVisible);
+      const DeepCollectionEquality().hash(progressBarVisible) ^
+      const DeepCollectionEquality().hash(user);
 
   @override
   _$UserProfileStateCopyWith<_UserProfileState> get copyWith =>
@@ -155,12 +188,16 @@ class _$_UserProfileState
 abstract class _UserProfileState implements UserProfileState {
   factory _UserProfileState(
       {@required bool observing,
-      @required bool progressBarVisible}) = _$_UserProfileState;
+      @required bool progressBarVisible,
+      @nullable User user}) = _$_UserProfileState;
 
   @override
   bool get observing;
   @override
   bool get progressBarVisible;
+  @override
+  @nullable
+  User get user;
   @override
   _$UserProfileStateCopyWith<_UserProfileState> get copyWith;
 }

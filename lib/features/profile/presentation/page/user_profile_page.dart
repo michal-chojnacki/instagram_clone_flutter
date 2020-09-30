@@ -34,6 +34,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   void initState() {
     super.initState();
     _userProfileBloc.fetchObservation(user: widget._user);
+    _userProfileBloc.refreshUserData(user: widget._user);
   }
 
   @override
@@ -44,31 +45,33 @@ class _UserProfilePageState extends State<UserProfilePage> {
       ),
       body: Container(
         margin: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ProfileInfoWidget(
-              user: widget._user,
-            ),
-            BlocBuilder<UserProfileBloc, UserProfileState>(
-              cubit: _userProfileBloc,
-              builder: (context, UserProfileState state) {
-                return PrimaryButton(
+        child: BlocBuilder<UserProfileBloc, UserProfileState>(
+          cubit: _userProfileBloc,
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ProfileInfoWidget(
+                  user: state.user ?? widget._user,
+                  onBackFromUserListPage: () =>
+                      _userProfileBloc.refreshUserData(user: widget._user),
+                ),
+                PrimaryButton(
                   text: state.observing ? 'Observing' : 'Observe',
                   light: state.observing,
                   onPressed: () {
                     _userProfileBloc.changeObservation(
                         user: widget._user, observe: !state.observing);
                   },
-                );
-              },
-            ),
-            Expanded(
-              child: UserContentsGrid(
-                user: widget._user,
-              ),
-            )
-          ],
+                ),
+                Expanded(
+                  child: UserContentsGrid(
+                    user: state.user ?? widget._user,
+                  ),
+                )
+              ],
+            );
+          },
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/core/paged_list.dart';
@@ -38,9 +39,11 @@ class UserDataRepositoryImpl extends UserDataRepository {
   }
 
   @override
-  Future<Result<User>> fetchUserData(String authorizationToken) async {
+  Future<Result<User>> fetchUserData(
+      String authorizationToken, @nullable int userId) async {
     try {
-      final response = await _service.getUser('Bearer $authorizationToken');
+      final response =
+          await _service.getUser('Bearer $authorizationToken', userId);
       if (response.statusCode == 200) {
         var rawUser = RawUser.fromJson(response.body);
         return Result.success(_userMapper.map(rawUser));

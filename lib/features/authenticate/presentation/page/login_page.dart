@@ -46,6 +46,9 @@ class LoginPage extends StatelessWidget {
                             _authenticateUser(context, login, password),
                         onRegister: (login, password) =>
                             _registerUser(context, login, password),
+                        initialLogin: state.initialLogin,
+                        initialPassword: state.initialPassword,
+                        initialConfirmPassword: state.initialConfirmPassword,
                       ),
                       if (state.error)
                         Text(

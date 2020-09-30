@@ -51,7 +51,7 @@ class EditProfileBloc extends BlocWithSideEffect<EditProfileEvent,
     yield EditProfileState.loading();
     yield (await _getUserData()).when(
         success: (data) => EditProfileState.success(data),
-        error: (_) => EditProfileState.success(null));
+        error: (_) => EditProfileState.error(fetchProfileData));
   }
 
   Stream<EditProfileState> _mapUpdateProfileData(
@@ -61,7 +61,10 @@ class EditProfileBloc extends BlocWithSideEffect<EditProfileEvent,
             bio: bio,
             username: username,
             fullname: fullname))
-        .when(success: (_) => fetchProfileData(), error: (_) => null);
+        .when(
+            success: (_) =>
+                addSideEffect(EditProfileSideEffect.updatedProfile()),
+            error: (_) => {});
   }
 
   Stream<EditProfileState> _mapLogout() async* {

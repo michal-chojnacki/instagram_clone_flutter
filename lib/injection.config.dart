@@ -156,7 +156,10 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   gh.factory<UserListBloc>(() =>
       UserListBloc(g<GetAllFollowersUseCase>(), g<GetAllFolloweesUseCase>()));
   gh.factory<UserProfileBloc>(() => UserProfileBloc(
-      g<ChangeObservationUseCase>(), g<GetObservationStatusUseCase>()));
+        g<ChangeObservationUseCase>(),
+        g<GetObservationStatusUseCase>(),
+        g<GetUserDataUseCase>(),
+      ));
   gh.factory<VerifyAuthorizationTokenUseCase>(() =>
       VerifyAuthorizationTokenUseCase(
           g<ClearAuthenticationTokenUseCase>(), g<GetUserDataUseCase>()));

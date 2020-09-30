@@ -5,8 +5,17 @@ class LoginForm extends StatefulWidget {
   final Function onLogIn;
   final Function onRegister;
   final bool registerMode;
+  final String initialLogin;
+  final String initialPassword;
+  final String initialConfirmPassword;
 
-  LoginForm({this.onLogIn, this.onRegister, this.registerMode});
+  LoginForm(
+      {this.onLogIn,
+      this.onRegister,
+      this.registerMode,
+      this.initialLogin,
+      this.initialPassword,
+      this.initialConfirmPassword});
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -23,6 +32,7 @@ class _LoginFormState extends State<LoginForm> {
     setState(() {
       _registerMode = widget.registerMode;
     });
+    _passwordController.text = widget.initialPassword;
     super.initState();
   }
 
@@ -36,6 +46,7 @@ class _LoginFormState extends State<LoginForm> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextFormField(
+              initialValue: widget.initialLogin,
               decoration: InputDecoration(labelText: 'Login'),
               validator: (value) {
                 if (value.isEmpty) {
@@ -59,6 +70,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             if (_registerMode)
               TextFormField(
+                initialValue: widget.initialConfirmPassword,
                 decoration: InputDecoration(labelText: 'Repeat password'),
                 validator: (value) {
                   if (_registerMode && value.isEmpty) {

@@ -36,7 +36,7 @@ class RecommendedProfilesBloc
   Stream<RecommendedProfilesState> _mapFetchRecommendedProfiles() async* {
     yield (await _getRecommendedProfiles()).when(
         success: (data) => RecommendedProfilesState.success(data),
-        error: (_) => state.copyWith(loading: false));
+        error: (_) => RecommendedProfilesState.error(getRecommendedProfiles));
   }
 
   Stream<RecommendedProfilesState> _mapObserveUser(User user) async* {

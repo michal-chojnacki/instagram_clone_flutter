@@ -10,6 +10,7 @@ abstract class MainContentsState with _$MainContentsState {
     @required List<PersonalizedContent> contents,
     @required int page,
     @required bool hasReachedEndOfResults,
+    @nullable Function onRetry,
   }) = _MainContentsState;
 
   factory MainContentsState.initial() {
@@ -23,5 +24,14 @@ abstract class MainContentsState with _$MainContentsState {
         contents: items,
         page: page,
         hasReachedEndOfResults: hasReachedEndOfResults);
+  }
+
+  factory MainContentsState.error(
+      Function onRetry, List<PersonalizedContent> items, int page) {
+    return MainContentsState(
+        contents: items,
+        page: page,
+        hasReachedEndOfResults: false,
+        onRetry: onRetry);
   }
 }

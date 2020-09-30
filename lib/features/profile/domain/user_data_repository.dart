@@ -1,3 +1,4 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
@@ -6,7 +7,8 @@ abstract class UserDataRepository {
   Future<Result<void>> updateUser(String authorizationToken, String avatarPath,
       String bio, String username, String fullname);
 
-  Future<Result<User>> fetchUserData(String authorizationToken);
+  Future<Result<User>> fetchUserData(
+      String authorizationToken, @nullable int userId);
 
   Future<Result<List<User>>> fetchRecommendedUsers(String authorizationToken);
 

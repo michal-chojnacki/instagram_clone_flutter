@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/core/widgets/show_error_widget.dart';
 import 'package:instagram_clone/features/content/presentation/widget/contents_grid.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_state.dart';
@@ -62,7 +63,10 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
         body: BlocBuilder<SearchForContentBloc, SearchForContentState>(
             cubit: _searchForContentBloc,
             builder: (context, SearchForContentState state) {
-              if (state.contents.isEmpty && state.hasReachedEndOfResults) {
+              if (state.onRetry != null) {
+                return ShowErrorWidget(onTryAgainPressed: state.onRetry);
+              } else if (state.contents.isEmpty &&
+                  state.hasReachedEndOfResults) {
                 return Center(
                   child: Text('No content found with current query.'),
                 );

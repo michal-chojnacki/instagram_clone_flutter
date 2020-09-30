@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:instagram_clone/core/widgets/show_error_widget.dart';
 import 'package:instagram_clone/core/widgets/primary_button.dart';
 import 'package:instagram_clone/features/camera/page/pick_image_page.dart';
 import 'package:instagram_clone/features/content/presentation/page/init_page.dart';
@@ -23,7 +24,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
     super.initState();
     _editProfileBloc.sideEffects.listen((sideEffect) => sideEffect.when(
         openInitPage: () => Navigator.of(context).pushReplacement(
-            InitPage.route(mode: InitPageMode.PROGRESS_INDICTATOR))));
+            InitPage.route(mode: InitPageMode.PROGRESS_INDICTATOR)),
+        updatedProfile: () => {}));
     _editProfileBloc.fetchProfileData();
   }
 
@@ -46,6 +48,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
               return Center(
                 child: CircularProgressIndicator(),
               );
+            } else if (state.onRetry != null) {
+              return ShowErrorWidget(onTryAgainPressed: state.onRetry);
             } else {
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 8.0),
@@ -55,6 +59,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                         margin: EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 16.0),
                         child: ProfileInfoWidget(
+                          onBackFromUserListPage: () =>
+                              _editProfileBloc.fetchProfileData(),
                           user: state.user,
                           onSelectAvatar: () =>
                               Navigator.of(context).push(PickImagePage.route(
@@ -64,6 +70,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                                     _editProfileBloc.updateProfileData(
                                         avatarPath: imagePath);
                                     Navigator.of(context).pop();
+                                    _editProfileBloc.fetchProfileData();
                                   })),
                         )),
                     ButtonTheme(

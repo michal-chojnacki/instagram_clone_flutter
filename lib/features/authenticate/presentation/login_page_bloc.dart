@@ -44,11 +44,13 @@ class LoginPageBloc extends BlocWithSideEffect<LoginPageEvent, LoginPageState,
                   addSideEffect(LoginPageSideEffect.openMainUserPage());
                   return Stream<LoginPageState>.empty();
                 } else {
-                  return Stream.value(LoginPageState.error(false));
+                  return Stream.value(
+                      LoginPageState.error(false, username, password));
                 }
               },
-              error: (_) => Stream.value(LoginPageState.error(false))))
-          .startWith(LoginPageState.loading(false));
+              error: (_) => Stream.value(
+                  LoginPageState.error(false, username, password))))
+          .startWith(LoginPageState.loading(false, username, password));
 
   Stream<LoginPageState> _mapRegisterUser(String username, String password) =>
       Stream.fromFuture(_registerUser(username, password))
@@ -58,9 +60,11 @@ class LoginPageBloc extends BlocWithSideEffect<LoginPageEvent, LoginPageState,
                   addSideEffect(LoginPageSideEffect.openMainUserPage());
                   return Stream<LoginPageState>.empty();
                 } else {
-                  return Stream.value(LoginPageState.error(true));
+                  return Stream.value(
+                      LoginPageState.error(true, username, password));
                 }
               },
-              error: (_) => Stream.value(LoginPageState.error(true))))
-          .startWith(LoginPageState.loading(true));
+              error: (_) =>
+                  Stream.value(LoginPageState.error(true, username, password))))
+          .startWith(LoginPageState.loading(true, username, password));
 }

@@ -17,6 +17,11 @@ class _$EditProfileSideEffectTearOff {
   OpenInitPage openInitPage() {
     return OpenInitPage();
   }
+
+// ignore: unused_element
+  UpdatedProfile updatedProfile() {
+    return UpdatedProfile();
+  }
 }
 
 /// @nodoc
@@ -28,19 +33,23 @@ mixin _$EditProfileSideEffect {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result openInitPage(),
+    @required Result updatedProfile(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result openInitPage(),
+    Result updatedProfile(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result openInitPage(OpenInitPage value),
+    @required Result updatedProfile(UpdatedProfile value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result openInitPage(OpenInitPage value),
+    Result updatedProfile(UpdatedProfile value),
     @required Result orElse(),
   });
 }
@@ -109,8 +118,10 @@ class _$OpenInitPage with DiagnosticableTreeMixin implements OpenInitPage {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result openInitPage(),
+    @required Result updatedProfile(),
   }) {
     assert(openInitPage != null);
+    assert(updatedProfile != null);
     return openInitPage();
   }
 
@@ -118,6 +129,7 @@ class _$OpenInitPage with DiagnosticableTreeMixin implements OpenInitPage {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result openInitPage(),
+    Result updatedProfile(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -131,8 +143,10 @@ class _$OpenInitPage with DiagnosticableTreeMixin implements OpenInitPage {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result openInitPage(OpenInitPage value),
+    @required Result updatedProfile(UpdatedProfile value),
   }) {
     assert(openInitPage != null);
+    assert(updatedProfile != null);
     return openInitPage(this);
   }
 
@@ -140,6 +154,7 @@ class _$OpenInitPage with DiagnosticableTreeMixin implements OpenInitPage {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result openInitPage(OpenInitPage value),
+    Result updatedProfile(UpdatedProfile value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -152,4 +167,103 @@ class _$OpenInitPage with DiagnosticableTreeMixin implements OpenInitPage {
 
 abstract class OpenInitPage implements EditProfileSideEffect {
   factory OpenInitPage() = _$OpenInitPage;
+}
+
+/// @nodoc
+abstract class $UpdatedProfileCopyWith<$Res> {
+  factory $UpdatedProfileCopyWith(
+          UpdatedProfile value, $Res Function(UpdatedProfile) then) =
+      _$UpdatedProfileCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$UpdatedProfileCopyWithImpl<$Res>
+    extends _$EditProfileSideEffectCopyWithImpl<$Res>
+    implements $UpdatedProfileCopyWith<$Res> {
+  _$UpdatedProfileCopyWithImpl(
+      UpdatedProfile _value, $Res Function(UpdatedProfile) _then)
+      : super(_value, (v) => _then(v as UpdatedProfile));
+
+  @override
+  UpdatedProfile get _value => super._value as UpdatedProfile;
+}
+
+/// @nodoc
+class _$UpdatedProfile with DiagnosticableTreeMixin implements UpdatedProfile {
+  _$UpdatedProfile();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'EditProfileSideEffect.updatedProfile()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+          DiagnosticsProperty('type', 'EditProfileSideEffect.updatedProfile'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is UpdatedProfile);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result openInitPage(),
+    @required Result updatedProfile(),
+  }) {
+    assert(openInitPage != null);
+    assert(updatedProfile != null);
+    return updatedProfile();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result openInitPage(),
+    Result updatedProfile(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updatedProfile != null) {
+      return updatedProfile();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result openInitPage(OpenInitPage value),
+    @required Result updatedProfile(UpdatedProfile value),
+  }) {
+    assert(openInitPage != null);
+    assert(updatedProfile != null);
+    return updatedProfile(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result openInitPage(OpenInitPage value),
+    Result updatedProfile(UpdatedProfile value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updatedProfile != null) {
+      return updatedProfile(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UpdatedProfile implements EditProfileSideEffect {
+  factory UpdatedProfile() = _$UpdatedProfile;
 }

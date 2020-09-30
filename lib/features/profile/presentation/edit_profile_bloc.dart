@@ -61,7 +61,10 @@ class EditProfileBloc extends BlocWithSideEffect<EditProfileEvent,
             bio: bio,
             username: username,
             fullname: fullname))
-        .when(success: (_) => fetchProfileData(), error: (_) => null);
+        .when(
+            success: (_) =>
+                addSideEffect(EditProfileSideEffect.updatedProfile()),
+            error: (_) => {});
   }
 
   Stream<EditProfileState> _mapLogout() async* {

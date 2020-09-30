@@ -17,10 +17,12 @@ class _$UserDataService extends UserDataService {
   final definitionType = UserDataService;
 
   @override
-  Future<Response<dynamic>> getUser(String authorizationBearer) {
+  Future<Response<dynamic>> getUser(String authorizationBearer, int userId) {
     final $url = '/user';
+    final $params = <String, dynamic>{'user': userId};
     final $headers = {'Authorization': authorizationBearer};
-    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    final $request = Request('GET', $url, client.baseUrl,
+        parameters: $params, headers: $headers);
     return client.send<dynamic, dynamic>($request);
   }
 

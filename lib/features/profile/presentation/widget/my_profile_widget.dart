@@ -23,7 +23,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
     super.initState();
     _editProfileBloc.sideEffects.listen((sideEffect) => sideEffect.when(
         openInitPage: () => Navigator.of(context).pushReplacement(
-            InitPage.route(mode: InitPageMode.PROGRESS_INDICTATOR))));
+            InitPage.route(mode: InitPageMode.PROGRESS_INDICTATOR)),
+        updatedProfile: () => {}));
     _editProfileBloc.fetchProfileData();
   }
 
@@ -55,6 +56,8 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                         margin: EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 16.0),
                         child: ProfileInfoWidget(
+                          onBackFromUserListPage: () =>
+                              _editProfileBloc.fetchProfileData(),
                           user: state.user,
                           onSelectAvatar: () =>
                               Navigator.of(context).push(PickImagePage.route(
@@ -64,6 +67,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget> {
                                     _editProfileBloc.updateProfileData(
                                         avatarPath: imagePath);
                                     Navigator.of(context).pop();
+                                    _editProfileBloc.fetchProfileData();
                                   })),
                         )),
                     ButtonTheme(

@@ -1,3 +1,4 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
@@ -19,7 +20,11 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
   }
 
   @override
-  Future<Result<User>> fetchUserData(String authorizationToken) async {
+  Future<Result<User>> fetchUserData(
+      String authorizationToken, @nullable int userId) async {
+    if (userId != null) {
+      return Result.error(Exception('Fake exception!'));
+    }
     return Result.success(User(
         id: 1,
         username: 'elo',

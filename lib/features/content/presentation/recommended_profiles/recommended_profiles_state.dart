@@ -9,13 +9,20 @@ abstract class RecommendedProfilesState with _$RecommendedProfilesState {
   factory RecommendedProfilesState({
     @required List<User> users,
     @required bool loading,
+    @nullable Function onRetry,
   }) = _RecommendedProfilesState;
 
   factory RecommendedProfilesState.initial() {
-    return RecommendedProfilesState(users: [], loading: true);
+    return RecommendedProfilesState(users: [], loading: true, onRetry: null);
   }
 
   factory RecommendedProfilesState.success(List<User> users) {
-    return RecommendedProfilesState(users: users, loading: false);
+    return RecommendedProfilesState(
+        users: users, loading: false, onRetry: null);
+  }
+
+  factory RecommendedProfilesState.error(Function onRetry) {
+    return RecommendedProfilesState(
+        users: [], loading: false, onRetry: onRetry);
   }
 }

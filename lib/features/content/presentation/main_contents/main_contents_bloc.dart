@@ -25,6 +25,7 @@ class MainContentsBloc extends Bloc<MainContentsEvent, MainContentsState> {
             state.contents + data.list.toList(),
             data.page,
             data.page + 1 >= data.pages),
-        error: (_) => state.copyWith(hasReachedEndOfResults: true));
+        error: (_) => MainContentsState.error(
+            () => getNextListPage(page: page), state.contents, page));
   }
 }

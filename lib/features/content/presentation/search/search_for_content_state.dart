@@ -11,12 +11,8 @@ abstract class SearchForContentState with _$SearchForContentState {
     @required List<PersonalizedContent> contents,
     @required int page,
     @required bool hasReachedEndOfResults,
+    @nullable Function onRetry,
   }) = _SearchForContentState;
-
-  factory SearchForContentState.initial() {
-    return SearchForContentState(
-        contents: [], page: 0, hasReachedEndOfResults: false);
-  }
 
   factory SearchForContentState.loading() {
     return SearchForContentState(
@@ -29,5 +25,14 @@ abstract class SearchForContentState with _$SearchForContentState {
         contents: items,
         page: page,
         hasReachedEndOfResults: hasReachedEndOfResults);
+  }
+
+  factory SearchForContentState.error(
+      Function onRetry, List<PersonalizedContent> items, int page) {
+    return SearchForContentState(
+        contents: items,
+        page: page,
+        hasReachedEndOfResults: false,
+        onRetry: onRetry);
   }
 }

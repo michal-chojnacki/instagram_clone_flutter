@@ -15,10 +15,13 @@ class _$EditProfileStateTearOff {
 
 // ignore: unused_element
   _EditProfileState call(
-      {@required bool progressBarVisible, @nullable User user}) {
+      {@required bool progressBarVisible,
+      @nullable User user,
+      @nullable Function onRetry}) {
     return _EditProfileState(
       progressBarVisible: progressBarVisible,
       user: user,
+      onRetry: onRetry,
     );
   }
 }
@@ -32,6 +35,8 @@ mixin _$EditProfileState {
   bool get progressBarVisible;
   @nullable
   User get user;
+  @nullable
+  Function get onRetry;
 
   $EditProfileStateCopyWith<EditProfileState> get copyWith;
 }
@@ -41,7 +46,10 @@ abstract class $EditProfileStateCopyWith<$Res> {
   factory $EditProfileStateCopyWith(
           EditProfileState value, $Res Function(EditProfileState) then) =
       _$EditProfileStateCopyWithImpl<$Res>;
-  $Res call({bool progressBarVisible, @nullable User user});
+  $Res call(
+      {bool progressBarVisible,
+      @nullable User user,
+      @nullable Function onRetry});
 
   $UserCopyWith<$Res> get user;
 }
@@ -59,12 +67,14 @@ class _$EditProfileStateCopyWithImpl<$Res>
   $Res call({
     Object progressBarVisible = freezed,
     Object user = freezed,
+    Object onRetry = freezed,
   }) {
     return _then(_value.copyWith(
       progressBarVisible: progressBarVisible == freezed
           ? _value.progressBarVisible
           : progressBarVisible as bool,
       user: user == freezed ? _value.user : user as User,
+      onRetry: onRetry == freezed ? _value.onRetry : onRetry as Function,
     ));
   }
 
@@ -86,7 +96,10 @@ abstract class _$EditProfileStateCopyWith<$Res>
           _EditProfileState value, $Res Function(_EditProfileState) then) =
       __$EditProfileStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool progressBarVisible, @nullable User user});
+  $Res call(
+      {bool progressBarVisible,
+      @nullable User user,
+      @nullable Function onRetry});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -107,12 +120,14 @@ class __$EditProfileStateCopyWithImpl<$Res>
   $Res call({
     Object progressBarVisible = freezed,
     Object user = freezed,
+    Object onRetry = freezed,
   }) {
     return _then(_EditProfileState(
       progressBarVisible: progressBarVisible == freezed
           ? _value.progressBarVisible
           : progressBarVisible as bool,
       user: user == freezed ? _value.user : user as User,
+      onRetry: onRetry == freezed ? _value.onRetry : onRetry as Function,
     ));
   }
 }
@@ -121,7 +136,10 @@ class __$EditProfileStateCopyWithImpl<$Res>
 class _$_EditProfileState
     with DiagnosticableTreeMixin
     implements _EditProfileState {
-  _$_EditProfileState({@required this.progressBarVisible, @nullable this.user})
+  _$_EditProfileState(
+      {@required this.progressBarVisible,
+      @nullable this.user,
+      @nullable this.onRetry})
       : assert(progressBarVisible != null);
 
   @override
@@ -129,10 +147,13 @@ class _$_EditProfileState
   @override
   @nullable
   final User user;
+  @override
+  @nullable
+  final Function onRetry;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'EditProfileState(progressBarVisible: $progressBarVisible, user: $user)';
+    return 'EditProfileState(progressBarVisible: $progressBarVisible, user: $user, onRetry: $onRetry)';
   }
 
   @override
@@ -141,7 +162,8 @@ class _$_EditProfileState
     properties
       ..add(DiagnosticsProperty('type', 'EditProfileState'))
       ..add(DiagnosticsProperty('progressBarVisible', progressBarVisible))
-      ..add(DiagnosticsProperty('user', user));
+      ..add(DiagnosticsProperty('user', user))
+      ..add(DiagnosticsProperty('onRetry', onRetry));
   }
 
   @override
@@ -152,14 +174,17 @@ class _$_EditProfileState
                 const DeepCollectionEquality()
                     .equals(other.progressBarVisible, progressBarVisible)) &&
             (identical(other.user, user) ||
-                const DeepCollectionEquality().equals(other.user, user)));
+                const DeepCollectionEquality().equals(other.user, user)) &&
+            (identical(other.onRetry, onRetry) ||
+                const DeepCollectionEquality().equals(other.onRetry, onRetry)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(progressBarVisible) ^
-      const DeepCollectionEquality().hash(user);
+      const DeepCollectionEquality().hash(user) ^
+      const DeepCollectionEquality().hash(onRetry);
 
   @override
   _$EditProfileStateCopyWith<_EditProfileState> get copyWith =>
@@ -169,13 +194,17 @@ class _$_EditProfileState
 abstract class _EditProfileState implements EditProfileState {
   factory _EditProfileState(
       {@required bool progressBarVisible,
-      @nullable User user}) = _$_EditProfileState;
+      @nullable User user,
+      @nullable Function onRetry}) = _$_EditProfileState;
 
   @override
   bool get progressBarVisible;
   @override
   @nullable
   User get user;
+  @override
+  @nullable
+  Function get onRetry;
   @override
   _$EditProfileStateCopyWith<_EditProfileState> get copyWith;
 }

@@ -51,7 +51,7 @@ class EditProfileBloc extends BlocWithSideEffect<EditProfileEvent,
     yield EditProfileState.loading();
     yield (await _getUserData()).when(
         success: (data) => EditProfileState.success(data),
-        error: (_) => EditProfileState.success(null));
+        error: (_) => EditProfileState.error(fetchProfileData));
   }
 
   Stream<EditProfileState> _mapUpdateProfileData(

@@ -14,6 +14,11 @@ App was written with the clean architecture approach, with frequent usage of BLo
 ## tests
 The same issue is the reason why app code contains only few unit tests. Some of them was written for bloc and some for use case class. However other tests would look like similarly to the written ones. Besides of that I've developed tests verifying one of the widgets.
 
+## screenshots
+| ![](screenshots/01_login.jpg)  |  ![](screenshots/02_main_content.jpg) | ![](screenshots/03_my_profile.jpg) |
+:-------------------------:|:-------------------------:|:-------------------------:
+![](screenshots/04_user_profile.jpg) |  ![](screenshots/05_camera.jpg) |  ![](screenshots/06_followers.jpg)
+
 ## other conclusions
 The implementation was great opportunity to learn about Flutter implemtation because on every day basis I implement Android apps using native SDK. I am satisfied with final shape of the code taking into account the circumstances of the implementation. However I do not rule out that on the next Flutter app implementation I'd change some architecture decisions. It's good thing because learned lessons was one of the goal of the implementation.
 

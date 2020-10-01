@@ -37,7 +37,7 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
       body: BlocBuilder<MainContentsBloc, MainContentsState>(
           cubit: _mainContentsBloc,
           builder: (context, MainContentsState state) {
-            if (state.onRetry != null) {
+            if (state.page == 0 && state.onRetry != null) {
               return ShowErrorWidget(onTryAgainPressed: state.onRetry);
             } else if (state.contents.isEmpty) {
               return Center(
@@ -54,7 +54,7 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
                       controller: _scrollController,
                       itemBuilder: (context, index) {
                         return index >= state.contents.length
-                            ? _buildLoaderListItem()
+                            ? _buildLoaderListItem(state.onRetry)
                             : ContentItemWidget(
                                 personalizedContent: state.contents[index],
                               );
@@ -84,9 +84,15 @@ class _MainContentsWidgetState extends State<MainContentsWidget> {
     }
   }
 
-  Widget _buildLoaderListItem() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
+  Widget _buildLoaderListItem(Function onRetry) {
+    if (onRetry != null) {
+      return ShowErrorWidget(
+          text: 'There was problem loading more content',
+          onTryAgainPressed: onRetry);
+    } else {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
   }
 }

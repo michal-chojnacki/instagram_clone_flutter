@@ -63,7 +63,7 @@ class _SearchForContentWidgetState extends State<SearchForContentWidget> {
         body: BlocBuilder<SearchForContentBloc, SearchForContentState>(
             cubit: _searchForContentBloc,
             builder: (context, SearchForContentState state) {
-              if (state.onRetry != null) {
+              if (state.page == 0 && state.onRetry != null) {
                 return ShowErrorWidget(onTryAgainPressed: state.onRetry);
               } else if (state.contents.isEmpty &&
                   state.hasReachedEndOfResults) {

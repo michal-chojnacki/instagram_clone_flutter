@@ -23,7 +23,7 @@ class AuthenticationLocalDataSourceImpl extends AuthenticationLocalDataSource {
     if (_token != null) {
       return Result.success(_token);
     } else {
-      var sharedPrefsToken = _sharedPreferences.getString(_TOKEN);
+      final sharedPrefsToken = _sharedPreferences.getString(_TOKEN);
       return (sharedPrefsToken != null)
           ? Result.success(sharedPrefsToken)
           : Result.error(Exception('No token saved. Authenticate first!'));

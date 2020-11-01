@@ -21,7 +21,7 @@ class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 void main() {
   group('ContentItemWidget', () {
     MockContentItemBloc mockContentItemBloc;
-    var fakePersonalizedContent = PersonalizedContent(
+    final fakePersonalizedContent = PersonalizedContent(
         content: Content(
             id: 1,
             likesCount: 2,

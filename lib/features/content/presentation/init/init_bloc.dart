@@ -23,8 +23,8 @@ class InitBloc extends Bloc<InitEvent, InitState> {
   }
 
   Stream<InitState> _mapVerifyAuthenticationState() async* {
-    var verifyAuthorizationTokenUseCase = _verifyAuthorizationTokenUseCase();
-    var futures = [
+    final verifyAuthorizationTokenUseCase = _verifyAuthorizationTokenUseCase();
+    final futures = [
       Future.delayed(Duration(seconds: 2)),
       _verifyAuthorizationTokenUseCase()
     ];

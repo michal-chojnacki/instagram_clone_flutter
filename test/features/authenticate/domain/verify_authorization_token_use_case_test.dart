@@ -17,9 +17,10 @@ class MockUser extends Mock implements User {}
 
 void main() {
   group('VerifyAuthorizationTokenUseCase tests:', () {
-    var getUserDataUseCase = MockGetUserDataUseCase();
-    var clearAuthenticationTokenUseCase = MockClearAuthenticationTokenUseCase();
-    var tested = VerifyAuthorizationTokenUseCase(
+    final getUserDataUseCase = MockGetUserDataUseCase();
+    final clearAuthenticationTokenUseCase =
+        MockClearAuthenticationTokenUseCase();
+    final tested = VerifyAuthorizationTokenUseCase(
         clearAuthenticationTokenUseCase, getUserDataUseCase);
     test(
         'given getUserDataUseCase returning success when testd called then result is success',
@@ -29,7 +30,7 @@ void main() {
           .thenAnswer((_) async => Result.success(MockUser()));
 
       // when
-      var result = await tested.call();
+      final result = await tested.call();
 
       // verify
       expect(result is Success, true);
@@ -44,7 +45,7 @@ void main() {
           .thenAnswer((_) async => Result.error(Exception('Fake error')));
 
       // when
-      var result = await tested.call();
+      final result = await tested.call();
 
       // verify
       expect(result is Error, true);

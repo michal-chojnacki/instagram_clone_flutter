@@ -45,7 +45,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response =
           await _service.getUser('Bearer $authorizationToken', userId);
       if (response.statusCode == 200) {
-        var rawUser = RawUser.fromJson(response.body);
+        final rawUser = RawUser.fromJson(response.body);
         return Result.success(_userMapper.map(rawUser));
       } else {
         return Result.error(ServerException());
@@ -96,7 +96,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
       final response =
           await _service.getRecommendedUsers('Bearer $authorizationToken');
       if (response.statusCode == 200) {
-        var rawUsers = RawUsers.fromJson(response.body);
+        final rawUsers = RawUsers.fromJson(response.body);
         return Result.success(
             rawUsers.users.map((rawUser) => _userMapper.map(rawUser)).toList());
       } else {
@@ -115,7 +115,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
           'Bearer $authorizationToken',
           contentIds.toString().replaceAll(' ', ''));
       if (response.statusCode == 200) {
-        var rawLikeStatuses = RawLikeStatuses.fromJson(response.body);
+        final rawLikeStatuses = RawLikeStatuses.fromJson(response.body);
         return Result.success(rawLikeStatuses.statuses);
       } else {
         return Result.error(ServerException());

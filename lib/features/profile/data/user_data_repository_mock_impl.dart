@@ -84,7 +84,7 @@ class UserDataRepositoryMockImpl extends UserDataRepository {
   Future<Result<Map<int, bool>>> getLikes(
       String authorizationToken, List<int> contentIds) async {
     return Result.success(
-        {for (var item in contentIds) item: _likes[item] ?? false});
+        {for (final item in contentIds) item: _likes[item] ?? false});
   }
 
   @override

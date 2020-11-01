@@ -117,7 +117,7 @@ class _PickImagePageState extends State<PickImagePage> {
   }
 
   Future<void> _pickImageFromGallery(BuildContext context) async {
-    var image = await _imagePicker.getImage(source: ImageSource.gallery);
+    final image = await _imagePicker.getImage(source: ImageSource.gallery);
     widget.onImagePicked(context, image.path, true);
   }
 }

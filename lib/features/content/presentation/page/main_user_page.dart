@@ -26,23 +26,23 @@ class MainUserPage extends StatelessWidget {
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
-                  title: Text('Home'),
+                  label: 'Home',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.search),
-                  title: Text('Search'),
+                  label: 'Search',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.add),
-                  title: Text('Add'),
+                  label: 'Add',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.favorite),
-                  title: Text('Favs'),
+                  label: 'Favs',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
-                  title: Text('Profile'),
+                  label: 'Profile',
                 ),
               ],
               unselectedItemColor: Colors.black12,

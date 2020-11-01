@@ -7,7 +7,7 @@ import 'package:instagram_clone/features/content/domain/model/image.dart';
 class ImageMapper implements Mapper<RawImage, Image> {
   @override
   Image map(RawImage input) {
-    var url = input.url;
+    final url = input.url;
     if (url == null) {
       return null;
     } else {

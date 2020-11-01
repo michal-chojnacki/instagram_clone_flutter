@@ -9,7 +9,7 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var primaryColor = Theme.of(context).primaryColor;
+    final primaryColor = Theme.of(context).primaryColor;
     return FlatButton(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),

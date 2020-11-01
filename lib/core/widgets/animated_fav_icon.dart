@@ -30,7 +30,7 @@ class _AnimatedFavIconState extends State<AnimatedFavIcon>
 
   @override
   Widget build(BuildContext context) {
-    var newState = widget.state();
+    final newState = widget.state();
     if (_state == null) {
       _iconData = _getIconData(newState);
     }

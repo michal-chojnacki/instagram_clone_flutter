@@ -7,7 +7,7 @@
 import 'package:chopper/chopper.dart';
 import 'package:http/http.dart';
 import 'package:get_it/get_it.dart';
-import 'package:injectable/get_it_helper.dart';
+import 'package:injectable/injectable.dart';
 import 'package:http/io_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,124 +70,131 @@ const _dev = 'dev';
 /// adds generated dependencies
 /// to the provided [GetIt] instance
 
-Future<void> $initGetIt(GetIt g, {String environment}) async {
-  final gh = GetItHelper(g, environment);
+Future<GetIt> $initGetIt(
+  GetIt get, {
+  String environment,
+  EnvironmentFilter environmentFilter,
+}) async {
+  final gh = GetItHelper(get, environment, environmentFilter);
   final registerModule = _$RegisterModule();
   gh.lazySingleton<AuthenticationRepository>(
       () => AuthenticationRepositoryMockImpl(),
       registerFor: {_mock});
   gh.lazySingleton<ChopperClient>(() => registerModule.chopperClient);
   gh.factory<ClearAuthenticationTokenUseCase>(
-      () => ClearAuthenticationTokenUseCase(g<AuthenticationRepository>()));
+      () => ClearAuthenticationTokenUseCase(get<AuthenticationRepository>()));
   gh.lazySingleton<Client>(() => registerModule.create);
-  gh.factory<ContentService>(() => ContentService.create(g<ChopperClient>()));
+  gh.factory<ContentService>(() => ContentService.create(get<ChopperClient>()));
   gh.factory<ImageMapper>(() => ImageMapper());
   gh.factory<LoadAuthorizationTokenUseCase>(
-      () => LoadAuthorizationTokenUseCase(g<AuthenticationRepository>()));
+      () => LoadAuthorizationTokenUseCase(get<AuthenticationRepository>()));
   gh.factory<MainUserBloc>(() => MainUserBloc());
   gh.factory<RegisterUserUseCase>(
-      () => RegisterUserUseCase(g<AuthenticationRepository>()));
+      () => RegisterUserUseCase(get<AuthenticationRepository>()));
   final sharedPreferences = await registerModule.prefs;
   gh.factory<SharedPreferences>(() => sharedPreferences);
   gh.factory<UserContentRepository>(() => UserContentRepositoryMockImpl(),
       registerFor: {_mock});
   gh.lazySingleton<UserDataRepository>(() => UserDataRepositoryMockImpl(),
       registerFor: {_mock});
-  gh.factory<UserDataService>(() => UserDataService.create(g<ChopperClient>()));
-  gh.factory<UserMapper>(() => UserMapper(g<ImageMapper>()));
+  gh.factory<UserDataService>(
+      () => UserDataService.create(get<ChopperClient>()));
+  gh.factory<UserMapper>(() => UserMapper(get<ImageMapper>()));
   gh.factory<AuthenticateUserUseCase>(
-      () => AuthenticateUserUseCase(g<AuthenticationRepository>()));
+      () => AuthenticateUserUseCase(get<AuthenticationRepository>()));
   gh.lazySingleton<AuthenticationLocalDataSource>(
-      () => AuthenticationLocalDataSourceImpl(g<SharedPreferences>()));
+      () => AuthenticationLocalDataSourceImpl(get<SharedPreferences>()));
   gh.factory<AuthenticationService>(
-      () => AuthenticationService.create(g<ChopperClient>()));
+      () => AuthenticationService.create(get<ChopperClient>()));
   gh.factory<ChangeLikeUseCase>(() => ChangeLikeUseCase(
-      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+      get<UserDataRepository>(), get<LoadAuthorizationTokenUseCase>()));
   gh.factory<ChangeObservationUseCase>(() => ChangeObservationUseCase(
-      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+      get<UserDataRepository>(), get<LoadAuthorizationTokenUseCase>()));
   gh.factoryParam<ContentItemBloc, PersonalizedContent, dynamic>(
       (personalizedContent, _) =>
-          ContentItemBloc(g<ChangeLikeUseCase>(), personalizedContent));
+          ContentItemBloc(get<ChangeLikeUseCase>(), personalizedContent));
   gh.factory<ContentMapper>(
-      () => ContentMapper(g<ImageMapper>(), g<UserMapper>()));
+      () => ContentMapper(get<ImageMapper>(), get<UserMapper>()));
   gh.factory<GetAllFolloweesUseCase>(() => GetAllFolloweesUseCase(
-      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+      get<UserDataRepository>(), get<LoadAuthorizationTokenUseCase>()));
   gh.factory<GetAllFollowersUseCase>(() => GetAllFollowersUseCase(
-      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+      get<UserDataRepository>(), get<LoadAuthorizationTokenUseCase>()));
   gh.factory<GetLikesStatusesUseCase>(() => GetLikesStatusesUseCase(
-      g<LoadAuthorizationTokenUseCase>(), g<UserDataRepository>()));
+      get<LoadAuthorizationTokenUseCase>(), get<UserDataRepository>()));
   gh.factory<GetMainContentUseCase>(() => GetMainContentUseCase(
-        g<UserContentRepository>(),
-        g<LoadAuthorizationTokenUseCase>(),
-        g<GetLikesStatusesUseCase>(),
+        get<UserContentRepository>(),
+        get<LoadAuthorizationTokenUseCase>(),
+        get<GetLikesStatusesUseCase>(),
       ));
   gh.factory<GetObservationStatusUseCase>(() => GetObservationStatusUseCase(
-      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+      get<UserDataRepository>(), get<LoadAuthorizationTokenUseCase>()));
   gh.factory<GetRecommendedContentUseCase>(() => GetRecommendedContentUseCase(
-        g<UserContentRepository>(),
-        g<LoadAuthorizationTokenUseCase>(),
-        g<GetLikesStatusesUseCase>(),
+        get<UserContentRepository>(),
+        get<LoadAuthorizationTokenUseCase>(),
+        get<GetLikesStatusesUseCase>(),
       ));
   gh.factory<GetRecommendedProfilesUseCase>(() => GetRecommendedProfilesUseCase(
-      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+      get<UserDataRepository>(), get<LoadAuthorizationTokenUseCase>()));
   gh.factory<GetUserContentsUseCase>(() => GetUserContentsUseCase(
-        g<UserContentRepository>(),
-        g<LoadAuthorizationTokenUseCase>(),
-        g<GetLikesStatusesUseCase>(),
+        get<UserContentRepository>(),
+        get<LoadAuthorizationTokenUseCase>(),
+        get<GetLikesStatusesUseCase>(),
       ));
   gh.factory<GetUserDataUseCase>(() => GetUserDataUseCase(
-      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
-  gh.factory<LoginPageBloc>(() =>
-      LoginPageBloc(g<AuthenticateUserUseCase>(), g<RegisterUserUseCase>()));
+      get<UserDataRepository>(), get<LoadAuthorizationTokenUseCase>()));
+  gh.factory<LoginPageBloc>(() => LoginPageBloc(
+      get<AuthenticateUserUseCase>(), get<RegisterUserUseCase>()));
   gh.factory<MainContentsBloc>(
-      () => MainContentsBloc(g<GetMainContentUseCase>()));
+      () => MainContentsBloc(get<GetMainContentUseCase>()));
   gh.factory<RecommendedProfilesBloc>(() => RecommendedProfilesBloc(
-      g<GetRecommendedProfilesUseCase>(), g<ChangeObservationUseCase>()));
+      get<GetRecommendedProfilesUseCase>(), get<ChangeObservationUseCase>()));
   gh.factory<SendContentUseCase>(() => SendContentUseCase(
-      g<UserContentRepository>(), g<LoadAuthorizationTokenUseCase>()));
+      get<UserContentRepository>(), get<LoadAuthorizationTokenUseCase>()));
   gh.factory<UpdateUserDataUseCase>(() => UpdateUserDataUseCase(
-      g<UserDataRepository>(), g<LoadAuthorizationTokenUseCase>()));
+      get<UserDataRepository>(), get<LoadAuthorizationTokenUseCase>()));
   gh.factory<UserContentRepository>(
-      () => UserContentRepositoryImpl(g<ContentService>(), g<ContentMapper>()),
+      () => UserContentRepositoryImpl(
+          get<ContentService>(), get<ContentMapper>()),
       registerFor: {_prod, _dev});
   gh.factory<UserDataRepository>(
-      () => UserDataRepositoryImpl(g<UserDataService>(), g<UserMapper>()),
+      () => UserDataRepositoryImpl(get<UserDataService>(), get<UserMapper>()),
       registerFor: {_prod, _dev});
-  gh.factory<UserListBloc>(() =>
-      UserListBloc(g<GetAllFollowersUseCase>(), g<GetAllFolloweesUseCase>()));
+  gh.factory<UserListBloc>(() => UserListBloc(
+      get<GetAllFollowersUseCase>(), get<GetAllFolloweesUseCase>()));
   gh.factory<UserProfileBloc>(() => UserProfileBloc(
-        g<ChangeObservationUseCase>(),
-        g<GetObservationStatusUseCase>(),
-        g<GetUserDataUseCase>(),
+        get<ChangeObservationUseCase>(),
+        get<GetObservationStatusUseCase>(),
+        get<GetUserDataUseCase>(),
       ));
   gh.factory<VerifyAuthorizationTokenUseCase>(() =>
       VerifyAuthorizationTokenUseCase(
-          g<ClearAuthenticationTokenUseCase>(), g<GetUserDataUseCase>()));
+          get<ClearAuthenticationTokenUseCase>(), get<GetUserDataUseCase>()));
   gh.factory<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(
-          g<AuthenticationService>(), g<AuthenticationLocalDataSource>()),
+          get<AuthenticationService>(), get<AuthenticationLocalDataSource>()),
       registerFor: {_prod, _dev});
   gh.factory<EditProfileBloc>(() => EditProfileBloc(
-        g<GetUserDataUseCase>(),
-        g<UpdateUserDataUseCase>(),
-        g<ClearAuthenticationTokenUseCase>(),
+        get<GetUserDataUseCase>(),
+        get<UpdateUserDataUseCase>(),
+        get<ClearAuthenticationTokenUseCase>(),
       ));
   gh.factory<GetContentWithQueryUseCase>(() => GetContentWithQueryUseCase(
-        g<UserContentRepository>(),
-        g<LoadAuthorizationTokenUseCase>(),
-        g<GetLikesStatusesUseCase>(),
+        get<UserContentRepository>(),
+        get<LoadAuthorizationTokenUseCase>(),
+        get<GetLikesStatusesUseCase>(),
       ));
   gh.factory<GetContentsForUserUseCase>(() => GetContentsForUserUseCase(
-        g<UserContentRepository>(),
-        g<LoadAuthorizationTokenUseCase>(),
-        g<GetLikesStatusesUseCase>(),
+        get<UserContentRepository>(),
+        get<LoadAuthorizationTokenUseCase>(),
+        get<GetLikesStatusesUseCase>(),
       ));
-  gh.factory<InitBloc>(() => InitBloc(g<VerifyAuthorizationTokenUseCase>()));
+  gh.factory<InitBloc>(() => InitBloc(get<VerifyAuthorizationTokenUseCase>()));
   gh.factory<SearchForContentBloc>(() => SearchForContentBloc(
-      g<GetContentWithQueryUseCase>(), g<GetRecommendedContentUseCase>()));
-  gh.factory<SendContentBloc>(() => SendContentBloc(g<SendContentUseCase>()));
+      get<GetContentWithQueryUseCase>(), get<GetRecommendedContentUseCase>()));
+  gh.factory<SendContentBloc>(() => SendContentBloc(get<SendContentUseCase>()));
   gh.factory<UserContentsGridBloc>(() => UserContentsGridBloc(
-      g<GetContentsForUserUseCase>(), g<GetUserContentsUseCase>()));
+      get<GetContentsForUserUseCase>(), get<GetUserContentsUseCase>()));
+  return get;
 }
 
 class _$RegisterModule extends RegisterModule {}

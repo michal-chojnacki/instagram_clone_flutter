@@ -24,7 +24,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
               username: credentials.username, password: credentials.password)
           .toJson());
       if (response.statusCode == 200) {
-        var token = RawToken.fromJson(response.body).token;
+        final token = RawToken.fromJson(response.body).token;
         await _localDataSource.saveToken(token);
         return Result.success(token);
       } else {
@@ -42,7 +42,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
               username: credentials.username, password: credentials.password)
           .toJson());
       if (response.statusCode == 200) {
-        var token = RawToken.fromJson(response.body).token;
+        final token = RawToken.fromJson(response.body).token;
         await _localDataSource.saveToken(token);
         return Result.success(token);
       } else {

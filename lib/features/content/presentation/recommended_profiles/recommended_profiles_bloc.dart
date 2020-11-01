@@ -40,7 +40,7 @@ class RecommendedProfilesBloc
   }
 
   Stream<RecommendedProfilesState> _mapObserveUser(User user) async* {
-    var observeResult = await _changeObservation(user, true);
+    final observeResult = await _changeObservation(user, true);
     if (observeResult is Success) {
       yield state.copyWith(
           users: state.users.toList()

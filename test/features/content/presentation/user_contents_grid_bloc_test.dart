@@ -19,9 +19,9 @@ class MockPersonalizedContent extends Mock implements PersonalizedContent {}
 
 void main() {
   group('UserContentsGridBloc tests:', () {
-    var getContentsForUserUseCase = MockGetContentsForUserUseCase();
-    var getUserContentsUseCase = MockGetUserContentsUseCase();
-    var personalizedContentList = [
+    final getContentsForUserUseCase = MockGetContentsForUserUseCase();
+    final getUserContentsUseCase = MockGetUserContentsUseCase();
+    final personalizedContentList = [
       MockPersonalizedContent(),
       MockPersonalizedContent()
     ];

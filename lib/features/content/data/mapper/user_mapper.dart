@@ -12,7 +12,7 @@ class UserMapper implements Mapper<RawUser, User> {
 
   @override
   User map(RawUser input) {
-    var username = input.username;
+    final username = input.username;
     if (username == null) {
       return null;
     } else {

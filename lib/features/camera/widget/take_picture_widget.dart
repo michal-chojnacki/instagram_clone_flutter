@@ -57,7 +57,7 @@ class _TakePictureWidgetState extends State<TakePictureWidget> {
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          var size = MediaQuery.of(context).size.width;
+          final size = MediaQuery.of(context).size.width;
           return Container(
             width: (widget.ratio != null) ? size : null,
             height: (widget.ratio != null) ? size * widget.ratio : null,
@@ -101,7 +101,7 @@ class _TakePictureWidgetState extends State<TakePictureWidget> {
   }
 
   Future<String> _resizePhoto(String filePath, double ratio) async {
-    var properties = await FlutterNativeImage.getImageProperties(filePath);
+    final properties = await FlutterNativeImage.getImageProperties(filePath);
 
     if (properties.orientation == ImageOrientation.rotate270 ||
         properties.orientation == ImageOrientation.rotate90) {
@@ -109,16 +109,16 @@ class _TakePictureWidgetState extends State<TakePictureWidget> {
     }
     var targetWidth = properties.width.toDouble();
     var targetHeight = properties.width.toDouble() * ratio;
-    var scale = properties.height / targetHeight;
+    final scale = properties.height / targetHeight;
     if (scale < 1) {
       targetWidth = targetWidth * scale;
       targetHeight = targetHeight * scale;
     }
 
-    var offsetVertical = (properties.height - targetHeight) / 2;
-    var offsetHorizontal = (properties.width - targetWidth) / 2;
+    final offsetVertical = (properties.height - targetHeight) / 2;
+    final offsetHorizontal = (properties.width - targetWidth) / 2;
 
-    var croppedFile = await FlutterNativeImage.cropImage(
+    final croppedFile = await FlutterNativeImage.cropImage(
         filePath,
         offsetHorizontal.toInt(),
         offsetVertical.toInt(),

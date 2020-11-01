@@ -27,9 +27,9 @@ class GetContentsForUserUseCase {
                 Future.value(Result<PagedList<Content>>.error(exception))))
         .asyncMap((contents) => contents.when(
             success: (data) async {
-              var contents = data.list;
-              var page = data.page;
-              var pages = data.pages;
+              final contents = data.list;
+              final page = data.page;
+              final pages = data.pages;
               return (await _getLikesStatuses(
                       contents.map((content) => content.id).toList()))
                   .when(

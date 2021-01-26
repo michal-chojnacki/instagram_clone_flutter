@@ -5,62 +5,62 @@
 // **************************************************************************
 
 import 'package:chopper/chopper.dart';
-import 'package:http/http.dart';
 import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart';
+import 'package:http/http.dart';
 import 'package:http/io_client.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'features/authenticate/domain/authenticate_user_use_case.dart';
 import 'features/authenticate/data/authentication_local_data_source.dart';
-import 'features/authenticate/domain/authentication_repository.dart';
 import 'features/authenticate/data/authentication_repository_impl.dart';
 import 'features/authenticate/data/authentication_repository_mock_impl.dart';
 import 'features/authenticate/data/authentication_service.dart';
-import 'features/profile/domain/change_like_use_case.dart';
-import 'features/profile/domain/change_observation_use_case.dart';
+import 'features/authenticate/domain/authenticate_user_use_case.dart';
+import 'features/authenticate/domain/authentication_repository.dart';
 import 'features/authenticate/domain/clear_authentication_token_use_case.dart';
-import 'features/content/presentation/item/content_item_bloc.dart';
-import 'features/content/data/mapper/content_mapper.dart';
-import 'features/content/data/content_service.dart';
-import 'features/profile/presentation/edit_profile_bloc.dart';
-import 'features/profile/domain/get_all_followees_use_case.dart';
-import 'features/profile/domain/get_all_followers_use_case.dart';
-import 'features/content/domain/get_content_with_query_use_case.dart';
-import 'features/content/domain/get_contents_for_user_use_case.dart';
-import 'features/profile/domain/get_likes_statuses_use_case.dart';
-import 'features/content/domain/get_main_content_use_case.dart';
-import 'features/profile/domain/get_observation_status_use_case.dart';
-import 'features/content/domain/get_recommended_content_use_case.dart';
-import 'features/profile/domain/get_recommended_profiles_use_case.dart';
-import 'features/content/domain/get_user_contents_use_case.dart';
-import 'features/profile/domain/get_user_data_use_case.dart';
-import 'features/content/data/mapper/image_mapper.dart';
-import 'features/content/presentation/init/init_bloc.dart';
 import 'features/authenticate/domain/load_authorization_token_use_case.dart';
-import 'features/authenticate/presentation/login_page_bloc.dart';
-import 'features/content/presentation/main_contents/main_contents_bloc.dart';
-import 'features/content/presentation/common/main_user_bloc.dart';
-import 'features/content/presentation/common/model/personalized_content.dart';
-import 'features/content/presentation/recommended_profiles/recommended_profiles_bloc.dart';
-import 'injection.dart';
 import 'features/authenticate/domain/register_user_use_case.dart';
-import 'features/content/presentation/search/search_for_content_bloc.dart';
-import 'features/content/presentation/add_content/send_content_bloc.dart';
-import 'features/content/domain/send_content_use_case.dart';
-import 'features/profile/domain/update_user_data_use_case.dart';
-import 'features/content/domain/user_content_repository.dart';
+import 'features/authenticate/domain/verify_authorization_token_use_case.dart';
+import 'features/authenticate/presentation/login_view_model.dart';
+import 'features/content/data/content_service.dart';
+import 'features/content/data/mapper/content_mapper.dart';
+import 'features/content/data/mapper/image_mapper.dart';
+import 'features/content/data/mapper/user_mapper.dart';
 import 'features/content/data/user_content_repository_impl.dart';
 import 'features/content/data/user_content_repository_mock_impl.dart';
+import 'features/content/domain/get_content_with_query_use_case.dart';
+import 'features/content/domain/get_contents_for_user_use_case.dart';
+import 'features/content/domain/get_main_content_use_case.dart';
+import 'features/content/domain/get_recommended_content_use_case.dart';
+import 'features/content/domain/get_user_contents_use_case.dart';
+import 'features/content/domain/send_content_use_case.dart';
+import 'features/content/domain/user_content_repository.dart';
+import 'features/content/presentation/add_content/send_content_bloc.dart';
+import 'features/content/presentation/common/main_user_bloc.dart';
+import 'features/content/presentation/common/model/personalized_content.dart';
 import 'features/content/presentation/common/user_contents_grid_bloc.dart';
-import 'features/profile/domain/user_data_repository.dart';
+import 'features/content/presentation/init/init_bloc.dart';
+import 'features/content/presentation/item/content_item_bloc.dart';
+import 'features/content/presentation/main_contents/main_contents_bloc.dart';
+import 'features/content/presentation/recommended_profiles/recommended_profiles_bloc.dart';
+import 'features/content/presentation/search/search_for_content_bloc.dart';
 import 'features/profile/data/user_data_repository_impl.dart';
 import 'features/profile/data/user_data_repository_mock_impl.dart';
 import 'features/profile/data/user_data_service.dart';
+import 'features/profile/domain/change_like_use_case.dart';
+import 'features/profile/domain/change_observation_use_case.dart';
+import 'features/profile/domain/get_all_followees_use_case.dart';
+import 'features/profile/domain/get_all_followers_use_case.dart';
+import 'features/profile/domain/get_likes_statuses_use_case.dart';
+import 'features/profile/domain/get_observation_status_use_case.dart';
+import 'features/profile/domain/get_recommended_profiles_use_case.dart';
+import 'features/profile/domain/get_user_data_use_case.dart';
+import 'features/profile/domain/update_user_data_use_case.dart';
+import 'features/profile/domain/user_data_repository.dart';
+import 'features/profile/presentation/edit_profile_bloc.dart';
 import 'features/profile/presentation/user_list_bloc.dart';
-import 'features/content/data/mapper/user_mapper.dart';
 import 'features/profile/presentation/user_profile_bloc.dart';
-import 'features/authenticate/domain/verify_authorization_token_use_case.dart';
+import 'injection.dart';
 
 /// Environment names
 const _mock = 'mock';
@@ -142,7 +142,7 @@ Future<GetIt> $initGetIt(
       ));
   gh.factory<GetUserDataUseCase>(() => GetUserDataUseCase(
       get<UserDataRepository>(), get<LoadAuthorizationTokenUseCase>()));
-  gh.factory<LoginPageBloc>(() => LoginPageBloc(
+  gh.factory<LoginViewModel>(() => LoginViewModel(
       get<AuthenticateUserUseCase>(), get<RegisterUserUseCase>()));
   gh.factory<MainContentsBloc>(
       () => MainContentsBloc(get<GetMainContentUseCase>()));

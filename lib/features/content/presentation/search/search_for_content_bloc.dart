@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/features/content/domain/get_content_with_query_use_case.dart';
 import 'package:instagram_clone/features/content/domain/get_recommended_content_use_case.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_event.dart';

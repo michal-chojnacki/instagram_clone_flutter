@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/authenticate/domain/load_authorization_token_use_case.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';

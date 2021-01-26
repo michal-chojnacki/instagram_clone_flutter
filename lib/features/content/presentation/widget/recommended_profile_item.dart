@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:instagram_clone/core/widgets/network_image_with_fallback.dart';
 import 'package:instagram_clone/core/widgets/primary_button.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 import 'package:instagram_clone/core/widgets/animated_fav_icon.dart';
 import 'package:instagram_clone/core/widgets/network_image_with_fallback.dart';
 import 'package:instagram_clone/core/widgets/rounded_square_image.dart';
@@ -8,7 +11,6 @@ import 'package:instagram_clone/features/content/presentation/common/model/perso
 import 'package:instagram_clone/features/content/presentation/item/content_item_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_state.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_page.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class ContentItemWidget extends StatefulWidget {
   final PersonalizedContent personalizedContent;

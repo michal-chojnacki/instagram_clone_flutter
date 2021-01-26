@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+
 import 'package:instagram_clone/features/authenticate/presentation/login_page_bloc.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_state.dart';
 import 'package:instagram_clone/features/authenticate/presentation/widget/login_form.dart';

@@ -43,6 +43,7 @@ dev_dependencies:
   mockito: ^4.1.0
   freezed: ^0.12.1
   pedantic: ^1.9.0
+  import_sorter: ^4.3.0
 
 dependency_overrides:
   analyzer: '0.40.5'
@@ -53,3 +54,8 @@ flutter:
     - .env/
     - assets/
     
+import_sorter:
+  emojis: false
+  comments: false
+  ignored_files:
+    - \/lib\/injectable.config.dart

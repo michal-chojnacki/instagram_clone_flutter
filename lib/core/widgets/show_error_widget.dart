@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:instagram_clone/core/widgets/primary_button.dart';
 
 class ShowErrorWidget extends StatelessWidget {

@@ -1,17 +1,20 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mockito/mockito.dart';
+
 import 'package:instagram_clone/features/content/domain/model/content.dart';
-import 'package:instagram_clone/features/content/domain/model/image.dart'
-    as image_model;
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_state.dart';
 import 'package:instagram_clone/features/content/presentation/widget/content_item_widget.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_page.dart';
-import 'package:mockito/mockito.dart';
+
+import 'package:instagram_clone/features/content/domain/model/image.dart'
+    as image_model;
 
 class MockContentItemBloc extends MockBloc<ContentItemState>
     implements ContentItemBloc {}

@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:built_value/built_value.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';

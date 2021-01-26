@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+
 import 'package:instagram_clone/features/content/domain/model/user.dart';
-import 'package:instagram_clone/features/content/presentation/widget/contents_grid.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_state.dart';
+import 'package:instagram_clone/features/content/presentation/widget/contents_grid.dart';
 
 class UserContentsGrid extends StatefulWidget {
   final User user;

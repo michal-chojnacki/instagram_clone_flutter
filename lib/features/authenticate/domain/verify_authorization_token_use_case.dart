@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/authenticate/domain/clear_authentication_token_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';

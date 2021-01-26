@@ -1,12 +1,12 @@
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/profile/domain/get_likes_statuses_use_case.dart';
-
+import '../../authenticate/domain/load_authorization_token_use_case.dart';
 import './model/content.dart';
 import './user_content_repository.dart';
-import '../../authenticate/domain/load_authorization_token_use_case.dart';
 
 @injectable
 class GetRecommendedContentUseCase {

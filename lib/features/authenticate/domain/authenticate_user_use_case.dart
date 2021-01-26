@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/authenticate/domain/authentication_repository.dart';
 import 'package:instagram_clone/features/authenticate/domain/model/credentials.dart';

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_stetho/flutter_stetho.dart';
-// import 'package:flutter/foundation.dart';
+
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/features/content/presentation/page/init_page.dart';
 import 'package:instagram_clone/injection.dart';
+
+// import 'package:flutter_stetho/flutter_stetho.dart';
+// import 'package:flutter/foundation.dart';
 
 void main() async {
   //  Temporary removed. Waiting for adding support for flutter 1.22.0 in this lib.

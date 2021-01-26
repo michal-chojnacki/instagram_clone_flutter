@@ -1,8 +1,9 @@
 import 'dart:ffi';
 
 import 'package:injectable/injectable.dart';
-import 'package:instagram_clone/core/result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:instagram_clone/core/result.dart';
 
 abstract class AuthenticationLocalDataSource {
   Future<Result<String>> obtainToken();

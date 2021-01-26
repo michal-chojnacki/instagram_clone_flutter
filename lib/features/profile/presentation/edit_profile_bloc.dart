@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/core/bloc_side_effects.dart';
 import 'package:instagram_clone/features/authenticate/domain/clear_authentication_token_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';

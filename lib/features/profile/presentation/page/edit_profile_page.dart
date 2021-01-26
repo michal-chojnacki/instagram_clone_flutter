@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
+
 import 'package:instagram_clone/core/bloc_hooks.dart';
 import 'package:instagram_clone/core/widgets/network_image_with_fallback.dart';
 import 'package:instagram_clone/features/camera/page/pick_image_page.dart';

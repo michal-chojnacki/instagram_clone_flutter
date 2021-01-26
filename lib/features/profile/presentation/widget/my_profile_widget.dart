@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:instagram_clone/core/widgets/show_error_widget.dart';
+
 import 'package:instagram_clone/core/widgets/primary_button.dart';
+import 'package:instagram_clone/core/widgets/show_error_widget.dart';
 import 'package:instagram_clone/features/camera/page/pick_image_page.dart';
 import 'package:instagram_clone/features/content/presentation/page/init_page.dart';
 import 'package:instagram_clone/features/content/presentation/widget/user_contents_grid.dart';

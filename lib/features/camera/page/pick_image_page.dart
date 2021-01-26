@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+
+import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
+
 import 'package:instagram_clone/features/camera/page/adjust_image_page.dart';
 import 'package:instagram_clone/features/camera/widget/take_picture_widget.dart';
 import 'package:instagram_clone/features/content/presentation/common/circular_overlay.dart';

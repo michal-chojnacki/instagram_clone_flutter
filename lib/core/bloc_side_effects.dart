@@ -1,11 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class BlocWithSideEffect<Event, State, SideEffect>
-    extends Bloc<Event, State> {
-  BlocWithSideEffect(State initialState) : super(initialState);
-
+mixin BlocSideEffects<Event, State, SideEffect> on Bloc<Event, State> {
   final _sideEffectsStreamController = StreamController<SideEffect>();
   Stream<SideEffect> get sideEffects => _sideEffectsStreamController.stream;
 
@@ -15,6 +13,7 @@ abstract class BlocWithSideEffect<Event, State, SideEffect>
   }
 
   @override
+  @mustCallSuper
   Future<void> close() async {
     await _sideEffectsStreamController.close();
     return super.close();

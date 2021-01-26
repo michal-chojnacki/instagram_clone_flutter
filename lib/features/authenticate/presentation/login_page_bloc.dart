@@ -1,5 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:instagram_clone/core/bloc_with_side_effects.dart';
+import 'package:instagram_clone/core/bloc_side_effects.dart';
 
 import 'package:instagram_clone/features/authenticate/domain/authenticate_user_use_case.dart';
 import 'package:instagram_clone/features/authenticate/domain/register_user_use_case.dart';
@@ -9,8 +10,8 @@ import 'package:instagram_clone/features/authenticate/presentation/login_page_st
 import 'package:rxdart/rxdart.dart';
 
 @injectable
-class LoginPageBloc extends BlocWithSideEffect<LoginPageEvent, LoginPageState,
-    LoginPageSideEffect> {
+class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState>
+    with BlocSideEffects<LoginPageEvent, LoginPageState, LoginPageSideEffect> {
   final AuthenticateUserUseCase _authenticateUser;
   final RegisterUserUseCase _registerUser;
 

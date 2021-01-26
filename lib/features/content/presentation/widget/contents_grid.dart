@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:instagram_clone/core/widgets/rounded_square_image.dart';
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/content/presentation/page/single_content_page.dart';

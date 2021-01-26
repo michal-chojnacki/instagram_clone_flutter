@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/features/profile/domain/get_all_followees_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/get_all_followers_use_case.dart';
 import 'package:instagram_clone/features/profile/presentation/user_list_event.dart';

@@ -1,5 +1,7 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'package:instagram_clone/features/content/domain/model/image.dart';
 
 part 'user.freezed.dart';

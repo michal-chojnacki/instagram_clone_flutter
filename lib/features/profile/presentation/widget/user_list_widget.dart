@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/content/presentation/widget/recommended_profile_item.dart';
 import 'package:instagram_clone/features/profile/presentation/page/user_profile_page.dart';

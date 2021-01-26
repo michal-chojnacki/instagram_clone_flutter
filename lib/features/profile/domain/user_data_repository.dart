@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';

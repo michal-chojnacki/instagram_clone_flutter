@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/authenticate/domain/load_authorization_token_use_case.dart';

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
@@ -10,8 +11,8 @@ import 'package:instagram_clone/features/profile/data/model/raw_like_status.dart
 import 'package:instagram_clone/features/profile/data/model/raw_like_statuses.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_observing_status.dart';
 import 'package:instagram_clone/features/profile/data/model/raw_users.dart';
-import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 import 'package:instagram_clone/features/profile/data/user_data_service.dart';
+import 'package:instagram_clone/features/profile/domain/user_data_repository.dart';
 
 @prod
 @dev

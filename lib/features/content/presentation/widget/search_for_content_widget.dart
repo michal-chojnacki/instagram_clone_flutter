@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+
 import 'package:instagram_clone/core/widgets/show_error_widget.dart';
-import 'package:instagram_clone/features/content/presentation/widget/contents_grid.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/search/search_for_content_state.dart';
+import 'package:instagram_clone/features/content/presentation/widget/contents_grid.dart';
 
 class SearchForContentWidget extends StatefulWidget {
   @override

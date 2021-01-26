@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+
 import 'package:instagram_clone/core/widgets/show_error_widget.dart';
-import 'package:instagram_clone/features/content/presentation/widget/content_item_widget.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/main_contents/main_contents_state.dart';
+import 'package:instagram_clone/features/content/presentation/widget/content_item_widget.dart';
 
 class MainContentsWidget extends StatefulWidget {
   @override

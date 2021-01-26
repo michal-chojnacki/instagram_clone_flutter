@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
+import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
 import 'package:instagram_clone/features/content/domain/get_user_contents_use_case.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
-import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_event.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_state.dart';
 

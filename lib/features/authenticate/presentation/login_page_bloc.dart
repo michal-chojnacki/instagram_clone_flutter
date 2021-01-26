@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:instagram_clone/core/bloc_side_effects.dart';
+import 'package:rxdart/rxdart.dart';
 
+import 'package:instagram_clone/core/bloc_side_effects.dart';
 import 'package:instagram_clone/features/authenticate/domain/authenticate_user_use_case.dart';
 import 'package:instagram_clone/features/authenticate/domain/register_user_use_case.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_event.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_side_effect.dart';
 import 'package:instagram_clone/features/authenticate/presentation/login_page_state.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
 class LoginPageBloc extends Bloc<LoginPageEvent, LoginPageState>

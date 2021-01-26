@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+
 import 'package:instagram_clone/core/exts_string.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/profile/presentation/user_list_bloc.dart';

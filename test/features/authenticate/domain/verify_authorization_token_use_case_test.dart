@@ -1,12 +1,13 @@
 import 'dart:ffi';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/authenticate/domain/clear_authentication_token_use_case.dart';
 import 'package:instagram_clone/features/authenticate/domain/verify_authorization_token_use_case.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
 import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';
-import 'package:mockito/mockito.dart';
 
 class MockClearAuthenticationTokenUseCase extends Mock
     implements ClearAuthenticationTokenUseCase {}

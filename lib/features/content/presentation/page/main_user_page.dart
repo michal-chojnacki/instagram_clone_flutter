@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+
 import 'package:instagram_clone/features/camera/page/pick_image_page.dart';
-import 'package:instagram_clone/features/content/presentation/page/send_content_page.dart';
 import 'package:instagram_clone/features/content/presentation/common/main_user_bloc.dart';
+import 'package:instagram_clone/features/content/presentation/page/send_content_page.dart';
 import 'package:instagram_clone/features/content/presentation/widget/main_contents_widget.dart';
 import 'package:instagram_clone/features/content/presentation/widget/recommended_profiles_widget.dart';
 import 'package:instagram_clone/features/content/presentation/widget/search_for_content_widget.dart';

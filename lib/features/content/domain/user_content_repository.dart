@@ -1,7 +1,6 @@
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/domain/model/user.dart';
-
 import './model/content.dart';
 
 abstract class UserContentRepository {

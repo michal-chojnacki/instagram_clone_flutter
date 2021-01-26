@@ -1,8 +1,8 @@
-import 'package:instagram_clone/core/bloc_side_effects.dart';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+
+import 'package:instagram_clone/core/bloc_side_effects.dart';
 
 S useBlocState<B extends Bloc<dynamic, S>, S>(
   B Function() blocFactory,

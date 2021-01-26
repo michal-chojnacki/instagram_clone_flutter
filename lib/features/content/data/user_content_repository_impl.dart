@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/core/exceptions.dart';
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';

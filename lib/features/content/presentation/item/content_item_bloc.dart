@@ -1,6 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+
+import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_event.dart';
 import 'package:instagram_clone/features/content/presentation/item/content_item_state.dart';

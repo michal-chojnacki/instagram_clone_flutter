@@ -1,5 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+
 import 'package:instagram_clone/core/paged_list.dart';
 import 'package:instagram_clone/core/result.dart';
 import 'package:instagram_clone/features/content/domain/get_contents_for_user_use_case.dart';
@@ -7,7 +9,6 @@ import 'package:instagram_clone/features/content/domain/get_user_contents_use_ca
 import 'package:instagram_clone/features/content/presentation/common/model/personalized_content.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_bloc.dart';
 import 'package:instagram_clone/features/content/presentation/common/user_contents_grid_state.dart';
-import 'package:mockito/mockito.dart';
 
 class MockGetContentsForUserUseCase extends Mock
     implements GetContentsForUserUseCase {}

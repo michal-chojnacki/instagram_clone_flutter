@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
+
 import 'package:instagram_clone/core/bloc_side_effects.dart';
 import 'package:instagram_clone/features/content/domain/send_content_use_case.dart';
+import 'package:instagram_clone/features/content/presentation/add_content/send_content_event.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_side_effect.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_state.dart';
-import 'package:instagram_clone/features/content/presentation/add_content/send_content_event.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
 class SendContentBloc extends Bloc<SendContentEvent, SendContentState>

@@ -1,7 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:instagram_clone/core/bloc_with_side_effects.dart';
+import 'package:instagram_clone/core/bloc_side_effects.dart';
 import 'package:instagram_clone/features/content/domain/send_content_use_case.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_side_effect.dart';
 import 'package:instagram_clone/features/content/presentation/add_content/send_content_state.dart';
@@ -9,8 +10,10 @@ import 'package:instagram_clone/features/content/presentation/add_content/send_c
 import 'package:rxdart/rxdart.dart';
 
 @injectable
-class SendContentBloc extends BlocWithSideEffect<SendContentEvent,
-    SendContentState, SendContentSideEffect> {
+class SendContentBloc extends Bloc<SendContentEvent, SendContentState>
+    with
+        BlocSideEffects<SendContentEvent, SendContentState,
+            SendContentSideEffect> {
   final SendContentUseCase _sendContentUseCase;
 
   SendContentBloc(this._sendContentUseCase) : super(SendContentState.loaded());

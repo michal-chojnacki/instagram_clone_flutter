@@ -1,4 +1,4 @@
-import 'package:instagram_clone/core/bloc_with_side_effects.dart';
+import 'package:instagram_clone/core/bloc_side_effects.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +13,7 @@ S useBlocState<B extends Bloc<dynamic, S>, S>(
   return useStream(stream, initialData: bloc.state).data;
 }
 
-void useBlocSideEffects<B extends BlocWithSideEffect<dynamic, dynamic, E>, E>(
+void useBlocSideEffects<B extends BlocSideEffects<dynamic, dynamic, E>, E>(
     B Function() blocFactory, Function onSideEffect(E)) {
   final bloc = useMemoized(() => blocFactory());
   useEffect(() {

@@ -1,7 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:instagram_clone/core/bloc_with_side_effects.dart';
+import 'package:instagram_clone/core/bloc_side_effects.dart';
 import 'package:instagram_clone/features/authenticate/domain/clear_authentication_token_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/get_user_data_use_case.dart';
 import 'package:instagram_clone/features/profile/domain/update_user_data_use_case.dart';
@@ -10,8 +11,10 @@ import 'package:instagram_clone/features/profile/presentation/edit_profile_side_
 import 'package:instagram_clone/features/profile/presentation/edit_profile_state.dart';
 
 @injectable
-class EditProfileBloc extends BlocWithSideEffect<EditProfileEvent,
-    EditProfileState, EditProfileSideEffect> {
+class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState>
+    with
+        BlocSideEffects<EditProfileEvent, EditProfileState,
+            EditProfileSideEffect> {
   final GetUserDataUseCase _getUserData;
   final UpdateUserDataUseCase _updateUserDataUseCase;
   final ClearAuthenticationTokenUseCase _clearAuthenticationTokenUseCase;
